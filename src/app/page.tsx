@@ -26,7 +26,8 @@ type Message = {
   content: string
 }
 
-const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+const LEVELS = ['A1']
+// const LEVELS_FULL = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] // включим после переписывания
 
 function normalizeMd(t: string) {
   return t.replace(/\*\*\s+/g, '**').replace(/\s+\*\*/g, '**')
