@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import ReactMarkdown from 'react-markdown'
 
@@ -26,8 +27,7 @@ type Message = {
   content: string
 }
 
-const LEVELS = ['A1']
-// const LEVELS_FULL = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] // включим после переписывания
+const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 function normalizeMd(t: string) {
   return t.replace(/\*\*\s+/g, '**').replace(/\s+\*\*/g, '**')
@@ -37,6 +37,7 @@ let gAudio: HTMLAudioElement | null = null
 let gAudioIdx = -1
 
 export default function Home() {
+  const router = useRouter()
   const [level, setLevel] = useState('A1')
   const [lessons, setLessons] = useState<LessonSummary[]>([])
   const [lesson, setLesson] = useState<Lesson | null>(null)
@@ -46,9 +47,44 @@ export default function Home() {
   const [recording, setRecording] = useState(false)
   const [tts, setTts] = useState<'idle' | 'load' | 'play'>('idle')
   const [ttsIdx, setTtsIdx] = useState(-1)
+
+  // Auth + access state
+  const [userEmail, setUserEmail] = useState<string | null>(null)
+  const [accessibleLevels, setAccessibleLevels] = useState<Set<string>>(new Set(['A1']))
+  const [authLoaded, setAuthLoaded] = useState(false)
+
   const endRef = useRef<HTMLDivElement>(null)
   const taRef = useRef<HTMLTextAreaElement>(null)
   const recRef = useRef<any>(null)
+
+  // Загружаем сессию и доступные уровни
+  useEffect(() => {
+    async function load() {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        setUserEmail(user.email ?? null)
+        const { data: access } = await supabase
+          .from('user_level_access')
+          .select('level, expires_at')
+          .eq('user_id', user.id)
+          .eq('active', true)
+        const now = Date.now()
+        const levels = new Set(['A1'])
+        if (access) {
+          for (const a of access) {
+            if (!a.expires_at || new Date(a.expires_at).getTime() > now) {
+              levels.add(a.level)
+            }
+          }
+        }
+        setAccessibleLevels(levels)
+      } else {
+        setAccessibleLevels(new Set(['A1']))
+      }
+      setAuthLoaded(true)
+    }
+    load()
+  }, [])
 
   useEffect(() => {
     supabase.from('lessons').select('id,level,lesson_number,title_fr,title_ru')
@@ -64,6 +100,26 @@ export default function Home() {
       taRef.current.style.height = Math.min(taRef.current.scrollHeight, 160) + 'px'
     }
   }, [input])
+
+  async function handleLogout() {
+    await supabase.auth.signOut()
+    setUserEmail(null)
+    setAccessibleLevels(new Set(['A1']))
+    if (level !== 'A1') setLevel('A1')
+  }
+
+  function handleLevelClick(l: string) {
+    if (accessibleLevels.has(l)) {
+      setLevel(l)
+      return
+    }
+    // Уровень заблокирован — отправляем на /pricing
+    if (!userEmail) {
+      router.push('/auth?redirect_to=' + encodeURIComponent('/pricing'))
+    } else {
+      router.push('/pricing')
+    }
+  }
 
   async function open(id: number) {
     const { data } = await supabase.from('lessons').select('*').eq('id', id).single()
@@ -152,13 +208,8 @@ export default function Home() {
       }
     }
 
-    r.onend = () => {
-      setRecording(false)
-    }
-
-    r.onerror = () => {
-      setRecording(false)
-    }
+    r.onend = () => { setRecording(false) }
+    r.onerror = () => { setRecording(false) }
 
     recRef.current = r
     r.start()
@@ -167,6 +218,7 @@ export default function Home() {
 
   function back() { kill(); setLesson(null); setMsgs([]) }
 
+  // ===== Внутри урока =====
   if (lesson) return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', maxWidth: '800px', margin: '0 auto' }}>
       <div style={{ padding: '12px 16px', background: 'white', borderBottom: '1px solid #eee', display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -229,20 +281,111 @@ export default function Home() {
     </div>
   )
 
+  // ===== Главная (выбор уровня и урока) =====
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '32px 16px' }}>
+      {/* Шапка с логином/выходом */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'flex-end',
+        gap: '12px',
+        marginBottom: '24px',
+        minHeight: '36px',
+      }}>
+        {authLoaded && (userEmail ? (
+          <>
+            <span style={{ fontSize: '13px', color: '#888', alignSelf: 'center' }}>
+              {userEmail}
+            </span>
+            <button
+              onClick={() => router.push('/pricing')}
+              style={{
+                padding: '7px 14px',
+                background: '#c47c40',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '13px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                fontFamily: 'inherit',
+              }}
+            >
+              Подписка
+            </button>
+            <button
+              onClick={handleLogout}
+              style={{
+                padding: '7px 14px',
+                background: 'white',
+                color: '#555',
+                border: '1px solid #ddd',
+                borderRadius: '8px',
+                fontSize: '13px',
+                cursor: 'pointer',
+                fontFamily: 'inherit',
+              }}
+            >
+              Выйти
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={() => router.push('/auth')}
+            style={{
+              padding: '7px 14px',
+              background: '#002395',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '13px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+            }}
+          >
+            Войти
+          </button>
+        ))}
+      </div>
+
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '36px', fontWeight: 700, color: '#1a1a2e', marginBottom: '8px' }}>Français au Quotidien</h1>
         <p style={{ color: '#888', fontSize: '18px' }}>Разговорный французский каждый день</p>
       </div>
+
       <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '32px', flexWrap: 'wrap' }}>
-        {LEVELS.map(l => (
-          <button key={l} onClick={() => setLevel(l)} style={{
-            padding: '8px 20px', borderRadius: '20px', border: level === l ? '2px solid #002395' : '2px solid transparent', cursor: 'pointer', fontWeight: 600, fontSize: '14px',
-            background: level === l ? '#002395' : 'white', color: level === l ? 'white' : '#555'
-          }}>{l}</button>
-        ))}
+        {LEVELS.map(l => {
+          const isAccessible = accessibleLevels.has(l)
+          const isSelected = level === l
+          return (
+            <button
+              key={l}
+              onClick={() => handleLevelClick(l)}
+              title={isAccessible ? '' : 'Откройте по подписке'}
+              style={{
+                padding: '8px 20px',
+                borderRadius: '20px',
+                border: isSelected ? '2px solid #002395' : '2px solid transparent',
+                cursor: 'pointer',
+                fontWeight: 600,
+                fontSize: '14px',
+                background: isSelected ? '#002395' : 'white',
+                color: isSelected ? 'white' : (isAccessible ? '#555' : '#bbb'),
+                fontFamily: 'inherit',
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+              }}
+            >
+              {l}
+              {!isAccessible && <span style={{ fontSize: '11px' }}>🔒</span>}
+            </button>
+          )
+        })}
       </div>
+
       <div>
         {lessons.map(ls => (
           <button key={ls.id} onClick={() => open(ls.id)} style={{
