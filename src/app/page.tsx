@@ -213,26 +213,30 @@ export default function Home() {
       setRecording(false)
       return
     }
-    const S = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
-    if (!S) { alert('Браузер не поддерживает речь'); return }
-    const r = new S()
-    r.lang = 'fr-FR'
-    r.continuous = false
-    r.interimResults = false
-    r.maxAlternatives = 1
 
-    r.onresult = (e: any) => {
-      if (e.results.length > 0 && e.results[0].length > 0) {
-        const transcript = e.results[0][0].transcript
-        setInput(prev => prev ? prev + ' ' + transcript : transcript)
+    if (!recRef.current) {
+      const S = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+      if (!S) { alert('Браузер не поддерживает речь'); return }
+      const r = new S()
+      r.lang = 'fr-FR'
+      r.continuous = false
+      r.interimResults = false
+      r.maxAlternatives = 1
+
+      r.onresult = (e: any) => {
+        if (e.results.length > 0 && e.results[0].length > 0) {
+          const transcript = e.results[0][0].transcript
+          setInput(prev => prev ? prev + ' ' + transcript : transcript)
+        }
       }
+
+      r.onend = () => { setRecording(false) }
+      r.onerror = () => { setRecording(false) }
+
+      recRef.current = r
     }
 
-    r.onend = () => { setRecording(false) }
-    r.onerror = () => { setRecording(false) }
-
-    recRef.current = r
-    r.start()
+    recRef.current.start()
     setRecording(true)
   }
 
