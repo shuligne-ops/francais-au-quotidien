@@ -1,246 +1,171 @@
 'use client'
 
-import { Suspense, useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
-import Link from 'next/link'
+import { useEffect, Suspense } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 
-export default function StartPage() {
-  return (
-    <Suspense fallback={null}>
-      <StartPageContent />
-    </Suspense>
-  )
-}
+// Этот лендинг — точка приземления для рекламного трафика FAQ.
+// НЕ показывает селектор уроков. Одна цель: довести до клика "Попробовать первый урок".
+// UTM-параметры из URL сохраняем в localStorage, чтобы потом сматчить с регистрацией.
+// Структура и логика — копия EF-лендинга, палитра — тёплая (бежевый/охра/тёмно-коричневый).
 
-function StartPageContent() {
-  const params = useSearchParams()
-  const [seatsLeft, setSeatsLeft] = useState<number | null>(null)
+function StartContent() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
-  // Сохраняем UTM-метки в localStorage при первом заходе
+  // Сохраняем UTM в localStorage для последующей атрибуции платежей к рекламной кампании
   useEffect(() => {
-    const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
-    const utmData: Record<string, string> = {}
-    utmKeys.forEach((k) => {
-      const v = params.get(k)
-      if (v) utmData[k] = v
+    const utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content']
+    const data: Record<string, string> = {}
+    utms.forEach(k => {
+      const v = searchParams.get(k)
+      if (v) data[k] = v
     })
-    if (Object.keys(utmData).length > 0) {
-      utmData['captured_at'] = new Date().toISOString()
-      localStorage.setItem('faq_utm', JSON.stringify(utmData))
+    if (Object.keys(data).length > 0) {
+      try {
+        data.first_seen_at = new Date().toISOString()
+        localStorage.setItem('faq_attribution', JSON.stringify(data))
+      } catch {}
     }
-  }, [params])
+  }, [searchParams])
 
-  // Подгружаем количество оставшихся мест по старт-офферу
-  // (если эндпоинта пока нет — показываем дефолт)
-  useEffect(() => {
-    fetch('/api/seats-left')
-      .then((r) => r.ok ? r.json() : null)
-      .then((data) => {
-        if (data && typeof data.left === 'number') setSeatsLeft(data.left)
-      })
-      .catch(() => {})
-  }, [])
+  function startFirstLesson() {
+    // Первый урок A1 — id зависит от данных в Supabase, но ссылка на главную с автозапуском
+    // самого первого. Простой путь: редирект на главную, фронт сам подхватит дефолт A1-01.
+    router.push('/?lesson=1')
+  }
 
   return (
-    <main style={{
-      background: '#FAF3E7',
-      color: '#3D2817',
+    <div style={{
       minHeight: '100vh',
-      fontFamily: 'Inter, -apple-system, sans-serif',
-      lineHeight: 1.6,
+      background: 'linear-gradient(180deg, #FAF3E7 0%, #F0E4CC 100%)',
+      color: '#3D2817',
+      fontFamily: 'var(--font-sans, system-ui)',
     }}>
       {/* HERO */}
       <section style={{
         maxWidth: '720px',
         margin: '0 auto',
-        padding: '80px 24px 60px',
+        padding: '48px 20px 32px',
         textAlign: 'center',
       }}>
         <div style={{
           display: 'inline-block',
           padding: '6px 14px',
-          background: '#C8964A',
-          color: 'white',
+          background: 'rgba(200, 150, 74, 0.18)',
+          color: '#A87729',
           borderRadius: '20px',
           fontSize: '13px',
-          fontWeight: 500,
+          fontWeight: 600,
+          marginBottom: '20px',
           letterSpacing: '0.5px',
-          marginBottom: '24px',
         }}>
           FRANÇAIS AU QUOTIDIEN
         </div>
 
         <h1 style={{
-          fontFamily: 'Playfair Display, Georgia, serif',
-          fontSize: 'clamp(36px, 6vw, 56px)',
+          fontFamily: 'var(--font-display, Georgia, serif)',
+          fontSize: 'clamp(32px, 6vw, 48px)',
           fontWeight: 700,
           lineHeight: 1.15,
-          marginBottom: '24px',
+          margin: '0 0 20px',
           color: '#2A1810',
         }}>
-          Французский, на котором<br/>действительно говорят
+          Перестань стесняться<br/>говорить по-французски
         </h1>
 
         <p style={{
-          fontSize: '20px',
+          fontSize: 'clamp(16px, 3vw, 19px)',
+          lineHeight: 1.6,
           color: '#5C4033',
-          marginBottom: '40px',
           maxWidth: '560px',
-          marginInline: 'auto',
+          margin: '0 auto 32px',
         }}>
-          180 уроков с Камиллой — учительницей, которая разговаривает живым языком,
-          а не зачитывает учебник.
+          180 уроков-диалогов с Камиллой и её друзьями. Из любого уровня — в свободную речь. 30 минут в день, без зубрёжки.
         </p>
 
-        <Link href="/auth" style={{
-          display: 'inline-block',
-          padding: '16px 36px',
-          background: '#3D2817',
-          color: '#FAF3E7',
-          fontSize: '17px',
-          fontWeight: 600,
-          borderRadius: '8px',
-          textDecoration: 'none',
-          marginBottom: '12px',
-        }}>
-          Начать с A1 бесплатно
-        </Link>
+        <button
+          onClick={startFirstLesson}
+          style={{
+            background: '#C8964A',
+            color: '#FAF3E7',
+            border: 'none',
+            padding: '16px 40px',
+            borderRadius: '12px',
+            fontSize: '17px',
+            fontWeight: 700,
+            cursor: 'pointer',
+            fontFamily: 'inherit',
+            boxShadow: '0 8px 24px rgba(200, 150, 74, 0.3)',
+          }}
+        >
+          Попробовать первый урок →
+        </button>
 
-        <p style={{ fontSize: '14px', color: '#8B6F47', margin: 0 }}>
-          Регистрация в один клик. Без карты.
+        <p style={{
+          marginTop: '14px',
+          fontSize: '13px',
+          color: '#8B6F47',
+        }}>
+          Без регистрации. Бесплатно.
         </p>
       </section>
 
-      {/* ИСТОРИЯ */}
+      {/* DIALOGUE PREVIEW — чтобы человек СРАЗУ увидел что это */}
       <section style={{
-        maxWidth: '640px',
+        maxWidth: '600px',
         margin: '0 auto',
-        padding: '60px 24px',
-        borderTop: '1px solid #E8DCC4',
+        padding: '32px 20px',
       }}>
-        <h2 style={{
-          fontFamily: 'Playfair Display, Georgia, serif',
-          fontSize: '28px',
-          fontWeight: 700,
-          marginBottom: '24px',
-          color: '#2A1810',
+        <p style={{
+          textAlign: 'center',
+          color: '#8B6F47',
+          fontSize: '13px',
+          letterSpacing: '1.5px',
+          marginBottom: '20px',
         }}>
-          Почему я делаю этот курс
-        </h2>
-
-        <div style={{ fontSize: '17px', color: '#3D2817' }}>
-          <p style={{ marginBottom: '20px' }}>
-            Я три года учился в Горьковском инязе, потом сам доучил английский
-            и французский до уровня, на котором живу в них.
-          </p>
-
-          <p style={{ marginBottom: '20px' }}>
-            Я знаю, как преподают французский в институте — пять лет грамматики,
-            таблицы спряжений, тексты про Жанну д'Арк. И знаю, почему после диплома
-            человек всё ещё может на ровном месте впасть в ступор, когда нужно
-            спросить дорогу или поговорить с консьержкой.
-          </p>
-
-          <p style={{ marginBottom: '20px' }}>
-            Дело не в грамматике. Дело в том, что живой французский — это
-            <em> bah</em>, <em>du coup</em>, <em>enfin</em>, незаконченные фразы,
-            ритм, в который надо попасть. Этому в институтах не учат.
-          </p>
-
-          <p style={{ marginBottom: 0, fontWeight: 500 }}>
-            Этот курс — то, чего мне самому не хватало.
-          </p>
-
-          <p style={{
-            marginTop: '24px',
-            fontSize: '15px',
-            color: '#8B6F47',
-            fontStyle: 'italic',
-          }}>
-            — Александр, автор Français au Quotidien
-          </p>
-        </div>
-      </section>
-
-      {/* ДИАЛОГ */}
-      <section style={{
-        maxWidth: '640px',
-        margin: '0 auto',
-        padding: '60px 24px',
-        borderTop: '1px solid #E8DCC4',
-      }}>
-        <h2 style={{
-          fontFamily: 'Playfair Display, Georgia, serif',
-          fontSize: '28px',
-          fontWeight: 700,
-          marginBottom: '12px',
-          color: '#2A1810',
-        }}>
-          Как выглядит урок с Камиллой
-        </h2>
-
-        <p style={{ fontSize: '15px', color: '#8B6F47', marginBottom: '32px' }}>
-          Фрагмент урока A2. Ученик задаёт вопрос — Камилла отвечает.
+          ВОТ КАК ЭТО ВЫГЛЯДИТ
         </p>
 
         <div style={{
-          background: 'white',
-          borderRadius: '12px',
-          padding: '28px',
-          boxShadow: '0 2px 12px rgba(61, 40, 23, 0.08)',
+          background: 'rgba(255, 255, 255, 0.6)',
+          borderRadius: '16px',
+          padding: '24px',
+          border: '1px solid rgba(200, 150, 74, 0.25)',
+          boxShadow: '0 2px 12px rgba(61, 40, 23, 0.06)',
         }}>
-          <DialogueLine
-            speaker="Ученик"
-            color="#8B6F47"
-            text="Камилла, а почему французы всё время говорят «du coup»? Что это вообще значит?"
-          />
-          <DialogueLine
-            speaker="Camille"
-            color="#C8964A"
-            text="Ah, bah écoute, c'est la question à un million ! «Du coup» — c'est… enfin, littéralement ça veut dire «du coup», как «в результате», но честно? Французы суют его везде, иногда вообще без смысла."
-          />
-          <DialogueLine
-            speaker="Camille"
-            color="#C8964A"
-            text="Tu sais, c'est comme «короче» по-русски. «Короче, я пошёл» — это не значит, что человек реально что-то сократил. Просто слово-паразит. У нас «du coup» делает ту же работу — заполняет паузу, связывает мысли."
-          />
-          <DialogueLine
-            speaker="Camille"
-            color="#C8964A"
-            text="Du coup, не парься, если не понимаешь его в каждой фразе. Главное — научись слышать ритм. А смысл подтянется."
-          />
-
-          <div style={{
-            marginTop: '24px',
-            paddingTop: '20px',
-            borderTop: '1px dashed #E8DCC4',
-            fontSize: '14px',
-            color: '#8B6F47',
-            fontStyle: 'italic',
-          }}>
-            ↑ Это не «диалог из учебника». Камилла говорит, как говорят живые
-            французы — с фамильярностями, паузами и сравнениями, которые
-            понятны русскому уху.
-          </div>
+          <DialogueLine speaker="Camille" text="Bah, t'as vu Léo ce matin ?" />
+          <DialogueLine speaker="Inès" text="Non, pourquoi ?" />
+          <DialogueLine speaker="Camille" text="Il avait l'air... bizarre. Du coup je m'inquiète." />
+          <DialogueLine speaker="Inès" text="Bizarre comment ?" />
+          <DialogueLine speaker="Camille" text="Enfin, tu sais, comme quand il a un truc à dire mais il dit rien." />
         </div>
+
+        <p style={{
+          textAlign: 'center',
+          fontSize: '14px',
+          color: '#5C4033',
+          marginTop: '16px',
+          fontStyle: 'italic',
+        }}>
+          Реальные диалоги. Живые ситуации. Никаких «Bonjour, je m'appelle Marie».
+        </p>
       </section>
 
-      {/* ЧТО ВНУТРИ */}
+      {/* HOW IT WORKS */}
       <section style={{
         maxWidth: '720px',
         margin: '0 auto',
-        padding: '60px 24px',
-        borderTop: '1px solid #E8DCC4',
+        padding: '40px 20px',
       }}>
         <h2 style={{
-          fontFamily: 'Playfair Display, Georgia, serif',
-          fontSize: '28px',
+          fontFamily: 'var(--font-display, Georgia, serif)',
+          fontSize: '26px',
           fontWeight: 700,
+          textAlign: 'center',
           marginBottom: '32px',
           color: '#2A1810',
-          textAlign: 'center',
         }}>
-          Что внутри
+          Как устроен курс
         </h2>
 
         <div style={{
@@ -248,294 +173,225 @@ function StartPageContent() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
           gap: '20px',
         }}>
-          <FeatureCard
-            number="180"
-            title="уроков"
-            text="Шесть уровней от A1 до C2. По 30 уроков на каждом."
-          />
-          <FeatureCard
-            number="5"
-            title="шагов в уроке"
-            text="Ключевая фраза → диалог → разбор → второе прослушивание → практика."
-          />
-          <FeatureCard
-            number="∞"
-            title="попыток"
-            text="Камилла не устаёт. Можете повторять и переспрашивать сколько нужно."
-          />
+          <Feature icon="🎭" title="Диалоги, не правила" text="Учишься на реальных разговорах между Камиллой, Лео, Инес и их друзьями" />
+          <Feature icon="🎙" title="Голос и распознавание" text="Слушаешь, повторяешь, говоришь — приложение услышит и поймёт" />
+          <Feature icon="📈" title="6 уровней — 180 уроков" text="От первых фраз до свободной речи. Каждый урок — новая ситуация" />
+          <Feature icon="📱" title="Где угодно" text="Браузер на телефоне, планшете, компьютере. Без установки приложения" />
         </div>
       </section>
 
-      {/* ЦЕНЫ */}
+      {/* FOUNDER STORY */}
       <section style={{
-        maxWidth: '720px',
+        maxWidth: '600px',
         margin: '0 auto',
-        padding: '60px 24px',
-        borderTop: '1px solid #E8DCC4',
+        padding: '40px 20px',
+      }}>
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.6)',
+          borderRadius: '16px',
+          padding: '28px 24px',
+          border: '1px solid rgba(200, 150, 74, 0.2)',
+          boxShadow: '0 2px 12px rgba(61, 40, 23, 0.06)',
+        }}>
+          <p style={{
+            color: '#8B6F47',
+            fontSize: '13px',
+            letterSpacing: '1.5px',
+            marginBottom: '16px',
+          }}>
+            ОТ АВТОРА
+          </p>
+          <p style={{
+            fontSize: '16px',
+            lineHeight: 1.7,
+            color: '#3D2817',
+            margin: 0,
+          }}>
+            Я три года учился в Горьковском инязе на французском отделении. Грамматика, фонетика, тексты про Жанну д'Арк — всё было. А когда нужно было говорить с живым французом, стоял и молчал. Языковой барьер.
+            <br/><br/>
+            Когда я наконец заговорил — понял, что мешало всё это время: не было живой разговорной практики каждый день.
+            <br/><br/>
+            Français au Quotidien — это то, чего мне самому не хватало. Курс, который вытаскивает в речь — через диалоги с Камиллой, как они говорят на самом деле.
+          </p>
+          <p style={{
+            marginTop: '16px',
+            fontSize: '14px',
+            color: '#8B6F47',
+          }}>
+            — Александр, автор курса
+          </p>
+        </div>
+      </section>
+
+      {/* PRICING */}
+      <section style={{
+        maxWidth: '600px',
+        margin: '0 auto',
+        padding: '40px 20px',
       }}>
         <h2 style={{
-          fontFamily: 'Playfair Display, Georgia, serif',
-          fontSize: '28px',
+          fontFamily: 'var(--font-display, Georgia, serif)',
+          fontSize: '26px',
           fontWeight: 700,
-          marginBottom: '12px',
-          color: '#2A1810',
           textAlign: 'center',
+          marginBottom: '8px',
+          color: '#2A1810',
         }}>
-          Тарифы
+          Сколько это стоит
         </h2>
-
         <p style={{
           textAlign: 'center',
           color: '#8B6F47',
-          marginBottom: '40px',
+          marginBottom: '24px',
         }}>
-          A1 — бесплатно навсегда. Хотите дальше — выбирайте подписку.
+          Уровень A1 — навсегда бесплатно. Дальше по подписке.
         </p>
 
-        {/* Старт-оффер */}
         <div style={{
-          background: 'linear-gradient(135deg, #3D2817 0%, #5C4033 100%)',
-          color: '#FAF3E7',
-          padding: '32px',
-          borderRadius: '16px',
-          marginBottom: '24px',
-          position: 'relative',
-          overflow: 'hidden',
+          background: 'rgba(200, 150, 74, 0.12)',
+          border: '1px solid rgba(200, 150, 74, 0.4)',
+          borderRadius: '12px',
+          padding: '16px 20px',
+          marginBottom: '20px',
+          textAlign: 'center',
+          fontSize: '14px',
+          color: '#3D2817',
         }}>
-          <div style={{
-            position: 'absolute',
-            top: '16px',
-            right: '16px',
-            background: '#C8964A',
-            color: 'white',
-            padding: '4px 12px',
-            borderRadius: '12px',
-            fontSize: '12px',
-            fontWeight: 600,
-            letterSpacing: '0.5px',
-          }}>
-            СТАРТ-ОФФЕР
-          </div>
-
-          <div style={{ fontSize: '14px', color: '#D4B896', marginBottom: '8px' }}>
-            Первым 50 подписчикам
-          </div>
-
-          <div style={{ fontSize: '32px', fontWeight: 700, marginBottom: '4px' }}>
-            Год за 4 990 ₽
-          </div>
-
-          <div style={{
-            fontSize: '15px',
-            color: '#D4B896',
-            marginBottom: '20px',
-            textDecoration: 'line-through',
-          }}>
-            обычная цена 7 990 ₽
-          </div>
-
-          {seatsLeft !== null && seatsLeft > 0 && (
-            <div style={{ fontSize: '14px', color: '#FAF3E7', marginBottom: '20px' }}>
-              Осталось <strong>{seatsLeft}</strong> мест из 50
-            </div>
-          )}
-
-          <Link href="/pricing" style={{
-            display: 'inline-block',
-            padding: '14px 28px',
-            background: '#C8964A',
-            color: 'white',
-            fontWeight: 600,
-            borderRadius: '8px',
-            textDecoration: 'none',
-            fontSize: '16px',
-          }}>
-            Забрать оффер
-          </Link>
+          🎁 <strong style={{ color: '#A87729' }}>Старт-оффер для первых 50:</strong> год за 4 990 ₽ вместо 7 990 ₽
         </div>
 
-        {/* Обычные тарифы */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '16px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+          gap: '12px',
         }}>
-          <PriceCard title="Месяц" price="890 ₽" subtitle="попробовать" />
-          <PriceCard title="Год" price="7 990 ₽" subtitle="экономия 30%" />
+          <Price label="Месяц" value="890 ₽" period="в мес" />
+          <Price label="Год" value="7 990 ₽" period="экономия 25%" highlight />
         </div>
-      </section>
-
-      {/* CTA */}
-      <section style={{
-        maxWidth: '640px',
-        margin: '0 auto',
-        padding: '60px 24px 100px',
-        textAlign: 'center',
-        borderTop: '1px solid #E8DCC4',
-      }}>
-        <h2 style={{
-          fontFamily: 'Playfair Display, Georgia, serif',
-          fontSize: '28px',
-          fontWeight: 700,
-          marginBottom: '16px',
-          color: '#2A1810',
-        }}>
-          Начните с первого урока. Бесплатно.
-        </h2>
 
         <p style={{
-          color: '#5C4033',
-          marginBottom: '32px',
-          fontSize: '17px',
+          textAlign: 'center',
+          fontSize: '12px',
+          color: '#8B6F47',
+          marginTop: '16px',
         }}>
-          Решение о подписке — потом. Сначала просто попробуйте.
+          Самозанятый Мешалкин А.В., ИНН 540447003201. Оплата через ЮKassa.
         </p>
-
-        <Link href="/auth" style={{
-          display: 'inline-block',
-          padding: '18px 40px',
-          background: '#3D2817',
-          color: '#FAF3E7',
-          fontSize: '18px',
-          fontWeight: 600,
-          borderRadius: '8px',
-          textDecoration: 'none',
-        }}>
-          Открыть первый урок →
-        </Link>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{
-        background: '#3D2817',
-        color: '#D4B896',
-        padding: '32px 24px',
+      {/* FINAL CTA */}
+      <section style={{
+        maxWidth: '600px',
+        margin: '0 auto',
+        padding: '32px 20px 64px',
         textAlign: 'center',
-        fontSize: '13px',
       }}>
-        <div style={{ marginBottom: '8px' }}>
-          Français au Quotidien · Самозанятый Шулигин А.
-        </div>
-        <div style={{ color: '#8B6F47' }}>
-          ИНН 540447003201
-        </div>
-      </footer>
-    </main>
+        <h2 style={{
+          fontFamily: 'var(--font-display, Georgia, serif)',
+          fontSize: '24px',
+          fontWeight: 700,
+          marginBottom: '20px',
+          color: '#2A1810',
+        }}>
+          Начни прямо сейчас
+        </h2>
+
+        <button
+          onClick={startFirstLesson}
+          style={{
+            background: '#C8964A',
+            color: '#FAF3E7',
+            border: 'none',
+            padding: '16px 40px',
+            borderRadius: '12px',
+            fontSize: '17px',
+            fontWeight: 700,
+            cursor: 'pointer',
+            fontFamily: 'inherit',
+            boxShadow: '0 8px 24px rgba(200, 150, 74, 0.3)',
+          }}
+        >
+          Открыть первый урок →
+        </button>
+
+        <p style={{
+          marginTop: '14px',
+          fontSize: '13px',
+          color: '#8B6F47',
+        }}>
+          Первые 30 уроков A1 — бесплатно, без регистрации.
+        </p>
+      </section>
+    </div>
   )
 }
 
-function DialogueLine({
-  speaker,
-  color,
-  text,
-}: {
-  speaker: string
-  color: string
-  text: string
-}) {
+function DialogueLine({ speaker, text }: { speaker: string; text: string }) {
   return (
-    <div style={{ marginBottom: '16px' }}>
-      <div style={{
-        fontWeight: 600,
-        color,
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{
+        color: '#A87729',
+        fontWeight: 700,
         fontSize: '14px',
-        marginBottom: '4px',
-        letterSpacing: '0.3px',
+        marginRight: '8px',
       }}>
-        {speaker}
-      </div>
-      <div style={{
-        fontSize: '16px',
+        {speaker}:
+      </span>
+      <span style={{
         color: '#3D2817',
-        lineHeight: 1.6,
+        fontSize: '15px',
+        fontStyle: 'italic',
       }}>
-        {text}
-      </div>
+        "{text}"
+      </span>
     </div>
   )
 }
 
-function FeatureCard({
-  number,
-  title,
-  text,
-}: {
-  number: string
-  title: string
-  text: string
-}) {
+function Feature({ icon, title, text }: { icon: string; title: string; text: string }) {
   return (
-    <div style={{
-      background: 'white',
-      padding: '24px',
-      borderRadius: '12px',
-      textAlign: 'center',
-      boxShadow: '0 2px 8px rgba(61, 40, 23, 0.06)',
-    }}>
-      <div style={{
-        fontFamily: 'Playfair Display, Georgia, serif',
-        fontSize: '40px',
+    <div>
+      <div style={{ fontSize: '32px', marginBottom: '8px' }}>{icon}</div>
+      <h3 style={{
+        fontSize: '16px',
         fontWeight: 700,
-        color: '#C8964A',
-        lineHeight: 1,
-        marginBottom: '4px',
-      }}>
-        {number}
-      </div>
-      <div style={{
-        fontSize: '14px',
-        color: '#8B6F47',
-        marginBottom: '12px',
-        textTransform: 'uppercase',
-        letterSpacing: '0.5px',
-      }}>
-        {title}
-      </div>
-      <div style={{ fontSize: '14px', color: '#5C4033' }}>
-        {text}
-      </div>
-    </div>
-  )
-}
-
-function PriceCard({
-  title,
-  price,
-  subtitle,
-}: {
-  title: string
-  price: string
-  subtitle: string
-}) {
-  return (
-    <div style={{
-      background: 'white',
-      padding: '24px',
-      borderRadius: '12px',
-      border: '1px solid #E8DCC4',
-      textAlign: 'center',
-    }}>
-      <div style={{
-        fontSize: '14px',
-        color: '#8B6F47',
-        marginBottom: '8px',
-        textTransform: 'uppercase',
-        letterSpacing: '0.5px',
-      }}>
-        {title}
-      </div>
-      <div style={{
-        fontFamily: 'Playfair Display, Georgia, serif',
-        fontSize: '28px',
-        fontWeight: 700,
+        marginBottom: '6px',
         color: '#2A1810',
-        marginBottom: '4px',
       }}>
-        {price}
-      </div>
-      <div style={{ fontSize: '13px', color: '#8B6F47' }}>
-        {subtitle}
-      </div>
+        {title}
+      </h3>
+      <p style={{
+        fontSize: '14px',
+        lineHeight: 1.5,
+        color: '#5C4033',
+        margin: 0,
+      }}>
+        {text}
+      </p>
     </div>
+  )
+}
+
+function Price({ label, value, period, highlight }: { label: string; value: string; period: string; highlight?: boolean }) {
+  return (
+    <div style={{
+      background: highlight ? 'rgba(200, 150, 74, 0.15)' : 'rgba(255, 255, 255, 0.5)',
+      border: highlight ? '1px solid rgba(200, 150, 74, 0.5)' : '1px solid rgba(200, 150, 74, 0.15)',
+      borderRadius: '12px',
+      padding: '16px',
+      textAlign: 'center',
+    }}>
+      <p style={{ fontSize: '13px', color: '#8B6F47', marginBottom: '4px' }}>{label}</p>
+      <p style={{ fontSize: '20px', fontWeight: 700, color: '#2A1810', marginBottom: '2px' }}>{value}</p>
+      <p style={{ fontSize: '12px', color: '#8B6F47' }}>{period}</p>
+    </div>
+  )
+}
+
+export default function StartPage() {
+  return (
+    <Suspense fallback={<div style={{ minHeight: '100vh', background: '#FAF3E7' }} />}>
+      <StartContent />
+    </Suspense>
   )
 }

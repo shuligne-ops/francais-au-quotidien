@@ -53,6 +53,9 @@ export default function Home() {
   const [accessibleLevels, setAccessibleLevels] = useState<Set<string>>(new Set(['A1']))
   const [authLoaded, setAuthLoaded] = useState(false)
 
+  // Авто-запуск первого урока A1, если пришли с лендинга /start (URL: /?lesson=1)
+  const [autoStart, setAutoStart] = useState(false)
+
   const endRef = useRef<HTMLDivElement>(null)
   const taRef = useRef<HTMLTextAreaElement>(null)
   const recRef = useRef<any>(null)
@@ -91,6 +94,23 @@ export default function Home() {
       .eq('level', level).order('lesson_number')
       .then(({ data }) => { if (data) setLessons(data as LessonSummary[]) })
   }, [level])
+
+  // На монтировании читаем ?lesson=1 — взводим флаг автозапуска
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('lesson') === '1') setAutoStart(true)
+  }, [])
+
+  // Когда уроки A1 загрузились — открываем первый и снимаем флаг
+  useEffect(() => {
+    if (!autoStart || lesson || lessons.length === 0) return
+    const firstA1 = lessons.find(l => l.level === 'A1')
+    if (firstA1) {
+      setAutoStart(false)
+      open(firstA1.id)
+    }
+  }, [autoStart, lesson, lessons])
 
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [msgs])
 
