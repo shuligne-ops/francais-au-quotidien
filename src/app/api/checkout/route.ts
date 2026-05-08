@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
     // Создаём платёж в ЮKassa
     const shopId = process.env.YOOKASSA_SHOP_ID
     const secretKey = process.env.YOOKASSA_SECRET_KEY
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://francais-au-quotidien.vercel.app'
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://francais-au-quotidien.ru'
 
     if (!shopId || !secretKey) {
       console.error('[checkout] YOOKASSA_SHOP_ID or YOOKASSA_SECRET_KEY missing')
