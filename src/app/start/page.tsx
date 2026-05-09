@@ -322,6 +322,47 @@ function StartContent() {
           Первые 30 уроков A1 — бесплатно, без регистрации.
         </p>
       </section>
+
+      {/* TELEGRAM CHANNEL */}
+      <section style={{
+        maxWidth: '600px',
+        margin: '0 auto',
+        padding: '0 20px 56px',
+      }}>
+        <div style={{
+          background: 'rgba(200, 150, 74, 0.08)',
+          border: '1px solid rgba(200, 150, 74, 0.25)',
+          borderRadius: '12px',
+          padding: '20px 24px',
+          textAlign: 'center',
+        }}>
+          <p style={{
+            fontSize: '14px',
+            color: '#5C4033',
+            marginBottom: '12px',
+            lineHeight: 1.5,
+          }}>
+            Не готовы начать сегодня? Подписывайтесь на канал —<br />
+            раз в несколько дней живая фраза или кусочек диалога.
+          </p>
+          <a
+            href="https://t.me/francais_au_quotidien"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-block',
+              color: '#A87729',
+              fontSize: '15px',
+              fontWeight: 700,
+              textDecoration: 'none',
+              borderBottom: '1px solid rgba(168, 119, 41, 0.4)',
+              paddingBottom: '2px',
+            }}
+          >
+            @francais_au_quotidien →
+          </a>
+        </div>
+      </section>
     </div>
   )
 }
