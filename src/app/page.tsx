@@ -1,477 +1,563 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
-import ReactMarkdown from 'react-markdown'
+import { useEffect, Suspense } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 
-type LessonSummary = {
-  id: number
-  level: string
-  lesson_number: number
-  title_fr: string
-  title_ru: string
-}
+// Этот лендинг — точка приземления для рекламного трафика FAQ.
+// Главный аргумент: ЗВУЧАНИЕ. Школа учит читать — мы учим звучать.
+// UTM-параметры из URL сохраняем в localStorage для атрибуции.
 
-type Lesson = {
-  id: number
-  level: string
-  lesson_number: number
-  title_fr: string
-  title_ru: string
-  content: any
-}
-
-type Message = {
-  role: 'user' | 'assistant'
-  content: string
-}
-
-const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
-
-function normalizeMd(t: string) {
-  return t.replace(/\*\*\s+/g, '**').replace(/\s+\*\*/g, '**')
-}
-
-let gAudio: HTMLAudioElement | null = null
-let gAudioIdx = -1
-
-export default function Home() {
+function StartContent() {
   const router = useRouter()
-  const [level, setLevel] = useState('A1')
-  const [lessons, setLessons] = useState<LessonSummary[]>([])
-  const [lesson, setLesson] = useState<Lesson | null>(null)
-  const [msgs, setMsgs] = useState<Message[]>([])
-  const [input, setInput] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [recording, setRecording] = useState(false)
-  const [tts, setTts] = useState<'idle' | 'load' | 'play'>('idle')
-  const [ttsIdx, setTtsIdx] = useState(-1)
-
-  // Auth + access state
-  const [userEmail, setUserEmail] = useState<string | null>(null)
-  const [accessibleLevels, setAccessibleLevels] = useState<Set<string>>(new Set(['A1']))
-  const [authLoaded, setAuthLoaded] = useState(false)
-
-  // Авто-запуск первого урока A1, если пришли с лендинга /start (URL: /?lesson=1)
-  const [autoStart, setAutoStart] = useState(false)
-
-  const endRef = useRef<HTMLDivElement>(null)
-  const taRef = useRef<HTMLTextAreaElement>(null)
-  const recRef = useRef<any>(null)
-
-  // Загружаем сессию и доступные уровни
-  useEffect(() => {
-    async function load() {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
-        setUserEmail(user.email ?? null)
-        const { data: access } = await supabase
-          .from('user_level_access')
-          .select('level, expires_at')
-          .eq('user_id', user.id)
-          .eq('active', true)
-        const now = Date.now()
-        const levels = new Set(['A1'])
-        if (access) {
-          for (const a of access) {
-            if (!a.expires_at || new Date(a.expires_at).getTime() > now) {
-              levels.add(a.level)
-            }
-          }
-        }
-        setAccessibleLevels(levels)
-      } else {
-        setAccessibleLevels(new Set(['A1']))
-      }
-      setAuthLoaded(true)
-    }
-    load()
-  }, [])
+  const searchParams = useSearchParams()
 
   useEffect(() => {
-    supabase.from('lessons').select('id,level,lesson_number,title_fr,title_ru')
-      .eq('level', level).order('lesson_number')
-      .then(({ data }) => { if (data) setLessons(data as LessonSummary[]) })
-  }, [level])
-
-  // На монтировании читаем ?lesson=1 — взводим флаг автозапуска
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    const params = new URLSearchParams(window.location.search)
-    if (params.get('lesson') === '1') setAutoStart(true)
-  }, [])
-
-  // Когда уроки A1 загрузились — открываем первый и снимаем флаг
-  useEffect(() => {
-    if (!autoStart || lesson || lessons.length === 0) return
-    const firstA1 = lessons.find(l => l.level === 'A1')
-    if (firstA1) {
-      setAutoStart(false)
-      open(firstA1.id)
+    const utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content']
+    const data: Record<string, string> = {}
+    utms.forEach(k => {
+      const v = searchParams.get(k)
+      if (v) data[k] = v
+    })
+    if (Object.keys(data).length > 0) {
+      try {
+        data.first_seen_at = new Date().toISOString()
+        localStorage.setItem('faq_attribution', JSON.stringify(data))
+      } catch {}
     }
-  }, [autoStart, lesson, lessons])
+  }, [searchParams])
 
-  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [msgs])
-
-  useEffect(() => {
-    if (taRef.current) {
-      taRef.current.style.height = '48px'
-      taRef.current.style.height = Math.min(taRef.current.scrollHeight, 160) + 'px'
-    }
-  }, [input])
-
-  async function handleLogout() {
-    await supabase.auth.signOut()
-    setUserEmail(null)
-    setAccessibleLevels(new Set(['A1']))
-    if (level !== 'A1') setLevel('A1')
+  function startFirstLesson() {
+    router.push('/?lesson=1')
   }
 
- function handleLevelClick(l: string) {
-    // Просто меняем выбранный уровень. Если он заблокирован,
-    // ниже покажем пейволл вместо списка уроков.
-    setLevel(l)
-  }
-
-  async function open(id: number) {
-    const { data } = await supabase.from('lessons').select('*').eq('id', id).single()
-    if (!data) return
-    setLesson(data as Lesson)
-    setMsgs([])
-    kill()
-    await chat(data as Lesson, [])
-  }
-
-  async function chat(l: Lesson, h: Message[], u?: string) {
-    setLoading(true)
-    const m = u ? [...h, { role: 'user' as const, content: u }] : h
-    if (u) { setMsgs(m); setInput('') }
-    try {
-      const r = await fetch('/api/chat', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lesson: l.content, lessonTitle: l.title_fr, lessonLevel: l.level, lessonNumber: l.lesson_number, messages: m })
-      })
-      if (!r.ok) throw 0
-      const rd = r.body?.getReader(), dc = new TextDecoder()
-      let txt = ''
-      setMsgs([...m, { role: 'assistant', content: '' }])
-      while (rd) {
-        const { done, value } = await rd.read()
-        if (done) break
-        txt += dc.decode(value, { stream: true })
-        setMsgs([...m, { role: 'assistant', content: txt }])
-      }
-    } catch { setMsgs([...m, { role: 'assistant', content: 'Ошибка. Попробуйте ещё раз.' }]) }
-    setLoading(false)
-  }
-
-  function send() {
-    if (!input.trim() || !lesson || loading) return
-    chat(lesson, msgs, input.trim())
-  }
-
-  function onKey(e: React.KeyboardEvent) {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send() }
-  }
-
-  function kill() {
-    if (gAudio) { gAudio.pause(); gAudio.src = ''; gAudio = null }
-    gAudioIdx = -1; setTts('idle'); setTtsIdx(-1)
-  }
-
-  async function speak(text: string, idx: number) {
-    if (gAudioIdx === idx && gAudio) {
-      if (tts === 'play') { gAudio.pause(); setTts('idle'); return }
-      if (tts === 'idle') { gAudio.play(); setTts('play'); return }
-    }
-    kill(); setTts('load'); setTtsIdx(idx); gAudioIdx = idx
-    try {
-      const r = await fetch('/api/tts', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text })
-      })
-      if (!r.ok) throw 0
-      const b = await r.blob(), u = URL.createObjectURL(b), a = new Audio(u)
-      gAudio = a
-      a.onended = () => kill()
-      a.onerror = () => kill()
-      a.play(); setTts('play')
-    } catch { kill() }
-  }
-
-  function mic() {
-    if (recording) {
-      recRef.current?.stop()
-      setRecording(false)
-      return
-    }
-
-    if (!recRef.current) {
-      const S = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
-      if (!S) { alert('Браузер не поддерживает речь'); return }
-      const r = new S()
-      r.lang = 'fr-FR'
-      r.continuous = false
-      r.interimResults = false
-      r.maxAlternatives = 1
-
-      r.onresult = (e: any) => {
-        if (e.results.length > 0 && e.results[0].length > 0) {
-          const transcript = e.results[0][0].transcript
-          setInput(prev => prev ? prev + ' ' + transcript : transcript)
-        }
-      }
-
-      r.onend = () => { setRecording(false) }
-      r.onerror = () => { setRecording(false) }
-
-      recRef.current = r
-    }
-
-    recRef.current.start()
-    setRecording(true)
-  }
-
-  function back() { kill(); setLesson(null); setMsgs([]) }
-
-  // ===== Внутри урока =====
-  if (lesson) return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', maxWidth: '800px', margin: '0 auto' }}>
-      <div style={{ padding: '12px 16px', background: 'white', borderBottom: '1px solid #eee', display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <button onClick={back} style={{ background: 'none', border: 'none', color: '#999', cursor: 'pointer', fontSize: '14px' }}>← Retour</button>
-        <div>
-          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '18px', color: '#1a1a2e' }}>
-            {lesson.level}-{String(lesson.lesson_number).padStart(2, '0')}: {lesson.title_fr}
-          </div>
-          <div style={{ fontSize: '13px', color: '#999' }}>{lesson.title_ru}</div>
+  return (
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(180deg, #FAF3E7 0%, #F0E4CC 100%)',
+      color: '#3D2817',
+      fontFamily: 'var(--font-sans, system-ui)',
+    }}>
+      {/* HERO */}
+      <section style={{
+        maxWidth: '720px',
+        margin: '0 auto',
+        padding: '48px 20px 32px',
+        textAlign: 'center',
+      }}>
+        <div style={{
+          display: 'inline-block',
+          padding: '6px 14px',
+          background: 'rgba(200, 150, 74, 0.18)',
+          color: '#A87729',
+          borderRadius: '20px',
+          fontSize: '13px',
+          fontWeight: 600,
+          marginBottom: '20px',
+          letterSpacing: '0.5px',
+        }}>
+          FRANÇAIS AU QUOTIDIEN
         </div>
-      </div>
 
-      <div style={{ flex: 1, overflowY: 'auto', padding: '24px 16px' }}>
-        {msgs.map((m, i) => (
-          <div key={i} style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start', marginBottom: '12px' }}>
-            {m.role === 'assistant' ? (
-              <div style={{ background: 'white', borderLeft: '3px solid #002395', borderRadius: '0 12px 12px 0', padding: '16px 20px', maxWidth: '85%', boxShadow: '0 1px 3px rgba(0,0,0,0.06)', position: 'relative' }}>
-                <ReactMarkdown components={{ p: ({children}) => <p style={{marginBottom:"8px"}}>{children}</p>, strong: ({children}) => <strong style={{color:"#002395"}}>{children}</strong> }}>{m.content.replace(/\n/g, "  \n")}</ReactMarkdown>
-                {m.content.length > 10 && (
-                  <button onClick={() => speak(m.content, i)} style={{
-                    marginTop: '8px', padding: '6px 14px', borderRadius: '16px', border: 'none', cursor: 'pointer', fontSize: '13px',
-                    background: ttsIdx === i && tts === 'load' ? '#FEF3C7' : ttsIdx === i && tts === 'play' ? '#002395' : '#f3f4f6',
-                    color: ttsIdx === i && tts === 'play' ? 'white' : '#555'
-                  }}>
-                    {ttsIdx === i && tts === 'load' ? '⏳ Загрузка...' : ttsIdx === i && tts === 'play' ? '⏸ Пауза' : '🔊 Слушать'}
-                  </button>
-                )}
-              </div>
-            ) : (
-              <div style={{ background: '#002395', color: 'white', borderRadius: '12px 0 0 12px', padding: '16px 20px', maxWidth: '85%' }}>
-                <p style={{ margin: 0 }}>{m.content}</p>
-              </div>
-            )}
-          </div>
-        ))}
-        {loading && msgs[msgs.length - 1]?.role !== 'assistant' && (
-          <div style={{ padding: '16px 20px', background: 'white', borderLeft: '3px solid #002395', borderRadius: '0 12px 12px 0', maxWidth: '85%' }}>
-            <span style={{ animation: 'pulse 1s infinite' }}>...</span>
-          </div>
-        )}
-        <div ref={endRef} />
-      </div>
+        <h1 style={{
+          fontFamily: 'var(--font-display, Georgia, serif)',
+          fontSize: 'clamp(32px, 6vw, 48px)',
+          fontWeight: 700,
+          lineHeight: 1.15,
+          margin: '0 0 20px',
+          color: '#2A1810',
+        }}>
+          Школа дала тебе чтение.<br/>
+          <span style={{ color: '#A87729' }}>Мы даём звук.</span>
+        </h1>
 
-      <div style={{ borderTop: '1px solid #eee', background: 'white', padding: '12px 16px' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px' }}>
-          <textarea ref={taRef} value={input} onChange={e => setInput(e.target.value)} onKeyDown={onKey}
-            placeholder="Écrivez ici..." rows={1}
-            style={{ flex: 1, padding: '12px 16px', border: '1px solid #ddd', borderRadius: '12px', fontSize: '14px', resize: 'none', minHeight: '48px', maxHeight: '160px', overflowY: 'auto', outline: 'none', fontFamily: 'inherit' }}
-          />
-          <button onClick={mic} style={{
-            width: '44px', height: '44px', borderRadius: '50%', border: 'none', cursor: 'pointer', fontSize: '20px',
-            background: recording ? '#ED2939' : '#f3f4f6', color: recording ? 'white' : '#555'
-          }}>🎤</button>
-          <button onClick={send} disabled={!input.trim() || loading} style={{
-            width: '44px', height: '44px', borderRadius: '50%', border: 'none', cursor: 'pointer', fontSize: '18px',
-            background: '#002395', color: 'white', opacity: !input.trim() || loading ? 0.3 : 1
-          }}>▲</button>
+        <p style={{
+          fontSize: 'clamp(16px, 3vw, 19px)',
+          lineHeight: 1.6,
+          color: '#5C4033',
+          maxWidth: '560px',
+          margin: '0 auto 32px',
+        }}>
+          Курс французского, где Camille из Парижа говорит живым голосом носителя — со связками, ритмом и реальным акцентом. Не как Google Translate. 180 уроков, 30 минут в день.
+        </p>
+
+        <button
+          onClick={startFirstLesson}
+          style={{
+            background: '#C8964A',
+            color: '#FAF3E7',
+            border: 'none',
+            padding: '16px 40px',
+            borderRadius: '12px',
+            fontSize: '17px',
+            fontWeight: 700,
+            cursor: 'pointer',
+            fontFamily: 'inherit',
+            boxShadow: '0 8px 24px rgba(200, 150, 74, 0.3)',
+          }}
+        >
+          Послушать первый урок →
+        </button>
+
+        <p style={{
+          marginTop: '14px',
+          fontSize: '13px',
+          color: '#8B6F47',
+        }}>
+          Без регистрации. Бесплатно.
+        </p>
+      </section>
+
+      {/* THE GAP — главный новый блок */}
+      <section style={{
+        maxWidth: '640px',
+        margin: '0 auto',
+        padding: '32px 20px',
+      }}>
+        <p style={{
+          textAlign: 'center',
+          color: '#8B6F47',
+          fontSize: '13px',
+          letterSpacing: '1.5px',
+          marginBottom: '24px',
+        }}>
+          ВОТ ПОЧЕМУ ШКОЛЬНЫЙ ФРАНЦУЗСКИЙ НЕ РАБОТАЕТ
+        </p>
+
+        <h2 style={{
+          fontFamily: 'var(--font-display, Georgia, serif)',
+          fontSize: '24px',
+          fontWeight: 700,
+          textAlign: 'center',
+          marginBottom: '28px',
+          color: '#2A1810',
+          lineHeight: 1.3,
+        }}>
+          Понимаешь каждое слово в учебнике,<br/>
+          но не понимаешь ни одного на улице Парижа?
+        </h2>
+
+        <GapRow
+          school='"Qu&apos;est-ce que c&apos;est ?"'
+          schoolPhonetic="— кэ-эс-кё-сэ — четыре слова —"
+          real='"Kèskësè ?"'
+          realPhonetic="кескёсэ — один звук, 0.6 секунды"
+        />
+        <GapRow
+          school='"Je ne sais pas."'
+          schoolPhonetic="— жё нё сэ па —"
+          real='"Chépas."'
+          realPhonetic="шепа — один слог"
+        />
+        <GapRow
+          school='"Tu as vu ?"'
+          schoolPhonetic="— тю а вю —"
+          real='"T&apos;as vu ?"'
+          realPhonetic="та вю — два слога"
+        />
+
+        <p style={{
+          textAlign: 'center',
+          fontSize: '15px',
+          color: '#5C4033',
+          marginTop: '24px',
+          fontStyle: 'italic',
+          lineHeight: 1.6,
+        }}>
+          Это называется <strong style={{ color: '#A87729', fontStyle: 'normal' }}>liaison</strong> и <strong style={{ color: '#A87729', fontStyle: 'normal' }}>enchaînement</strong> — реальная фонетика французского.<br/>
+          В школе её нет. У нас — на каждом уроке.
+        </p>
+      </section>
+
+      {/* DIALOGUE PREVIEW */}
+      <section style={{
+        maxWidth: '600px',
+        margin: '0 auto',
+        padding: '32px 20px',
+      }}>
+        <p style={{
+          textAlign: 'center',
+          color: '#8B6F47',
+          fontSize: '13px',
+          letterSpacing: '1.5px',
+          marginBottom: '20px',
+        }}>
+          ВОТ КАК ЗВУЧИТ ОДИН УРОК
+        </p>
+
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.6)',
+          borderRadius: '16px',
+          padding: '24px',
+          border: '1px solid rgba(200, 150, 74, 0.25)',
+          boxShadow: '0 2px 12px rgba(61, 40, 23, 0.06)',
+        }}>
+          <DialogueLine speaker="Camille" text="Bah, t&apos;as vu Léo ce matin ?" />
+          <DialogueLine speaker="Inès" text="Non, pourquoi ?" />
+          <DialogueLine speaker="Camille" text="Il avait l&apos;air... bizarre. Du coup je m&apos;inquiète." />
+          <DialogueLine speaker="Inès" text="Bizarre comment ?" />
+          <DialogueLine speaker="Camille" text="Enfin, tu sais, comme quand il a un truc à dire mais il dit rien." />
         </div>
+
+        <p style={{
+          textAlign: 'center',
+          fontSize: '14px',
+          color: '#5C4033',
+          marginTop: '16px',
+          fontStyle: 'italic',
+        }}>
+          Реальные диалоги, живой парижский акцент, настоящая скорость. Никаких «Bonjour, je m&apos;appelle Marie».
+        </p>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section style={{
+        maxWidth: '720px',
+        margin: '0 auto',
+        padding: '40px 20px',
+      }}>
+        <h2 style={{
+          fontFamily: 'var(--font-display, Georgia, serif)',
+          fontSize: '26px',
+          fontWeight: 700,
+          textAlign: 'center',
+          marginBottom: '32px',
+          color: '#2A1810',
+        }}>
+          Что внутри курса
+        </h2>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '20px',
+        }}>
+          <Feature icon="🎙" title="Живой голос Camille" text="Не синтезатор. Живой парижский акцент со связками, ритмом и реальной скоростью" />
+          <Feature icon="🎭" title="Liaison et enchaînement" text="Chépas, t&apos;as, y a un — реальная фонетика, которой не учат в школе" />
+          <Feature icon="🗣" title="Распознавание речи" text="Говоришь — приложение слышит и понимает. Тренировка произношения в одиночку" />
+          <Feature icon="📈" title="180 уроков, 6 уровней" text="От первых фраз до свободной речи. Каждый урок — новая ситуация" />
+        </div>
+      </section>
+
+      {/* FOUNDER STORY */}
+      <section style={{
+        maxWidth: '600px',
+        margin: '0 auto',
+        padding: '40px 20px',
+      }}>
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.6)',
+          borderRadius: '16px',
+          padding: '28px 24px',
+          border: '1px solid rgba(200, 150, 74, 0.2)',
+          boxShadow: '0 2px 12px rgba(61, 40, 23, 0.06)',
+        }}>
+          <p style={{
+            color: '#8B6F47',
+            fontSize: '13px',
+            letterSpacing: '1.5px',
+            marginBottom: '16px',
+          }}>
+            ПОЧЕМУ Я СДЕЛАЛ ЭТОТ КУРС
+          </p>
+          <p style={{
+            fontSize: '16px',
+            lineHeight: 1.7,
+            color: '#3D2817',
+            margin: 0,
+          }}>
+            Я три года учился в Горьковском инязе на французском отделении. Грамматика, фонетика на бумаге, тексты про Жанну д&apos;Арк — всё было.
+            <br/><br/>
+            А в первой беседе с живой француженкой — я не понял ни одной фразы. Звуки шли — слов не было. Будто язык, которому меня учили, и язык, на котором говорят, — это два разных языка.
+            <br/><br/>
+            Через несколько месяцев я понял: они и правда разные. Школа учит, <strong>как слова пишутся</strong>. А парижане говорят, <strong>как они звучат вместе</strong>. И этой второй системе у нас не учат — ни в школе, ни в большинстве курсов.
+            <br/><br/>
+            Français au Quotidien — это то, чего мне самому не хватало. Курс, где ты слышишь язык таким, какой он есть. И постепенно начинаешь сам звучать так же.
+          </p>
+          <p style={{
+            marginTop: '16px',
+            fontSize: '14px',
+            color: '#8B6F47',
+          }}>
+            — Александр, автор курса
+          </p>
+        </div>
+      </section>
+
+      {/* PRICING */}
+      <section style={{
+        maxWidth: '600px',
+        margin: '0 auto',
+        padding: '40px 20px',
+      }}>
+        <h2 style={{
+          fontFamily: 'var(--font-display, Georgia, serif)',
+          fontSize: '26px',
+          fontWeight: 700,
+          textAlign: 'center',
+          marginBottom: '8px',
+          color: '#2A1810',
+        }}>
+          Сколько это стоит
+        </h2>
+        <p style={{
+          textAlign: 'center',
+          color: '#8B6F47',
+          marginBottom: '24px',
+        }}>
+          Уровень A1 — навсегда бесплатно. Дальше один тариф открывает все уровни A2–C2.
+        </p>
+
+        <div style={{
+          background: 'rgba(200, 150, 74, 0.12)',
+          border: '1px solid rgba(200, 150, 74, 0.4)',
+          borderRadius: '12px',
+          padding: '16px 20px',
+          marginBottom: '20px',
+          textAlign: 'center',
+          fontSize: '14px',
+          color: '#3D2817',
+        }}>
+          🎁 <strong style={{ color: '#A87729' }}>Старт-оффер для первых 50:</strong> год за 4 990 ₽ вместо 7 990 ₽
+        </div>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+          gap: '12px',
+        }}>
+          <Price label="Месяц" value="890 ₽" period="в мес" />
+          <Price label="Год" value="7 990 ₽" period="экономия 25%" highlight />
+        </div>
+
+        <p style={{
+          textAlign: 'center',
+          fontSize: '12px',
+          color: '#8B6F47',
+          marginTop: '16px',
+        }}>
+          Самозанятый Мешалкин А.В., ИНН 540447003201. Оплата через ЮKassa.
+        </p>
+      </section>
+
+      {/* FINAL CTA */}
+      <section style={{
+        maxWidth: '600px',
+        margin: '0 auto',
+        padding: '32px 20px 64px',
+        textAlign: 'center',
+      }}>
+        <h2 style={{
+          fontFamily: 'var(--font-display, Georgia, serif)',
+          fontSize: '24px',
+          fontWeight: 700,
+          marginBottom: '12px',
+          color: '#2A1810',
+        }}>
+          Услышь, как звучит французский на самом деле
+        </h2>
+        <p style={{
+          fontSize: '15px',
+          color: '#5C4033',
+          marginBottom: '24px',
+          lineHeight: 1.5,
+        }}>
+          Первый урок — два клика, без регистрации.
+        </p>
+
+        <button
+          onClick={startFirstLesson}
+          style={{
+            background: '#C8964A',
+            color: '#FAF3E7',
+            border: 'none',
+            padding: '16px 40px',
+            borderRadius: '12px',
+            fontSize: '17px',
+            fontWeight: 700,
+            cursor: 'pointer',
+            fontFamily: 'inherit',
+            boxShadow: '0 8px 24px rgba(200, 150, 74, 0.3)',
+          }}
+        >
+          Послушать Camille →
+        </button>
+
+        <p style={{
+          marginTop: '14px',
+          fontSize: '13px',
+          color: '#8B6F47',
+        }}>
+          30 уроков A1 — бесплатно, без регистрации.
+        </p>
+      </section>
+
+      {/* TELEGRAM CHANNEL */}
+      <section style={{
+        maxWidth: '600px',
+        margin: '0 auto',
+        padding: '0 20px 56px',
+      }}>
+        <div style={{
+          background: 'rgba(200, 150, 74, 0.08)',
+          border: '1px solid rgba(200, 150, 74, 0.25)',
+          borderRadius: '12px',
+          padding: '20px 24px',
+          textAlign: 'center',
+        }}>
+          <p style={{
+            fontSize: '14px',
+            color: '#5C4033',
+            marginBottom: '12px',
+            lineHeight: 1.5,
+          }}>
+            Не готовы начать сегодня? Подписывайтесь на канал —<br />
+            живая фраза, разбор звука или диалог раз в несколько дней.
+          </p>
+          <a
+            href="https://t.me/francais_au_quotidien"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-block',
+              color: '#A87729',
+              fontSize: '15px',
+              fontWeight: 700,
+              textDecoration: 'none',
+              borderBottom: '1px solid rgba(168, 119, 41, 0.4)',
+              paddingBottom: '2px',
+            }}
+          >
+            @francais_au_quotidien →
+          </a>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function GapRow({ school, schoolPhonetic, real, realPhonetic }: { school: string; schoolPhonetic: string; real: string; realPhonetic: string }) {
+  return (
+    <div style={{
+      background: 'rgba(255, 255, 255, 0.5)',
+      borderRadius: '12px',
+      padding: '16px 20px',
+      marginBottom: '14px',
+      border: '1px solid rgba(200, 150, 74, 0.15)',
+    }}>
+      <div style={{ marginBottom: '10px' }}>
+        <p style={{
+          fontSize: '12px',
+          color: '#8B6F47',
+          letterSpacing: '1px',
+          marginBottom: '4px',
+        }}>
+          ШКОЛА УЧИТ ТАК
+        </p>
+        <p style={{
+          fontSize: '17px',
+          color: '#5C4033',
+          fontStyle: 'italic',
+          marginBottom: '2px',
+        }}>
+          {school}
+        </p>
+        <p style={{ fontSize: '13px', color: '#8B6F47' }}>{schoolPhonetic}</p>
+      </div>
+      <div style={{
+        height: '1px',
+        background: 'rgba(200, 150, 74, 0.2)',
+        margin: '12px 0',
+      }} />
+      <div>
+        <p style={{
+          fontSize: '12px',
+          color: '#A87729',
+          letterSpacing: '1px',
+          marginBottom: '4px',
+        }}>
+          ПАРИЖАНИН ГОВОРИТ ТАК
+        </p>
+        <p style={{
+          fontSize: '20px',
+          color: '#2A1810',
+          fontWeight: 700,
+          fontStyle: 'italic',
+          marginBottom: '2px',
+        }}>
+          {real}
+        </p>
+        <p style={{ fontSize: '13px', color: '#A87729' }}>{realPhonetic}</p>
       </div>
     </div>
   )
+}
 
-  // ===== Главная (выбор уровня и урока) =====
+function DialogueLine({ speaker, text }: { speaker: string; text: string }) {
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '32px 16px' }}>
-      {/* Шапка с логином/выходом */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        gap: '12px',
-        marginBottom: '24px',
-        minHeight: '36px',
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{
+        color: '#A87729',
+        fontWeight: 700,
+        fontSize: '14px',
+        marginRight: '8px',
       }}>
-        {authLoaded && (userEmail ? (
-          <>
-            <span style={{ fontSize: '13px', color: '#888', alignSelf: 'center' }}>
-              {userEmail}
-            </span>
-            <button
-              onClick={() => router.push('/pricing')}
-              style={{
-                padding: '7px 14px',
-                background: '#c47c40',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                fontSize: '13px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                fontFamily: 'inherit',
-              }}
-            >
-              Подписка
-            </button>
-            <button
-              onClick={handleLogout}
-              style={{
-                padding: '7px 14px',
-                background: 'white',
-                color: '#555',
-                border: '1px solid #ddd',
-                borderRadius: '8px',
-                fontSize: '13px',
-                cursor: 'pointer',
-                fontFamily: 'inherit',
-              }}
-            >
-              Выйти
-            </button>
-          </>
-        ) : (
-          <button
-            onClick={() => router.push('/auth')}
-            style={{
-              padding: '7px 14px',
-              background: '#002395',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              fontSize: '13px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              fontFamily: 'inherit',
-            }}
-          >
-            Войти
-          </button>
-        ))}
-      </div>
-
-      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '36px', fontWeight: 700, color: '#1a1a2e', marginBottom: '8px' }}>Français au Quotidien</h1>
-        <p style={{ color: '#888', fontSize: '18px' }}>Разговорный французский каждый день</p>
-      </div>
-
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '32px', flexWrap: 'wrap' }}>
-        {LEVELS.map(l => {
-          const isAccessible = accessibleLevels.has(l)
-          const isSelected = level === l
-          return (
-            <button
-              key={l}
-              onClick={() => handleLevelClick(l)}
-              title={isAccessible ? '' : 'Откройте по подписке'}
-              style={{
-                padding: '8px 20px',
-                borderRadius: '20px',
-                border: isSelected ? '2px solid #002395' : '2px solid transparent',
-                cursor: 'pointer',
-                fontWeight: 600,
-                fontSize: '14px',
-                background: isSelected ? '#002395' : 'white',
-                color: isSelected ? 'white' : (isAccessible ? '#555' : '#bbb'),
-                fontFamily: 'inherit',
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '4px',
-              }}
-            >
-              {l}
-              {!isAccessible && <span style={{ fontSize: '11px' }}>🔒</span>}
-            </button>
-          )
-        })}
-      </div>
-
-      <div>
-        {!accessibleLevels.has(level) ? (
-          // Заблокированный уровень — показываем пейволл
-          <div style={{ textAlign: 'center', padding: '32px 24px' }}>
-            <div style={{
-              background: 'white', border: '1px solid #c47c4030', borderRadius: '16px',
-              padding: '32px 24px', maxWidth: '480px', margin: '0 auto',
-              boxShadow: '0 4px 12px rgba(196, 124, 64, 0.08)'
-            }}>
-              <div style={{ fontSize: '32px', marginBottom: '12px' }}>🔓</div>
-              <h2 style={{
-                fontFamily: 'var(--font-display)', fontSize: '22px', fontWeight: 700,
-                color: '#1a1a2e', marginBottom: '12px'
-              }}>
-                {userEmail ? `Откройте все уровни — от A2 до C2` : `Все уровни от A2 до C2 — по подписке`}
-              </h2>
-              <p style={{ color: '#666', fontSize: '15px', marginBottom: '20px', lineHeight: 1.5 }}>
-                {userEmail
-                  ? 'Camille и её друзья — Léo, Inès, Mathieu, Chloé — в новых ситуациях: работа, дружба, эмоции, конфликты, путешествия, профессия. 150 уроков-диалогов.'
-                  : '150 уроков-диалогов с Camille. Один тариф открывает все уровни. Войдите, чтобы оформить подписку.'}
-              </p>
-
-              {userEmail && (
-                <div style={{
-                  background: '#FEF3C7', borderRadius: '10px', padding: '12px 16px',
-                  marginBottom: '20px', fontSize: '14px', color: '#92400e'
-                }}>
-                  🎁 <strong>Старт-оффер первым 50:</strong> год за 4 990 ₽ вместо 7 990 ₽
-                </div>
-              )}
-
-              <button onClick={() => router.push(userEmail ? '/pricing' : '/auth?redirect_to=/pricing')} style={{
-                background: '#c47c40', border: 'none', color: 'white', cursor: 'pointer',
-                fontSize: '15px', fontWeight: 700, padding: '14px 32px',
-                borderRadius: '12px', fontFamily: 'inherit', width: '100%',
-                boxShadow: '0 4px 12px rgba(196, 124, 64, 0.25)'
-              }}>
-                {userEmail ? 'Выбрать тариф →' : 'Войти и подписаться →'}
-              </button>
-
-              {userEmail && (
-                <>
-                  <p style={{ fontSize: '13px', color: '#999', marginTop: '14px' }}>
-                    От 890 ₽/мес · Год 7 990 ₽
-                  </p>
-                  <p style={{ fontSize: '12px', color: '#bbb', marginTop: '8px', fontStyle: 'italic' }}>
-                    Один тариф открывает все 5 уровней: A2, B1, B2, C1, C2
-                  </p>
-                </>
-              )}
-            </div>
-          </div>
-        ) : (
-          // Доступный уровень — показываем список уроков
-          lessons.map(ls => (
-            <button key={ls.id} onClick={() => open(ls.id)} style={{
-              display: 'block', width: '100%', textAlign: 'left', padding: '16px 20px', background: 'white', borderRadius: '12px', border: 'none', cursor: 'pointer', marginBottom: '8px', fontFamily: 'inherit'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
-                <span style={{ fontSize: '12px', fontFamily: 'monospace', color: '#999' }}>{String(ls.lesson_number).padStart(2, '0')}</span>
-                <div>
-                  <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: '#1a1a2e' }}>{ls.title_fr}</div>
-                  <div style={{ fontSize: '13px', color: '#999', marginTop: '2px' }}>{ls.title_ru}</div>
-                </div>
-              </div>
-            </button>
-          ))
-        )}
-      </div>
+        {speaker}:
+      </span>
+      <span style={{
+        color: '#3D2817',
+        fontSize: '15px',
+        fontStyle: 'italic',
+      }}>
+        &quot;{text}&quot;
+      </span>
     </div>
+  )
+}
+
+function Feature({ icon, title, text }: { icon: string; title: string; text: string }) {
+  return (
+    <div>
+      <div style={{ fontSize: '32px', marginBottom: '8px' }}>{icon}</div>
+      <h3 style={{
+        fontSize: '16px',
+        fontWeight: 700,
+        marginBottom: '6px',
+        color: '#2A1810',
+      }}>
+        {title}
+      </h3>
+      <p style={{
+        fontSize: '14px',
+        lineHeight: 1.5,
+        color: '#5C4033',
+        margin: 0,
+      }}>
+        {text}
+      </p>
+    </div>
+  )
+}
+
+function Price({ label, value, period, highlight }: { label: string; value: string; period: string; highlight?: boolean }) {
+  return (
+    <div style={{
+      background: highlight ? 'rgba(200, 150, 74, 0.15)' : 'rgba(255, 255, 255, 0.5)',
+      border: highlight ? '1px solid rgba(200, 150, 74, 0.5)' : '1px solid rgba(200, 150, 74, 0.15)',
+      borderRadius: '12px',
+      padding: '16px',
+      textAlign: 'center',
+    }}>
+      <p style={{ fontSize: '13px', color: '#8B6F47', marginBottom: '4px' }}>{label}</p>
+      <p style={{ fontSize: '20px', fontWeight: 700, color: '#2A1810', marginBottom: '2px' }}>{value}</p>
+      <p style={{ fontSize: '12px', color: '#8B6F47' }}>{period}</p>
+    </div>
+  )
+}
+
+export default function StartPage() {
+  return (
+    <Suspense fallback={<div style={{ minHeight: '100vh', background: '#FAF3E7' }} />}>
+      <StartContent />
+    </Suspense>
   )
 }
