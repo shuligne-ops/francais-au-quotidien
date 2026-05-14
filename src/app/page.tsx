@@ -128,17 +128,10 @@ export default function Home() {
     if (level !== 'A1') setLevel('A1')
   }
 
-  function handleLevelClick(l: string) {
-    if (accessibleLevels.has(l)) {
-      setLevel(l)
-      return
-    }
-    // Уровень заблокирован — отправляем на /pricing
-    if (!userEmail) {
-      router.push('/auth?redirect_to=' + encodeURIComponent('/pricing'))
-    } else {
-      router.push('/pricing')
-    }
+ function handleLevelClick(l: string) {
+    // Просто меняем выбранный уровень. Если он заблокирован,
+    // ниже покажем пейволл вместо списка уроков.
+    setLevel(l)
   }
 
   async function open(id: number) {
@@ -411,19 +404,73 @@ export default function Home() {
       </div>
 
       <div>
-        {lessons.map(ls => (
-          <button key={ls.id} onClick={() => open(ls.id)} style={{
-            display: 'block', width: '100%', textAlign: 'left', padding: '16px 20px', background: 'white', borderRadius: '12px', border: 'none', cursor: 'pointer', marginBottom: '8px', fontFamily: 'inherit'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
-              <span style={{ fontSize: '12px', fontFamily: 'monospace', color: '#999' }}>{String(ls.lesson_number).padStart(2, '0')}</span>
-              <div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: '#1a1a2e' }}>{ls.title_fr}</div>
-                <div style={{ fontSize: '13px', color: '#999', marginTop: '2px' }}>{ls.title_ru}</div>
-              </div>
+        {!accessibleLevels.has(level) ? (
+          // Заблокированный уровень — показываем пейволл
+          <div style={{ textAlign: 'center', padding: '32px 24px' }}>
+            <div style={{
+              background: 'white', border: '1px solid #c47c4030', borderRadius: '16px',
+              padding: '32px 24px', maxWidth: '480px', margin: '0 auto',
+              boxShadow: '0 4px 12px rgba(196, 124, 64, 0.08)'
+            }}>
+              <div style={{ fontSize: '32px', marginBottom: '12px' }}>🔓</div>
+              <h2 style={{
+                fontFamily: 'var(--font-display)', fontSize: '22px', fontWeight: 700,
+                color: '#1a1a2e', marginBottom: '12px'
+              }}>
+                {userEmail ? `Откройте все уровни — от A2 до C2` : `Все уровни от A2 до C2 — по подписке`}
+              </h2>
+              <p style={{ color: '#666', fontSize: '15px', marginBottom: '20px', lineHeight: 1.5 }}>
+                {userEmail
+                  ? 'Camille и её друзья — Léo, Inès, Mathieu, Chloé — в новых ситуациях: работа, дружба, эмоции, конфликты, путешествия, профессия. 150 уроков-диалогов.'
+                  : '150 уроков-диалогов с Camille. Один тариф открывает все уровни. Войдите, чтобы оформить подписку.'}
+              </p>
+
+              {userEmail && (
+                <div style={{
+                  background: '#FEF3C7', borderRadius: '10px', padding: '12px 16px',
+                  marginBottom: '20px', fontSize: '14px', color: '#92400e'
+                }}>
+                  🎁 <strong>Старт-оффер первым 50:</strong> год за 4 990 ₽ вместо 7 990 ₽
+                </div>
+              )}
+
+              <button onClick={() => router.push(userEmail ? '/pricing' : '/auth?redirect_to=/pricing')} style={{
+                background: '#c47c40', border: 'none', color: 'white', cursor: 'pointer',
+                fontSize: '15px', fontWeight: 700, padding: '14px 32px',
+                borderRadius: '12px', fontFamily: 'inherit', width: '100%',
+                boxShadow: '0 4px 12px rgba(196, 124, 64, 0.25)'
+              }}>
+                {userEmail ? 'Выбрать тариф →' : 'Войти и подписаться →'}
+              </button>
+
+              {userEmail && (
+                <>
+                  <p style={{ fontSize: '13px', color: '#999', marginTop: '14px' }}>
+                    От 890 ₽/мес · Год 7 990 ₽
+                  </p>
+                  <p style={{ fontSize: '12px', color: '#bbb', marginTop: '8px', fontStyle: 'italic' }}>
+                    Один тариф открывает все 5 уровней: A2, B1, B2, C1, C2
+                  </p>
+                </>
+              )}
             </div>
-          </button>
-        ))}
+          </div>
+        ) : (
+          // Доступный уровень — показываем список уроков
+          lessons.map(ls => (
+            <button key={ls.id} onClick={() => open(ls.id)} style={{
+              display: 'block', width: '100%', textAlign: 'left', padding: '16px 20px', background: 'white', borderRadius: '12px', border: 'none', cursor: 'pointer', marginBottom: '8px', fontFamily: 'inherit'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
+                <span style={{ fontSize: '12px', fontFamily: 'monospace', color: '#999' }}>{String(ls.lesson_number).padStart(2, '0')}</span>
+                <div>
+                  <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: '#1a1a2e' }}>{ls.title_fr}</div>
+                  <div style={{ fontSize: '13px', color: '#999', marginTop: '2px' }}>{ls.title_ru}</div>
+                </div>
+              </div>
+            </button>
+          ))
+        )}
       </div>
     </div>
   )
