@@ -4,15 +4,13 @@ import { useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 
 // Этот лендинг — точка приземления для рекламного трафика FAQ.
-// НЕ показывает селектор уроков. Одна цель: довести до клика "Попробовать первый урок".
-// UTM-параметры из URL сохраняем в localStorage, чтобы потом сматчить с регистрацией.
-// Структура и логика — копия EF-лендинга, палитра — тёплая (бежевый/охра/тёмно-коричневый).
+// Главный аргумент: ЗВУЧАНИЕ. Школа учит читать — мы учим звучать.
+// UTM-параметры из URL сохраняем в localStorage для атрибуции.
 
 function StartContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  // Сохраняем UTM в localStorage для последующей атрибуции платежей к рекламной кампании
   useEffect(() => {
     const utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content']
     const data: Record<string, string> = {}
@@ -29,8 +27,6 @@ function StartContent() {
   }, [searchParams])
 
   function startFirstLesson() {
-    // Первый урок A1 — id зависит от данных в Supabase, но ссылка на главную с автозапуском
-    // самого первого. Простой путь: редирект на главную, фронт сам подхватит дефолт A1-01.
     router.push('/?lesson=1')
   }
 
@@ -70,7 +66,8 @@ function StartContent() {
           margin: '0 0 20px',
           color: '#2A1810',
         }}>
-          Перестань стесняться<br/>говорить по-французски
+          Школа дала тебе чтение.<br/>
+          <span style={{ color: '#A87729' }}>Мы даём звук.</span>
         </h1>
 
         <p style={{
@@ -80,7 +77,7 @@ function StartContent() {
           maxWidth: '560px',
           margin: '0 auto 32px',
         }}>
-          180 уроков-диалогов с Камиллой и её друзьями. Из любого уровня — в свободную речь. 30 минут в день, без зубрёжки.
+          Курс французского, где Camille из Парижа говорит живым голосом носителя — со связками, ритмом и реальным акцентом. Не как Google Translate. 180 уроков, 30 минут в день.
         </p>
 
         <button
@@ -98,7 +95,7 @@ function StartContent() {
             boxShadow: '0 8px 24px rgba(200, 150, 74, 0.3)',
           }}
         >
-          Попробовать первый урок →
+          Послушать первый урок →
         </button>
 
         <p style={{
@@ -110,7 +107,68 @@ function StartContent() {
         </p>
       </section>
 
-      {/* DIALOGUE PREVIEW — чтобы человек СРАЗУ увидел что это */}
+      {/* THE GAP — главный новый блок */}
+      <section style={{
+        maxWidth: '640px',
+        margin: '0 auto',
+        padding: '32px 20px',
+      }}>
+        <p style={{
+          textAlign: 'center',
+          color: '#8B6F47',
+          fontSize: '13px',
+          letterSpacing: '1.5px',
+          marginBottom: '24px',
+        }}>
+          ВОТ ПОЧЕМУ ШКОЛЬНЫЙ ФРАНЦУЗСКИЙ НЕ РАБОТАЕТ
+        </p>
+
+        <h2 style={{
+          fontFamily: 'var(--font-display, Georgia, serif)',
+          fontSize: '24px',
+          fontWeight: 700,
+          textAlign: 'center',
+          marginBottom: '28px',
+          color: '#2A1810',
+          lineHeight: 1.3,
+        }}>
+          Понимаешь каждое слово в учебнике,<br/>
+          но не понимаешь ни одного на улице Парижа?
+        </h2>
+
+        <GapRow
+          school='"Qu&apos;est-ce que c&apos;est ?"'
+          schoolPhonetic="— кэ-эс-кё-сэ — четыре слова —"
+          real='"Kèskësè ?"'
+          realPhonetic="кескёсэ — один звук, 0.6 секунды"
+        />
+        <GapRow
+          school='"Je ne sais pas."'
+          schoolPhonetic="— жё нё сэ па —"
+          real='"Chépas."'
+          realPhonetic="шепа — один слог"
+        />
+        <GapRow
+          school='"Tu as vu ?"'
+          schoolPhonetic="— тю а вю —"
+          real='"T&apos;as vu ?"'
+          realPhonetic="та вю — два слога"
+        />
+
+        <p style={{
+          textAlign: 'center',
+          fontSize: '15px',
+          color: '#5C4033',
+          marginTop: '24px',
+          fontStyle: 'italic',
+          lineHeight: 1.6,
+        }}>
+          Это называется <strong style={{ color: '#A87729', fontStyle: 'normal' }}>liaison</strong> и <strong style={{ color: '#A87729', fontStyle: 'normal' }}>enchaînement</strong> — реальная фонетика французского.<br/>
+          В школе её нет. У нас — на каждом уроке.
+        </p>
+      </section>
+
+      {/* DIALOGUE PREVIEW */}
       <section style={{
         maxWidth: '600px',
         margin: '0 auto',
@@ -123,7 +181,7 @@ function StartContent() {
           letterSpacing: '1.5px',
           marginBottom: '20px',
         }}>
-          ВОТ КАК ЭТО ВЫГЛЯДИТ
+          ВОТ КАК ЗВУЧИТ ОДИН УРОК
         </p>
 
         <div style={{
@@ -133,9 +191,9 @@ function StartContent() {
           border: '1px solid rgba(200, 150, 74, 0.25)',
           boxShadow: '0 2px 12px rgba(61, 40, 23, 0.06)',
         }}>
-          <DialogueLine speaker="Camille" text="Bah, t'as vu Léo ce matin ?" />
+          <DialogueLine speaker="Camille" text="Bah, t&apos;as vu Léo ce matin ?" />
           <DialogueLine speaker="Inès" text="Non, pourquoi ?" />
-          <DialogueLine speaker="Camille" text="Il avait l'air... bizarre. Du coup je m'inquiète." />
+          <DialogueLine speaker="Camille" text="Il avait l&apos;air... bizarre. Du coup je m&apos;inquiète." />
           <DialogueLine speaker="Inès" text="Bizarre comment ?" />
           <DialogueLine speaker="Camille" text="Enfin, tu sais, comme quand il a un truc à dire mais il dit rien." />
         </div>
@@ -147,7 +205,7 @@ function StartContent() {
           marginTop: '16px',
           fontStyle: 'italic',
         }}>
-          Реальные диалоги. Живые ситуации. Никаких «Bonjour, je m'appelle Marie».
+          Реальные диалоги, живой парижский акцент, настоящая скорость. Никаких «Bonjour, je m&apos;appelle Marie».
         </p>
       </section>
 
@@ -165,7 +223,7 @@ function StartContent() {
           marginBottom: '32px',
           color: '#2A1810',
         }}>
-          Как устроен курс
+          Что внутри курса
         </h2>
 
         <div style={{
@@ -173,10 +231,10 @@ function StartContent() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
           gap: '20px',
         }}>
-          <Feature icon="🎭" title="Диалоги, не правила" text="Учишься на реальных разговорах между Камиллой, Лео, Инес и их друзьями" />
-          <Feature icon="🎙" title="Голос и распознавание" text="Слушаешь, повторяешь, говоришь — приложение услышит и поймёт" />
-          <Feature icon="📈" title="6 уровней — 180 уроков" text="От первых фраз до свободной речи. Каждый урок — новая ситуация" />
-          <Feature icon="📱" title="Где угодно" text="Браузер на телефоне, планшете, компьютере. Без установки приложения" />
+          <Feature icon="🎙" title="Живой голос Camille" text="Не синтезатор. Живой парижский акцент со связками, ритмом и реальной скоростью" />
+          <Feature icon="🎭" title="Liaison et enchaînement" text="Chépas, t&apos;as, y a un — реальная фонетика, которой не учат в школе" />
+          <Feature icon="🗣" title="Распознавание речи" text="Говоришь — приложение слышит и понимает. Тренировка произношения в одиночку" />
+          <Feature icon="📈" title="180 уроков, 6 уровней" text="От первых фраз до свободной речи. Каждый урок — новая ситуация" />
         </div>
       </section>
 
@@ -199,7 +257,7 @@ function StartContent() {
             letterSpacing: '1.5px',
             marginBottom: '16px',
           }}>
-            ОТ АВТОРА
+            ПОЧЕМУ Я СДЕЛАЛ ЭТОТ КУРС
           </p>
           <p style={{
             fontSize: '16px',
@@ -207,11 +265,13 @@ function StartContent() {
             color: '#3D2817',
             margin: 0,
           }}>
-            Я три года учился в Горьковском инязе на французском отделении. Грамматика, фонетика, тексты про Жанну д'Арк — всё было. А когда нужно было говорить с живым французом, стоял и молчал. Языковой барьер.
+            Я три года учился в Горьковском инязе на французском отделении. Грамматика, фонетика на бумаге, тексты про Жанну д&apos;Арк — всё было.
             <br/><br/>
-            Когда я наконец заговорил — понял, что мешало всё это время: не было живой разговорной практики каждый день.
+            А в первой беседе с живой француженкой — я не понял ни одной фразы. Звуки шли — слов не было. Будто язык, которому меня учили, и язык, на котором говорят, — это два разных языка.
             <br/><br/>
-            Français au Quotidien — это то, чего мне самому не хватало. Курс, который вытаскивает в речь — через диалоги с Камиллой, как они говорят на самом деле.
+            Через несколько месяцев я понял: они и правда разные. Школа учит, <strong>как слова пишутся</strong>. А парижане говорят, <strong>как они звучат вместе</strong>. И этой второй системе у нас не учат — ни в школе, ни в большинстве курсов.
+            <br/><br/>
+            Français au Quotidien — это то, чего мне самому не хватало. Курс, где ты слышишь язык таким, какой он есть. И постепенно начинаешь сам звучать так же.
           </p>
           <p style={{
             marginTop: '16px',
@@ -244,7 +304,7 @@ function StartContent() {
           color: '#8B6F47',
           marginBottom: '24px',
         }}>
-          Уровень A1 — навсегда бесплатно. Дальше по подписке.
+          Уровень A1 — навсегда бесплатно. Дальше один тариф открывает все уровни A2–C2.
         </p>
 
         <div style={{
@@ -290,11 +350,19 @@ function StartContent() {
           fontFamily: 'var(--font-display, Georgia, serif)',
           fontSize: '24px',
           fontWeight: 700,
-          marginBottom: '20px',
+          marginBottom: '12px',
           color: '#2A1810',
         }}>
-          Начни прямо сейчас
+          Услышь, как звучит французский на самом деле
         </h2>
+        <p style={{
+          fontSize: '15px',
+          color: '#5C4033',
+          marginBottom: '24px',
+          lineHeight: 1.5,
+        }}>
+          Первый урок — два клика, без регистрации.
+        </p>
 
         <button
           onClick={startFirstLesson}
@@ -311,7 +379,7 @@ function StartContent() {
             boxShadow: '0 8px 24px rgba(200, 150, 74, 0.3)',
           }}
         >
-          Открыть первый урок →
+          Послушать Camille →
         </button>
 
         <p style={{
@@ -319,7 +387,7 @@ function StartContent() {
           fontSize: '13px',
           color: '#8B6F47',
         }}>
-          Первые 30 уроков A1 — бесплатно, без регистрации.
+          30 уроков A1 — бесплатно, без регистрации.
         </p>
       </section>
 
@@ -343,7 +411,7 @@ function StartContent() {
             lineHeight: 1.5,
           }}>
             Не готовы начать сегодня? Подписывайтесь на канал —<br />
-            раз в несколько дней живая фраза или кусочек диалога.
+            живая фраза, разбор звука или диалог раз в несколько дней.
           </p>
           <a
             href="https://t.me/francais_au_quotidien"
@@ -367,6 +435,63 @@ function StartContent() {
   )
 }
 
+function GapRow({ school, schoolPhonetic, real, realPhonetic }: { school: string; schoolPhonetic: string; real: string; realPhonetic: string }) {
+  return (
+    <div style={{
+      background: 'rgba(255, 255, 255, 0.5)',
+      borderRadius: '12px',
+      padding: '16px 20px',
+      marginBottom: '14px',
+      border: '1px solid rgba(200, 150, 74, 0.15)',
+    }}>
+      <div style={{ marginBottom: '10px' }}>
+        <p style={{
+          fontSize: '12px',
+          color: '#8B6F47',
+          letterSpacing: '1px',
+          marginBottom: '4px',
+        }}>
+          ШКОЛА УЧИТ ТАК
+        </p>
+        <p style={{
+          fontSize: '17px',
+          color: '#5C4033',
+          fontStyle: 'italic',
+          marginBottom: '2px',
+        }}>
+          {school}
+        </p>
+        <p style={{ fontSize: '13px', color: '#8B6F47' }}>{schoolPhonetic}</p>
+      </div>
+      <div style={{
+        height: '1px',
+        background: 'rgba(200, 150, 74, 0.2)',
+        margin: '12px 0',
+      }} />
+      <div>
+        <p style={{
+          fontSize: '12px',
+          color: '#A87729',
+          letterSpacing: '1px',
+          marginBottom: '4px',
+        }}>
+          ПАРИЖАНИН ГОВОРИТ ТАК
+        </p>
+        <p style={{
+          fontSize: '20px',
+          color: '#2A1810',
+          fontWeight: 700,
+          fontStyle: 'italic',
+          marginBottom: '2px',
+        }}>
+          {real}
+        </p>
+        <p style={{ fontSize: '13px', color: '#A87729' }}>{realPhonetic}</p>
+      </div>
+    </div>
+  )
+}
+
 function DialogueLine({ speaker, text }: { speaker: string; text: string }) {
   return (
     <div style={{ marginBottom: '12px' }}>
@@ -383,7 +508,7 @@ function DialogueLine({ speaker, text }: { speaker: string; text: string }) {
         fontSize: '15px',
         fontStyle: 'italic',
       }}>
-        "{text}"
+        &quot;{text}&quot;
       </span>
     </div>
   )
