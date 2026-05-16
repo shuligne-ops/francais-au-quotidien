@@ -110,7 +110,7 @@ export async function POST(req: NextRequest) {
         .from('user_subscriptions')
         .update({ status: 'refunded' })
         .eq('id', subscription.id)
-
+        .eq('status', 'pending')
       if (updateErr) {
         console.error('[yookassa-webhook] refund: update failed:', updateErr)
         return NextResponse.json({ error: 'db_update_failed' }, { status: 500 })
