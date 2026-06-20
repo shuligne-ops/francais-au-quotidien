@@ -28,6 +28,7 @@ type Message = {
 }
 
 const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+const FREE_A1_LESSONS = 3
 
 function normalizeMd(t: string) {
   return t.replace(/\*\*\s+/g, '**').replace(/\s+\*\*/g, '**')
@@ -59,6 +60,7 @@ export default function Home() {
   const endRef = useRef<HTMLDivElement>(null)
   const taRef = useRef<HTMLTextAreaElement>(null)
   const recRef = useRef<any>(null)
+  const hasPaidAccess = Array.from(accessibleLevels).some(l => l !== 'A1')
 
   // Загружаем сессию и доступные уровни
   useEffect(() => {
@@ -90,10 +92,21 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    supabase.from('lessons').select('id,level,lesson_number,title_fr,title_ru')
+    if (!accessibleLevels.has(level)) {
+      setLessons([])
+      return
+    }
+
+    let query = supabase.from('lessons').select('id,level,lesson_number,title_fr,title_ru')
       .eq('level', level).order('lesson_number')
+
+    if (level === 'A1' && !hasPaidAccess) {
+      query = query.lte('lesson_number', FREE_A1_LESSONS)
+    }
+
+    query
       .then(({ data }) => { if (data) setLessons(data as LessonSummary[]) })
-  }, [level])
+  }, [level, accessibleLevels, hasPaidAccess])
 
   // На монтировании читаем ?lesson=1 — взводим флаг автозапуска
   useEffect(() => {
@@ -144,10 +157,16 @@ export default function Home() {
   async function open(id: number) {
     const { data } = await supabase.from('lessons').select('*').eq('id', id).single()
     if (!data) return
-    setLesson(data as Lesson)
+    const lessonData = data as Lesson
+    const canOpen = hasPaidAccess || (lessonData.level === 'A1' && lessonData.lesson_number <= FREE_A1_LESSONS)
+    if (!canOpen) {
+      router.push(userEmail ? '/pricing' : '/auth?redirect_to=' + encodeURIComponent('/pricing'))
+      return
+    }
+    setLesson(lessonData)
     setMsgs([])
     kill()
-    await chat(data as Lesson, [])
+    await chat(lessonData, [])
   }
 
   async function chat(l: Lesson, h: Message[], u?: string) {
