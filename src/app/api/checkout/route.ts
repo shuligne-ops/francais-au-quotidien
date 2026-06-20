@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 type Plan = 'monthly' | 'yearly' | 'yearly_launch'
 
 const PRICES: Record<Plan, { amount: number; description: string; durationDays: number }> = {
-  monthly: { amount: 890, description: 'Подписка на курс «Français au Quotidien», месяц', durationDays: 30 },
+  monthly: { amount: 1500, description: 'Подписка на курс «Français au Quotidien», месяц', durationDays: 30 },
   yearly: { amount: 7990, description: 'Подписка на курс «Français au Quotidien», год', durationDays: 365 },
   yearly_launch: { amount: 4990, description: 'Подписка на курс «Français au Quotidien», год (старт-оффер)', durationDays: 365 },
 }

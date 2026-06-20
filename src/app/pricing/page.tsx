@@ -9,7 +9,7 @@ const LAUNCH_LIMIT = 50
 type Plan = 'monthly' | 'yearly' | 'yearly_launch'
 
 const PLANS: { id: Plan; title: string; price: number; period: string; note?: string; highlight?: boolean }[] = [
-  { id: 'monthly', title: 'Месяц', price: 890, period: 'в месяц' },
+  { id: 'monthly', title: 'Месяц', price: 1500, period: 'в месяц' },
   { id: 'yearly_launch', title: 'Год · Старт-оффер', price: 4990, period: 'в год', note: 'Только для первых 50 подписчиков', highlight: true },
   { id: 'yearly', title: 'Год', price: 7990, period: 'в год', note: 'Экономия 25%' },
 ]
@@ -114,7 +114,7 @@ export default function PricingPage() {
             Подписка на курс
           </h1>
           <p style={{ color: '#7a6549', fontSize: '17px' }}>
-            A1 — бесплатно. Уровни A2–C2 по подписке.
+            3 урока A1 — бесплатно. Остальные уроки A1 и уровни A2–C2 по подписке.
           </p>
         </header>
 
