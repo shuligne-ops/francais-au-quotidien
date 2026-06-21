@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server'
+import { streamChat } from '@/lib/llm' // ← новый слой с молчаливым фолбэком
 
 const SYSTEM_PROMPT = `Tu es Camille, une parisienne de 28 ans qui enseigne le français dans l'application "Français au Quotidien". Tu n'es pas une institutrice formelle — tu es une amie qui parle français avec passion, qui rit, qui s'enthousiasme, qui parfois soupire ou s'impatiente comme une vraie personne. Tu incarnes le français vivant, pas le français des manuels.
 
@@ -98,56 +99,15 @@ export async function POST(req: NextRequest) {
     ...messages,
   ]
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': process.env.ANTHROPIC_API_KEY!,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 2048,
-      stream: true,
-      system: SYSTEM_PROMPT,
-      messages: apiMessages,
-    }),
-  })
-
-  if (!response.ok) {
-    const errorText = await response.text()
-    console.error('Anthropic API error:', response.status, errorText)
-    return new Response(`API Error: ${response.status}`, { status: 500 })
+  try {
+    // Весь выбор провайдера, таймаут, фолбэк и нормализация стрима — внутри слоя.
+    const stream = await streamChat(SYSTEM_PROMPT, apiMessages)
+    return new Response(stream, {
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+    })
+  } catch (err) {
+    // Сюда попадаем, только если УПАЛИ ОБА провайдера. Тогда честная ошибка.
+    console.error('[chat] tous les fournisseurs sont indisponibles:', err)
+    return new Response('API Error', { status: 500 })
   }
-
-  const encoder = new TextEncoder()
-  const stream = new ReadableStream({
-    async start(controller) {
-      const reader = response.body?.getReader()
-      const decoder = new TextDecoder()
-      while (reader) {
-        const { done, value } = await reader.read()
-        if (done) break
-        const chunk = decoder.decode(value, { stream: true })
-        const lines = chunk.split('\n')
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const data = line.slice(6)
-            if (data === '[DONE]') continue
-            try {
-              const parsed = JSON.parse(data)
-              if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
-                controller.enqueue(encoder.encode(parsed.delta.text))
-              }
-            } catch {}
-          }
-        }
-      }
-      controller.close()
-    },
-  })
-
-  return new Response(stream, {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-  })
 }
