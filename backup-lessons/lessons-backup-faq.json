@@ -1,0 +1,3232 @@
+{
+  "meta": {
+    "table": "lessons",
+    "source": "https://dhdafawxcqkmteggcrca.supabase.co",
+    "exported_at": "2026-06-21T14:29:49.308Z",
+    "total": 30,
+    "by_level": {
+      "A1": 30
+    }
+  },
+  "lessons": [
+    {
+      "id": 1,
+      "level": "A1",
+      "lesson_number": 1,
+      "title_fr": "Première rencontre au café",
+      "title_ru": "Первая встреча в кафе",
+      "content": {
+        "step1": {
+          "phrase_fr": "Ça vous dit ?",
+          "phrase_ru": "Вам хочется? / Как вам идея?",
+          "example_fr": "Un café en terrasse, ça vous dit ?",
+          "explanation_fr": "On utilise cette expression pour proposer quelque chose simplement et poliment."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Camille: Pardon, la chaise est libre ?",
+            "Léo: Oui, bien sûr, allez-y.",
+            "Camille: Merci. Il y a du monde.",
+            "Léo: Oui, le midi, toujours.",
+            "Camille: Vous venez souvent ici ?",
+            "Léo: Oui, assez souvent.",
+            "Camille: Le café est bon ?",
+            "Léo: Oui. Le service, moins.",
+            "Camille: Ah oui, pas facile !",
+            "Léo: Oui. Moi, c'est Léo.",
+            "Camille: Camille. Enchantée.",
+            "Léo: Enchanté. Un café, ça vous dit ?"
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "il y a du monde",
+              "explanation_fr": "il y a beaucoup de gens",
+              "translation_ru": "много людей"
+            },
+            {
+              "word": "le midi",
+              "explanation_fr": "à l'heure du déjeuner",
+              "translation_ru": "в обед"
+            },
+            {
+              "word": "souvent",
+              "explanation_fr": "beaucoup de fois",
+              "translation_ru": "часто"
+            },
+            {
+              "word": "le service",
+              "explanation_fr": "les personnes qui servent au café",
+              "translation_ru": "обслуживание"
+            },
+            {
+              "word": "ça vous dit ?",
+              "explanation_fr": "vous avez envie ?",
+              "translation_ru": "вам хочется? / как вам идея?"
+            },
+            {
+              "word": "enchanté(e)",
+              "explanation_fr": "formule quand on rencontre quelqu'un",
+              "translation_ru": "приятно познакомиться"
+            }
+          ],
+          "culture_note": "En France, dans un café plein, il est normal de demander si une chaise est libre. Une petite conversation simple peut commencer très naturellement comme ça.",
+          "comprehension": [
+            {
+              "answer": "Потому что она хочет сесть на свободный стул.",
+              "question": "Pourquoi Camille parle-t-elle à Léo ?"
+            },
+            {
+              "answer": "Он говорит, что кофе хороший.",
+              "question": "Que dit Léo sur le café ?"
+            },
+            {
+              "answer": "В конце он предлагает выпить кофе.",
+              "question": "Que propose Léo à la fin ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Pardon, la chaise est libre ?",
+            "Oui, bien sûr, allez-y.",
+            "Merci. Il y a du monde.",
+            "Oui, le midi, toujours.",
+            "Vous venez souvent ici ?",
+            "Oui, assez souvent.",
+            "Le café est bon ?",
+            "Oui. Le service, moins.",
+            "Ah oui, pas facile !",
+            "Oui. Moi, c'est Léo.",
+            "Camille. Enchantée.",
+            "Enchanté. Un café, ça vous dit ?"
+          ]
+        },
+        "step5": {
+          "models": [
+            "Pardon, la chaise est libre ?",
+            "Vous venez souvent ici ?",
+            "Un café, ça vous dit ?"
+          ],
+          "scenario": "Вы в кафе. Рядом есть свободный стул, и вы начинаете простой разговор с незнакомым человеком."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 2,
+      "level": "A1",
+      "lesson_number": 2,
+      "title_fr": "À la boulangerie",
+      "title_ru": "В булочной",
+      "content": {
+        "step1": {
+          "phrase_fr": "Je vais prendre...",
+          "phrase_ru": "Я возьму...",
+          "example_fr": "Je vais prendre une baguette, s'il vous plaît.",
+          "explanation_fr": "On utilise cette phrase pour commander quelque chose dans un magasin ou une boulangerie."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Camille: Bonjour madame.",
+            "Inès: Bonjour, je vous écoute.",
+            "Camille: Je vais prendre une baguette.",
+            "Inès: Bien cuite ou non ?",
+            "Camille: Pas trop cuite, merci.",
+            "Inès: Très bien. Avec ça ?",
+            "Camille: Deux croissants, s'il vous plaît.",
+            "Inès: D'accord. Pour ce matin ?",
+            "Camille: Oui, pour ce matin.",
+            "Inès: Très bien. Voilà.",
+            "Camille: Merci beaucoup.",
+            "Inès: Avec plaisir."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "je vais prendre",
+              "explanation_fr": "je veux acheter",
+              "translation_ru": "я возьму"
+            },
+            {
+              "word": "bien cuite",
+              "explanation_fr": "plus dorée, plus croustillante",
+              "translation_ru": "хорошо пропечённая"
+            },
+            {
+              "word": "pas trop cuite",
+              "explanation_fr": "moins dorée",
+              "translation_ru": "не слишком пропечённая"
+            },
+            {
+              "word": "avec ça ?",
+              "explanation_fr": "autre chose ?",
+              "translation_ru": "что-нибудь ещё?"
+            },
+            {
+              "word": "un croissant",
+              "explanation_fr": "viennoiserie du matin",
+              "translation_ru": "круассан"
+            },
+            {
+              "word": "avec plaisir",
+              "explanation_fr": "formule polie",
+              "translation_ru": "с удовольствием / пожалуйста"
+            }
+          ],
+          "culture_note": "En France, à la boulangerie, on demande souvent si la baguette doit être bien cuite ou non. C'est une question très normale.",
+          "comprehension": [
+            {
+              "answer": "Она покупает багет и два круассана.",
+              "question": "Qu'est-ce que Camille achète ?"
+            },
+            {
+              "answer": "Она хочет не слишком сильно пропечённый багет.",
+              "question": "Comment veut-elle la baguette ?"
+            },
+            {
+              "answer": "Круассаны нужны на это утро.",
+              "question": "Les croissants sont pour quand ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour madame.",
+            "Bonjour, je vous écoute.",
+            "Je vais prendre une baguette.",
+            "Bien cuite ou non ?",
+            "Pas trop cuite, merci.",
+            "Très bien. Avec ça ?",
+            "Deux croissants, s'il vous plaît.",
+            "D'accord. Pour ce matin ?",
+            "Oui, pour ce matin.",
+            "Très bien. Voilà.",
+            "Merci beaucoup.",
+            "Avec plaisir."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, je vais prendre une baguette.",
+            "Pas trop cuite, s'il vous plaît.",
+            "Et deux croissants, merci."
+          ],
+          "scenario": "Вы в булочной и хотите купить хлеб и что-нибудь к завтраку."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 3,
+      "level": "A1",
+      "lesson_number": 3,
+      "title_fr": "Dans le métro",
+      "title_ru": "В метро",
+      "content": {
+        "step1": {
+          "phrase_fr": "On est bien sur la ligne... ?",
+          "phrase_ru": "Мы точно на линии...?",
+          "example_fr": "Pardon, on est bien sur la ligne 2 ?",
+          "explanation_fr": "On utilise cette phrase pour vérifier qu'on est dans le bon métro ou le bon train."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Léo: Pardon, on est bien sur la ligne 2 ?",
+            "Mathieu: Oui, c'est bien la 2.",
+            "Léo: Merci. Je vais à Bellecour.",
+            "Mathieu: Alors, c'est bon.",
+            "Léo: Je descends où ?",
+            "Mathieu: Au prochain arrêt.",
+            "Léo: D'accord, merci beaucoup.",
+            "Mathieu: De rien.",
+            "Léo: Le métro est souvent plein ?",
+            "Mathieu: Oui, très souvent.",
+            "Léo: Ah oui, je vois.",
+            "Mathieu: Bienvenue dans le métro."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "la ligne",
+              "explanation_fr": "le trajet du métro",
+              "translation_ru": "линия метро"
+            },
+            {
+              "word": "descendre",
+              "explanation_fr": "sortir du métro à une station",
+              "translation_ru": "выходить на станции"
+            },
+            {
+              "word": "le prochain arrêt",
+              "explanation_fr": "la station suivante",
+              "translation_ru": "следующая остановка"
+            },
+            {
+              "word": "souvent",
+              "explanation_fr": "beaucoup de fois",
+              "translation_ru": "часто"
+            },
+            {
+              "word": "plein",
+              "explanation_fr": "avec beaucoup de monde",
+              "translation_ru": "полный"
+            },
+            {
+              "word": "bienvenue",
+              "explanation_fr": "formule gentille ou un peu drôle",
+              "translation_ru": "добро пожаловать"
+            }
+          ],
+          "culture_note": "Dans le métro en France, on demande souvent son chemin très directement à une autre personne. C'est rapide et pratique.",
+          "comprehension": [
+            {
+              "answer": "Он ищет вторую линию.",
+              "question": "Quelle ligne cherche Léo ?"
+            },
+            {
+              "answer": "Он хочет доехать до Белькур.",
+              "question": "Où veut-il aller ?"
+            },
+            {
+              "answer": "Ему нужно выйти на следующей станции.",
+              "question": "Où doit-il descendre ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Pardon, on est bien sur la ligne 2 ?",
+            "Oui, c'est bien la 2.",
+            "Merci. Je vais à Bellecour.",
+            "Alors, c'est bon.",
+            "Je descends où ?",
+            "Au prochain arrêt.",
+            "D'accord, merci beaucoup.",
+            "De rien.",
+            "Le métro est souvent plein ?",
+            "Oui, très souvent.",
+            "Ah oui, je vois.",
+            "Bienvenue dans le métro."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Pardon, on est bien sur la ligne 2 ?",
+            "Je vais à Bellecour.",
+            "Je descends au prochain arrêt ?"
+          ],
+          "scenario": "Вы в метро и хотите проверить, что едете на правильной линии."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 4,
+      "level": "A1",
+      "lesson_number": 4,
+      "title_fr": "Au marché",
+      "title_ru": "На рынке",
+      "content": {
+        "step1": {
+          "phrase_fr": "Ils ont l'air bons",
+          "phrase_ru": "Они выглядят хорошими / аппетитными",
+          "example_fr": "Vos abricots ont l'air bons.",
+          "explanation_fr": "On utilise cette expression pour parler de fruits, de légumes ou d'un plat quand l'aspect est agréable."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Camille: Bonjour monsieur.",
+            "Antoine: Bonjour madame.",
+            "Camille: Ils ont l'air bons, vos abricots.",
+            "Antoine: Oui, très bons même.",
+            "Camille: Je peux goûter ?",
+            "Antoine: Oui, bien sûr.",
+            "Camille: Ah, c'est bon ça.",
+            "Antoine: Je vous l'avais dit.",
+            "Camille: Je vais prendre un kilo.",
+            "Antoine: Très bien.",
+            "Camille: Et les tomates aussi.",
+            "Antoine: Très bon choix."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "ils ont l'air bons",
+              "explanation_fr": "ils semblent bons",
+              "translation_ru": "они выглядят хорошими"
+            },
+            {
+              "word": "goûter",
+              "explanation_fr": "essayer avec la bouche",
+              "translation_ru": "попробовать на вкус"
+            },
+            {
+              "word": "un kilo",
+              "explanation_fr": "mille grammes",
+              "translation_ru": "килограмм"
+            },
+            {
+              "word": "très bon choix",
+              "explanation_fr": "bon achat",
+              "translation_ru": "очень хороший выбор"
+            },
+            {
+              "word": "même",
+              "explanation_fr": "ici, pour renforcer",
+              "translation_ru": "даже / очень"
+            },
+            {
+              "word": "aussi",
+              "explanation_fr": "en plus",
+              "translation_ru": "тоже / ещё"
+            }
+          ],
+          "culture_note": "Au marché en France, on peut parfois goûter un fruit avant d'acheter. Le vendeur aime souvent dire que ses produits sont très bons.",
+          "comprehension": [
+            {
+              "answer": "Она смотрит на абрикосы.",
+              "question": "Quel fruit regarde Camille ?"
+            },
+            {
+              "answer": "Она сначала пробует один абрикос.",
+              "question": "Que fait-elle avant d'acheter ?"
+            },
+            {
+              "answer": "В конце она покупает килограмм абрикосов и ещё помидоры.",
+              "question": "Qu'achète-t-elle à la fin ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour monsieur.",
+            "Bonjour madame.",
+            "Ils ont l'air bons, vos abricots.",
+            "Oui, très bons même.",
+            "Je peux goûter ?",
+            "Oui, bien sûr.",
+            "Ah, c'est bon ça.",
+            "Je vous l'avais dit.",
+            "Je vais prendre un kilo.",
+            "Très bien.",
+            "Et les tomates aussi.",
+            "Très bon choix."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, ils ont l'air bons, vos abricots.",
+            "Je peux goûter ?",
+            "Je vais prendre un kilo."
+          ],
+          "scenario": "Вы на рынке, пробуете фрукт и решаете, что купить."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 5,
+      "level": "A1",
+      "lesson_number": 5,
+      "title_fr": "Chez le médecin",
+      "title_ru": "У врача — записаться на приём",
+      "content": {
+        "step1": {
+          "phrase_fr": "Je voudrais prendre rendez-vous",
+          "phrase_ru": "Я хотел(а) бы записаться на приём",
+          "example_fr": "Bonjour, je voudrais prendre rendez-vous pour demain.",
+          "explanation_fr": "On utilise cette phrase pour demander un rendez-vous de manière polie."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Chloé: Bonjour docteur.",
+            "Youssef: Bonjour madame.",
+            "Chloé: Je voudrais prendre rendez-vous.",
+            "Youssef: Pour aujourd'hui ?",
+            "Chloé: Oui, si possible.",
+            "Youssef: Vous avez mal où ?",
+            "Chloé: À la gorge.",
+            "Youssef: D'accord. À seize heures ?",
+            "Chloé: Oui, très bien.",
+            "Youssef: Parfait. À seize heures.",
+            "Chloé: Merci beaucoup.",
+            "Youssef: Avec plaisir."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "prendre rendez-vous",
+              "explanation_fr": "fixer une heure",
+              "translation_ru": "записаться на приём"
+            },
+            {
+              "word": "si possible",
+              "explanation_fr": "si c'est possible",
+              "translation_ru": "если возможно"
+            },
+            {
+              "word": "la gorge",
+              "explanation_fr": "partie intérieure du cou",
+              "translation_ru": "горло"
+            },
+            {
+              "word": "parfait",
+              "explanation_fr": "très bien",
+              "translation_ru": "отлично"
+            },
+            {
+              "word": "avec plaisir",
+              "explanation_fr": "formule polie",
+              "translation_ru": "с удовольствием / пожалуйста"
+            },
+            {
+              "word": "aujourd'hui",
+              "explanation_fr": "ce jour",
+              "translation_ru": "сегодня"
+            }
+          ],
+          "culture_note": "En France, on dit très souvent “prendre rendez-vous” pour le médecin. La phrase est utile aussi pour le coiffeur, la banque ou d'autres services.",
+          "comprehension": [
+            {
+              "answer": "Она приходит, чтобы записаться на приём.",
+              "question": "Pourquoi Chloé vient-elle ?"
+            },
+            {
+              "answer": "У неё болит горло.",
+              "question": "Où a-t-elle mal ?"
+            },
+            {
+              "answer": "Приём назначен на 16:00.",
+              "question": "À quelle heure est le rendez-vous ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour docteur.",
+            "Bonjour madame.",
+            "Je voudrais prendre rendez-vous.",
+            "Pour aujourd'hui ?",
+            "Oui, si possible.",
+            "Vous avez mal où ?",
+            "À la gorge.",
+            "D'accord. À seize heures ?",
+            "Oui, très bien.",
+            "Parfait. À seize heures.",
+            "Merci beaucoup.",
+            "Avec plaisir."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, je voudrais prendre rendez-vous.",
+            "Oui, si possible pour aujourd'hui.",
+            "Merci beaucoup, à tout à l'heure."
+          ],
+          "scenario": "Вы приходите к врачу и хотите записаться на приём."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 6,
+      "level": "A1",
+      "lesson_number": 6,
+      "title_fr": "À la pharmacie",
+      "title_ru": "В аптеке — купить лекарство",
+      "content": {
+        "step1": {
+          "phrase_fr": "Il me faut quelque chose pour la gorge",
+          "phrase_ru": "Мне нужно что-нибудь от горла",
+          "example_fr": "Bonjour, il me faut quelque chose pour la gorge.",
+          "explanation_fr": "On utilise cette phrase pour demander un médicament ou un produit pour un problème simple."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Lucie: Bonjour madame.",
+            "Camille: Bonjour.",
+            "Lucie: Il me faut quelque chose pour la gorge.",
+            "Camille: Vous avez mal depuis quand ?",
+            "Lucie: Depuis hier soir.",
+            "Camille: Vous avez de la fièvre ?",
+            "Lucie: Un peu, oui.",
+            "Camille: D'accord. Je vous donne ça.",
+            "Lucie: Merci beaucoup.",
+            "Camille: Avec plaisir."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "il me faut",
+              "explanation_fr": "j'ai besoin de",
+              "translation_ru": "мне нужно"
+            },
+            {
+              "word": "la gorge",
+              "explanation_fr": "partie intérieure du cou",
+              "translation_ru": "горло"
+            },
+            {
+              "word": "depuis quand ?",
+              "explanation_fr": "à partir de quel moment ?",
+              "translation_ru": "с какого времени? / как давно?"
+            },
+            {
+              "word": "la fièvre",
+              "explanation_fr": "température du corps trop élevée",
+              "translation_ru": "температура / жар"
+            },
+            {
+              "word": "je vous donne ça",
+              "explanation_fr": "je vous propose ce produit",
+              "translation_ru": "я дам вам вот это"
+            },
+            {
+              "word": "avec plaisir",
+              "explanation_fr": "formule polie",
+              "translation_ru": "с удовольствием / пожалуйста"
+            }
+          ],
+          "culture_note": "En France, on va souvent à la pharmacie pour un petit problème comme un mal de gorge. On peut demander conseil directement.",
+          "comprehension": [
+            {
+              "answer": "Потому что ей нужно что-нибудь от боли в горле.",
+              "question": "Pourquoi Lucie va-t-elle à la pharmacie ?"
+            },
+            {
+              "answer": "У неё болит со вчерашнего вечера.",
+              "question": "Depuis quand a-t-elle mal ?"
+            },
+            {
+              "answer": "Да, немного.",
+              "question": "A-t-elle un peu de fièvre ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour madame.",
+            "Bonjour.",
+            "Il me faut quelque chose pour la gorge.",
+            "Vous avez mal depuis quand ?",
+            "Depuis hier soir.",
+            "Vous avez de la fièvre ?",
+            "Un peu, oui.",
+            "D'accord. Je vous donne ça.",
+            "Merci beaucoup.",
+            "Avec plaisir."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, il me faut quelque chose pour la gorge.",
+            "J'ai mal depuis hier soir.",
+            "Merci beaucoup."
+          ],
+          "scenario": "Вы в аптеке и хотите купить что-нибудь от боли в горле."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 7,
+      "level": "A1",
+      "lesson_number": 7,
+      "title_fr": "Au restaurant",
+      "title_ru": "В ресторане — заказать обед",
+      "content": {
+        "step1": {
+          "phrase_fr": "Je vais prendre le plat du jour",
+          "phrase_ru": "Я возьму блюдо дня",
+          "example_fr": "Je vais prendre le plat du jour, s'il vous plaît.",
+          "explanation_fr": "On utilise cette phrase pour commander le menu proposé ce jour-là."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Léo: Bonjour madame.",
+            "Inès: Bonjour monsieur. Vous avez choisi ?",
+            "Léo: Oui, presque.",
+            "Inès: Je vous écoute.",
+            "Léo: Je vais prendre le plat du jour.",
+            "Inès: Très bien. Et à boire ?",
+            "Léo: Une eau, s'il vous plaît.",
+            "Inès: Plate ou gazeuse ?",
+            "Léo: Plate, merci.",
+            "Inès: Parfait, ça arrive."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "le plat du jour",
+              "explanation_fr": "le plat proposé aujourd'hui",
+              "translation_ru": "блюдо дня"
+            },
+            {
+              "word": "à boire",
+              "explanation_fr": "comme boisson",
+              "translation_ru": "пить / из напитков"
+            },
+            {
+              "word": "plate",
+              "explanation_fr": "sans bulles",
+              "translation_ru": "негазированная"
+            },
+            {
+              "word": "gazeuse",
+              "explanation_fr": "avec des bulles",
+              "translation_ru": "газированная"
+            },
+            {
+              "word": "ça arrive",
+              "explanation_fr": "je vous apporte ça bientôt",
+              "translation_ru": "сейчас принесу"
+            },
+            {
+              "word": "je vous écoute",
+              "explanation_fr": "dites-moi votre commande",
+              "translation_ru": "я слушаю вас"
+            }
+          ],
+          "culture_note": "En France, au restaurant, le plat du jour est souvent une option simple et classique. On demande aussi souvent si on veut une eau plate ou gazeuse.",
+          "comprehension": [
+            {
+              "answer": "Он заказывает блюдо дня.",
+              "question": "Qu'est-ce que Léo commande ?"
+            },
+            {
+              "answer": "Он хочет воду.",
+              "question": "Que veut-il boire ?"
+            },
+            {
+              "answer": "Он выбирает негазированную воду.",
+              "question": "Quelle eau choisit-il ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour madame.",
+            "Bonjour monsieur. Vous avez choisi ?",
+            "Oui, presque.",
+            "Je vous écoute.",
+            "Je vais prendre le plat du jour.",
+            "Très bien. Et à boire ?",
+            "Une eau, s'il vous plaît.",
+            "Plate ou gazeuse ?",
+            "Plate, merci.",
+            "Parfait, ça arrive."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, je vais prendre le plat du jour.",
+            "Une eau, s'il vous plaît.",
+            "Plate, merci."
+          ],
+          "scenario": "Вы в ресторане и делаете простой заказ."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 8,
+      "level": "A1",
+      "lesson_number": 8,
+      "title_fr": "À la gare",
+      "title_ru": "На вокзале — купить билет",
+      "content": {
+        "step1": {
+          "phrase_fr": "Je voudrais un billet pour...",
+          "phrase_ru": "Я хотел(а) бы билет до...",
+          "example_fr": "Je voudrais un billet pour Lille, s'il vous plaît.",
+          "explanation_fr": "On utilise cette phrase pour acheter un billet de train."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Mathieu: Bonjour madame.",
+            "Nadia: Bonjour monsieur.",
+            "Mathieu: Je voudrais un billet pour Lille.",
+            "Nadia: Pour aujourd'hui ?",
+            "Mathieu: Oui, pour cet après-midi.",
+            "Nadia: Aller simple ou aller-retour ?",
+            "Mathieu: Aller-retour, s'il vous plaît.",
+            "Nadia: En première ou en seconde ?",
+            "Mathieu: En seconde, merci.",
+            "Nadia: Très bien."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "un billet",
+              "explanation_fr": "document pour voyager",
+              "translation_ru": "билет"
+            },
+            {
+              "word": "cet après-midi",
+              "explanation_fr": "aujourd'hui dans l'après-midi",
+              "translation_ru": "сегодня днём"
+            },
+            {
+              "word": "aller simple",
+              "explanation_fr": "billet pour un seul trajet",
+              "translation_ru": "билет в один конец"
+            },
+            {
+              "word": "aller-retour",
+              "explanation_fr": "billet pour partir et revenir",
+              "translation_ru": "билет туда-обратно"
+            },
+            {
+              "word": "la première / la seconde",
+              "explanation_fr": "classes du train",
+              "translation_ru": "первый / второй класс"
+            },
+            {
+              "word": "pour aujourd'hui ?",
+              "explanation_fr": "pour ce jour ?",
+              "translation_ru": "на сегодня?"
+            }
+          ],
+          "culture_note": "À la gare en France, les questions “aller simple ou aller-retour ?” et “première ou seconde ?” sont très courantes.",
+          "comprehension": [
+            {
+              "answer": "Он хочет поехать в Лилль.",
+              "question": "Où veut aller Mathieu ?"
+            },
+            {
+              "answer": "Он хочет уехать сегодня днём.",
+              "question": "Quand veut-il partir ?"
+            },
+            {
+              "answer": "Он берёт билет туда-обратно, во втором классе.",
+              "question": "Quel type de billet choisit-il ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour madame.",
+            "Bonjour monsieur.",
+            "Je voudrais un billet pour Lille.",
+            "Pour aujourd'hui ?",
+            "Oui, pour cet après-midi.",
+            "Aller simple ou aller-retour ?",
+            "Aller-retour, s'il vous plaît.",
+            "En première ou en seconde ?",
+            "En seconde, merci.",
+            "Très bien."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, je voudrais un billet pour Lille.",
+            "Pour aujourd'hui, s'il vous plaît.",
+            "Aller-retour, en seconde."
+          ],
+          "scenario": "Вы у кассы на вокзале и покупаете билет."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 9,
+      "level": "A1",
+      "lesson_number": 9,
+      "title_fr": "Au téléphone",
+      "title_ru": "По телефону — позвонить другу",
+      "content": {
+        "step1": {
+          "phrase_fr": "Tu peux parler ?",
+          "phrase_ru": "Ты можешь говорить?",
+          "example_fr": "Salut, tu peux parler deux minutes ?",
+          "explanation_fr": "On utilise cette question au téléphone pour savoir si l'autre personne est disponible."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Camille: Allô, tu peux parler ?",
+            "Margot: Oui, mais vite.",
+            "Camille: Ah bon, pourquoi ?",
+            "Margot: Je suis dans la rue.",
+            "Camille: D'accord. On se voit ce soir ?",
+            "Margot: Oui, bonne idée.",
+            "Camille: Huit heures ?",
+            "Margot: Parfait.",
+            "Camille: Super, à ce soir.",
+            "Margot: À ce soir."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "allô",
+              "explanation_fr": "mot pour commencer un appel",
+              "translation_ru": "алло"
+            },
+            {
+              "word": "vite",
+              "explanation_fr": "rapidement",
+              "translation_ru": "быстро"
+            },
+            {
+              "word": "dans la rue",
+              "explanation_fr": "dehors, dans la ville",
+              "translation_ru": "на улице"
+            },
+            {
+              "word": "on se voit ?",
+              "explanation_fr": "on se rencontre ?",
+              "translation_ru": "увидимся?"
+            },
+            {
+              "word": "ce soir",
+              "explanation_fr": "aujourd'hui dans la soirée",
+              "translation_ru": "сегодня вечером"
+            },
+            {
+              "word": "parfait",
+              "explanation_fr": "très bien",
+              "translation_ru": "отлично"
+            }
+          ],
+          "culture_note": "Entre amis, au téléphone, on va souvent droit au but en France: “Tu peux parler ?”, puis la vraie question arrive tout de suite.",
+          "comprehension": [
+            {
+              "answer": "Потому что она на улице.",
+              "question": "Pourquoi Margot parle-t-elle vite ?"
+            },
+            {
+              "answer": "Она предлагает увидеться вечером.",
+              "question": "Que propose Camille ?"
+            },
+            {
+              "answer": "Они встречаются в восемь часов.",
+              "question": "À quelle heure se retrouvent-elles ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Allô, tu peux parler ?",
+            "Oui, mais vite.",
+            "Ah bon, pourquoi ?",
+            "Je suis dans la rue.",
+            "D'accord. On se voit ce soir ?",
+            "Oui, bonne idée.",
+            "Huit heures ?",
+            "Parfait.",
+            "Super, à ce soir.",
+            "À ce soir."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Allô, tu peux parler ?",
+            "On se voit ce soir ?",
+            "Huit heures, ça va ?"
+          ],
+          "scenario": "Вы звоните другу, чтобы договориться о встрече вечером."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 10,
+      "level": "A1",
+      "lesson_number": 10,
+      "title_fr": "À l'hôtel",
+      "title_ru": "В отеле — заселиться",
+      "content": {
+        "step1": {
+          "phrase_fr": "J'ai une réservation",
+          "phrase_ru": "У меня бронь",
+          "example_fr": "Bonjour, j'ai une réservation pour deux nuits.",
+          "explanation_fr": "On utilise cette phrase à l'hôtel pour dire qu'une chambre est réservée."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Hugo: Bonjour madame.",
+            "Camille: Bonjour monsieur.",
+            "Hugo: J'ai une réservation.",
+            "Camille: À quel nom ?",
+            "Hugo: Hugo Martin.",
+            "Camille: Oui, je l'ai.",
+            "Hugo: Pour deux nuits.",
+            "Camille: Très bien. Voici votre clé.",
+            "Hugo: Merci beaucoup.",
+            "Camille: Bonne soirée."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "une réservation",
+              "explanation_fr": "chambre réservée à l'avance",
+              "translation_ru": "бронь"
+            },
+            {
+              "word": "à quel nom ?",
+              "explanation_fr": "quel est le nom ?",
+              "translation_ru": "на какое имя?"
+            },
+            {
+              "word": "je l'ai",
+              "explanation_fr": "oui, la réservation est là",
+              "translation_ru": "да, бронь есть"
+            },
+            {
+              "word": "la clé",
+              "explanation_fr": "objet pour ouvrir la porte",
+              "translation_ru": "ключ"
+            },
+            {
+              "word": "bonne soirée",
+              "explanation_fr": "formule polie",
+              "translation_ru": "хорошего вечера"
+            },
+            {
+              "word": "pour deux nuits",
+              "explanation_fr": "deux nuits à l'hôtel",
+              "translation_ru": "на две ночи"
+            }
+          ],
+          "culture_note": "À l'hôtel en France, “J'ai une réservation” est la phrase la plus utile au début. Ensuite, on demande souvent le nom et le nombre de nuits.",
+          "comprehension": [
+            {
+              "answer": "Он в отеле, потому что у него есть бронь.",
+              "question": "Pourquoi Hugo est-il à l'hôtel ?"
+            },
+            {
+              "answer": "Бронь оформлена на имя Hugo Martin.",
+              "question": "À quel nom est la réservation ?"
+            },
+            {
+              "answer": "Он остаётся на две ночи.",
+              "question": "Pour combien de nuits reste-t-il ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour madame.",
+            "Bonjour monsieur.",
+            "J'ai une réservation.",
+            "À quel nom ?",
+            "Hugo Martin.",
+            "Oui, je l'ai.",
+            "Pour deux nuits.",
+            "Très bien. Voici votre clé.",
+            "Merci beaucoup.",
+            "Bonne soirée."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, j'ai une réservation.",
+            "C'est au nom de...",
+            "Merci beaucoup."
+          ],
+          "scenario": "Вы приезжаете в отель и хотите заселиться."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 11,
+      "level": "A1",
+      "lesson_number": 11,
+      "title_fr": "Dans la rue",
+      "title_ru": "На улице — спросить время",
+      "content": {
+        "step1": {
+          "phrase_fr": "Vous avez l'heure ?",
+          "phrase_ru": "У вас есть время? / Который час?",
+          "example_fr": "Pardon monsieur, vous avez l'heure ?",
+          "explanation_fr": "On utilise cette question pour demander l'heure à quelqu'un dans la rue."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Antoine: Pardon monsieur, vous avez l'heure ?",
+            "Léo: Oui, bien sûr. Il est midi vingt.",
+            "Antoine: Ah, merci beaucoup.",
+            "Léo: Vous avez un rendez-vous ?",
+            "Antoine: Non, j'ai faim, surtout.",
+            "Léo: Ah, je comprends.",
+            "Antoine: Il y a une boulangerie près d'ici ?",
+            "Léo: Oui, juste là, à droite.",
+            "Antoine: Parfait, merci.",
+            "Léo: Avec plaisir.",
+            "Antoine: Bonne journée.",
+            "Léo: Vous aussi."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "vous avez l'heure ?",
+              "explanation_fr": "quelle heure est-il ?",
+              "translation_ru": "который час?"
+            },
+            {
+              "word": "un rendez-vous",
+              "explanation_fr": "moment prévu avec quelqu'un",
+              "translation_ru": "встреча"
+            },
+            {
+              "word": "surtout",
+              "explanation_fr": "ici, principalement",
+              "translation_ru": "главным образом"
+            },
+            {
+              "word": "près d'ici",
+              "explanation_fr": "pas loin",
+              "translation_ru": "недалеко отсюда"
+            },
+            {
+              "word": "juste là",
+              "explanation_fr": "très près",
+              "translation_ru": "прямо здесь"
+            },
+            {
+              "word": "avec plaisir",
+              "explanation_fr": "formule polie",
+              "translation_ru": "с удовольствием / пожалуйста"
+            }
+          ],
+          "culture_note": "En France, “Vous avez l'heure ?” est une manière très naturelle et simple de demander l'heure à un inconnu dans la rue.",
+          "comprehension": [
+            {
+              "answer": "Сейчас 12:20.",
+              "question": "Quelle heure est-il ?"
+            },
+            {
+              "answer": "Потому что он хочет savoir время и, вероятно, пойти поесть.",
+              "question": "Pourquoi Antoine demande-t-il l'heure ?"
+            },
+            {
+              "answer": "Потом он ищет булочную.",
+              "question": "Qu'est-ce qu'il cherche après ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Pardon monsieur, vous avez l'heure ?",
+            "Oui, bien sûr. Il est midi vingt.",
+            "Ah, merci beaucoup.",
+            "Vous avez un rendez-vous ?",
+            "Non, j'ai faim, surtout.",
+            "Ah, je comprends.",
+            "Il y a une boulangerie près d'ici ?",
+            "Oui, juste là, à droite.",
+            "Parfait, merci.",
+            "Avec plaisir.",
+            "Bonne journée.",
+            "Vous aussi."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Pardon, vous avez l'heure ?",
+            "Merci beaucoup.",
+            "Bonne journée."
+          ],
+          "scenario": "Вы на улице и хотите узнать время у прохожего."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 12,
+      "level": "A1",
+      "lesson_number": 12,
+      "title_fr": "Au supermarché",
+      "title_ru": "В супермаркете — найти продукт",
+      "content": {
+        "step1": {
+          "phrase_fr": "Je cherche le riz",
+          "phrase_ru": "Я ищу рис",
+          "example_fr": "Excusez-moi, je cherche le riz.",
+          "explanation_fr": "On utilise cette phrase pour demander où se trouve un produit dans un magasin."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Chloé: Excusez-moi madame, je cherche le riz.",
+            "Émilie: Ah... moi aussi, justement.",
+            "Chloé: Ah bon ? Pardon.",
+            "Émilie: Ce n'est pas grave.",
+            "Chloé: Je pensais que vous travailliez ici.",
+            "Émilie: Non, pas du tout.",
+            "Chloé: D'accord, désolée.",
+            "Émilie: Attendez... je vois un panneau.",
+            "Chloé: Ah oui, là-bas.",
+            "Émilie: Oui, “pâtes, riz, semoule”.",
+            "Chloé: Merci beaucoup.",
+            "Émilie: Avec plaisir."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "je cherche",
+              "explanation_fr": "je veux trouver",
+              "translation_ru": "я ищу"
+            },
+            {
+              "word": "pas du tout",
+              "explanation_fr": "non, vraiment pas",
+              "translation_ru": "совсем нет"
+            },
+            {
+              "word": "un panneau",
+              "explanation_fr": "indication écrite",
+              "translation_ru": "указатель / табличка"
+            },
+            {
+              "word": "là-bas",
+              "explanation_fr": "plus loin",
+              "translation_ru": "вон там"
+            },
+            {
+              "word": "le rayon",
+              "explanation_fr": "partie du magasin pour un produit",
+              "translation_ru": "отдел / ряд"
+            },
+            {
+              "word": "avec plaisir",
+              "explanation_fr": "formule polie",
+              "translation_ru": "с удовольствием / пожалуйста"
+            }
+          ],
+          "culture_note": "Dans les supermarchés en France, on peut facilement demander de l'aide à une autre personne par erreur. Ça arrive souvent.",
+          "comprehension": [
+            {
+              "answer": "Она ищет рис.",
+              "question": "Que cherche Chloé ?"
+            },
+            {
+              "answer": "Потому что она подумала, что Эмили работает в магазине.",
+              "question": "Pourquoi Chloé s'excuse-t-elle ?"
+            },
+            {
+              "answer": "Они видят указатель с надписью “pâtes, riz, semoule”.",
+              "question": "Comment trouvent-elles le rayon ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Excusez-moi madame, je cherche le riz.",
+            "Ah... moi aussi, justement.",
+            "Ah bon ? Pardon.",
+            "Ce n'est pas grave.",
+            "Je pensais que vous travailliez ici.",
+            "Non, pas du tout.",
+            "D'accord, désolée.",
+            "Attendez... je vois un panneau.",
+            "Ah oui, là-bas.",
+            "Oui, “pâtes, riz, semoule”.",
+            "Merci beaucoup.",
+            "Avec plaisir."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Excusez-moi, je cherche le riz.",
+            "C'est où, s'il vous plaît ?",
+            "Merci beaucoup."
+          ],
+          "scenario": "Вы в супермаркете и не можете найти нужный продукт."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 13,
+      "level": "A1",
+      "lesson_number": 13,
+      "title_fr": "À la poste",
+      "title_ru": "На почте — отправить посылку",
+      "content": {
+        "step1": {
+          "phrase_fr": "Je voudrais envoyer un colis",
+          "phrase_ru": "Я хотел(а) бы отправить посылку",
+          "example_fr": "Bonjour, je voudrais envoyer un colis en France.",
+          "explanation_fr": "On utilise cette phrase à la poste pour dire qu'on veut envoyer un paquet."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Julien: Bonjour madame.",
+            "Camille: Bonjour monsieur.",
+            "Julien: Je voudrais envoyer un colis.",
+            "Camille: En France ou à l'étranger ?",
+            "Julien: En France.",
+            "Camille: D'accord. C'est fragile ?",
+            "Julien: Oui, un peu.",
+            "Camille: Qu'est-ce qu'il y a dedans ?",
+            "Julien: Des livres.",
+            "Camille: Très bien. Écrivez l'adresse ici.",
+            "Julien: D'accord, merci.",
+            "Camille: Avec plaisir."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "envoyer",
+              "explanation_fr": "faire partir quelque chose",
+              "translation_ru": "отправлять"
+            },
+            {
+              "word": "un colis",
+              "explanation_fr": "paquet envoyé par la poste",
+              "translation_ru": "посылка"
+            },
+            {
+              "word": "à l'étranger",
+              "explanation_fr": "dans un autre pays",
+              "translation_ru": "за границу"
+            },
+            {
+              "word": "fragile",
+              "explanation_fr": "qui peut se casser facilement",
+              "translation_ru": "хрупкий"
+            },
+            {
+              "word": "dedans",
+              "explanation_fr": "à l'intérieur",
+              "translation_ru": "внутри"
+            },
+            {
+              "word": "l'adresse",
+              "explanation_fr": "information du lieu de destination",
+              "translation_ru": "адрес"
+            }
+          ],
+          "culture_note": "À la poste en France, on demande souvent si le colis est fragile et s'il va en France ou à l'étranger.",
+          "comprehension": [
+            {
+              "answer": "Он хочет отправить посылку.",
+              "question": "Que veut faire Julien ?"
+            },
+            {
+              "answer": "Посылка отправляется по Франции.",
+              "question": "Où va le colis ?"
+            },
+            {
+              "answer": "В посылке книги.",
+              "question": "Qu'est-ce qu'il y a dans le colis ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour madame.",
+            "Bonjour monsieur.",
+            "Je voudrais envoyer un colis.",
+            "En France ou à l'étranger ?",
+            "En France.",
+            "D'accord. C'est fragile ?",
+            "Oui, un peu.",
+            "Qu'est-ce qu'il y a dedans ?",
+            "Des livres.",
+            "Très bien. Écrivez l'adresse ici.",
+            "D'accord, merci.",
+            "Avec plaisir."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, je voudrais envoyer un colis.",
+            "En France, s'il vous plaît.",
+            "Oui, c'est fragile."
+          ],
+          "scenario": "Вы на почте и хотите отправить посылку."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 14,
+      "level": "A1",
+      "lesson_number": 14,
+      "title_fr": "Au parc",
+      "title_ru": "В парке — погода и прогулка",
+      "content": {
+        "step1": {
+          "phrase_fr": "Il fait bon",
+          "phrase_ru": "Хорошая погода / Приятно на улице",
+          "example_fr": "Aujourd'hui, il fait bon au parc.",
+          "explanation_fr": "On utilise cette expression quand le temps est agréable."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Camille: Bonjour madame.",
+            "Lucie: Bonjour.",
+            "Camille: Il fait bon aujourd'hui.",
+            "Lucie: Oui, ça fait du bien.",
+            "Camille: Vous venez souvent ici ?",
+            "Lucie: Oui, pour marcher un peu.",
+            "Camille: Moi aussi, j'aime bien.",
+            "Lucie: Il y a du soleil, en plus.",
+            "Camille: Oui, c'est agréable.",
+            "Lucie: Vous faites un tour ?",
+            "Camille: Oui, avec plaisir.",
+            "Lucie: Très bien."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "il fait bon",
+              "explanation_fr": "le temps est agréable",
+              "translation_ru": "хорошая погода / приятно"
+            },
+            {
+              "word": "ça fait du bien",
+              "explanation_fr": "c'est agréable",
+              "translation_ru": "это приятно / полезно"
+            },
+            {
+              "word": "marcher",
+              "explanation_fr": "aller à pied",
+              "translation_ru": "гулять / идти пешком"
+            },
+            {
+              "word": "en plus",
+              "explanation_fr": "aussi",
+              "translation_ru": "к тому же"
+            },
+            {
+              "word": "agréable",
+              "explanation_fr": "plaisant",
+              "translation_ru": "приятный"
+            },
+            {
+              "word": "faire un tour",
+              "explanation_fr": "marcher un peu",
+              "translation_ru": "немного пройтись"
+            }
+          ],
+          "culture_note": "En France, parler de la météo dans un parc est très naturel. C'est une façon simple de commencer une conversation.",
+          "comprehension": [
+            {
+              "answer": "Погода хорошая, на улице приятно.",
+              "question": "Quel temps fait-il ?"
+            },
+            {
+              "answer": "Она приходит туда, чтобы немного погулять.",
+              "question": "Pourquoi Lucie vient-elle au parc ?"
+            },
+            {
+              "answer": "В конце они решают пройтись по парку.",
+              "question": "Que proposent-elles à la fin ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour madame.",
+            "Bonjour.",
+            "Il fait bon aujourd'hui.",
+            "Oui, ça fait du bien.",
+            "Vous venez souvent ici ?",
+            "Oui, pour marcher un peu.",
+            "Moi aussi, j'aime bien.",
+            "Il y a du soleil, en plus.",
+            "Oui, c'est agréable.",
+            "Vous faites un tour ?",
+            "Oui, avec plaisir.",
+            "Très bien."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Il fait bon aujourd'hui.",
+            "Oui, ça fait du bien.",
+            "Vous faites un tour ?"
+          ],
+          "scenario": "Вы гуляете в парке и начинаете разговор о погоде."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 15,
+      "level": "A1",
+      "lesson_number": 15,
+      "title_fr": "Chez le coiffeur",
+      "title_ru": "В парикмахерской — записаться",
+      "content": {
+        "step1": {
+          "phrase_fr": "Je voudrais juste une coupe",
+          "phrase_ru": "Я хотел(а) бы просто стрижку",
+          "example_fr": "Bonjour, je voudrais juste une coupe.",
+          "explanation_fr": "On utilise cette phrase chez le coiffeur pour dire qu'on veut seulement couper les cheveux."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Nadia: Bonjour monsieur.",
+            "Théo: Bonjour madame.",
+            "Nadia: Je voudrais juste une coupe.",
+            "Théo: D'accord. Pour quand ?",
+            "Nadia: Pour demain, si possible.",
+            "Théo: Oui, j'ai dix heures.",
+            "Nadia: Très bien.",
+            "Théo: Cheveux longs ?",
+            "Nadia: Oui, un peu.",
+            "Théo: Parfait. À demain, alors.",
+            "Nadia: Merci beaucoup.",
+            "Théo: Avec plaisir."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "juste une coupe",
+              "explanation_fr": "seulement couper les cheveux",
+              "translation_ru": "просто стрижка"
+            },
+            {
+              "word": "si possible",
+              "explanation_fr": "si c'est possible",
+              "translation_ru": "если возможно"
+            },
+            {
+              "word": "les cheveux longs",
+              "explanation_fr": "cheveux qui ne sont pas courts",
+              "translation_ru": "длинные волосы"
+            },
+            {
+              "word": "parfait",
+              "explanation_fr": "très bien",
+              "translation_ru": "отлично"
+            },
+            {
+              "word": "à demain",
+              "explanation_fr": "formule avant le lendemain",
+              "translation_ru": "до завтра"
+            },
+            {
+              "word": "avec plaisir",
+              "explanation_fr": "formule polie",
+              "translation_ru": "с удовольствием / пожалуйста"
+            }
+          ],
+          "culture_note": "Chez le coiffeur en France, dire “je voudrais juste une coupe” est très utile quand on ne veut pas d'autre service.",
+          "comprehension": [
+            {
+              "answer": "Она хочет просто стрижку.",
+              "question": "Que veut Nadia ?"
+            },
+            {
+              "answer": "Она хочет запись на завтра.",
+              "question": "Pour quand veut-elle le rendez-vous ?"
+            },
+            {
+              "answer": "Запись назначена на 10:00.",
+              "question": "À quelle heure est le rendez-vous ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour monsieur.",
+            "Bonjour madame.",
+            "Je voudrais juste une coupe.",
+            "D'accord. Pour quand ?",
+            "Pour demain, si possible.",
+            "Oui, j'ai dix heures.",
+            "Très bien.",
+            "Cheveux longs ?",
+            "Oui, un peu.",
+            "Parfait. À demain, alors.",
+            "Merci beaucoup.",
+            "Avec plaisir."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, je voudrais juste une coupe.",
+            "Pour demain, si possible.",
+            "Merci beaucoup."
+          ],
+          "scenario": "Вы записываетесь в парикмахерскую и хотите только стрижку."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 16,
+      "level": "A1",
+      "lesson_number": 16,
+      "title_fr": "Au cinéma",
+      "title_ru": "В кино — выбрать фильм",
+      "content": {
+        "step1": {
+          "phrase_fr": "Qu'est-ce qu'on regarde ?",
+          "phrase_ru": "Что будем смотреть?",
+          "example_fr": "Ce soir, qu'est-ce qu'on regarde ?",
+          "explanation_fr": "On utilise cette question pour choisir un film avec quelqu'un."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Léo: Bon, qu'est-ce qu'on regarde ?",
+            "Margot: Pas le film de trois heures.",
+            "Léo: Ah non ? Pourquoi ?",
+            "Margot: Je suis déjà fatiguée.",
+            "Léo: D'accord. Et la comédie ?",
+            "Margot: Bof, pas trop.",
+            "Léo: Alors, le polar français ?",
+            "Margot: Ah oui, bonne idée.",
+            "Léo: Parfait. À dix-neuf heures vingt.",
+            "Margot: Très bien. Et après, on mange.",
+            "Léo: Oui, avec plaisir.",
+            "Margot: Là, je suis d'accord."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "regarder",
+              "explanation_fr": "voir un film",
+              "translation_ru": "смотреть"
+            },
+            {
+              "word": "fatiguée",
+              "explanation_fr": "sans beaucoup d'énergie",
+              "translation_ru": "уставшая"
+            },
+            {
+              "word": "la comédie",
+              "explanation_fr": "film pour rire",
+              "translation_ru": "комедия"
+            },
+            {
+              "word": "un polar",
+              "explanation_fr": "film policier",
+              "translation_ru": "детектив"
+            },
+            {
+              "word": "la séance",
+              "explanation_fr": "moment où le film commence",
+              "translation_ru": "сеанс"
+            },
+            {
+              "word": "avec plaisir",
+              "explanation_fr": "formule positive",
+              "translation_ru": "с удовольствием"
+            }
+          ],
+          "culture_note": "En France, choisir un film, c'est souvent discuter un peu avant. Même un choix simple peut devenir une petite négociation.",
+          "comprehension": [
+            {
+              "answer": "Она не хочет смотреть фильм на три часа.",
+              "question": "Quel film Margot ne veut-elle pas voir ?"
+            },
+            {
+              "answer": "В итоге они выбирают французский детектив.",
+              "question": "Quel film choisissent-ils finalement ?"
+            },
+            {
+              "answer": "Сеанс в 19:20.",
+              "question": "À quelle heure est la séance ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bon, qu'est-ce qu'on regarde ?",
+            "Pas le film de trois heures.",
+            "Ah non ? Pourquoi ?",
+            "Je suis déjà fatiguée.",
+            "D'accord. Et la comédie ?",
+            "Bof, pas trop.",
+            "Alors, le polar français ?",
+            "Ah oui, bonne idée.",
+            "Parfait. À dix-neuf heures vingt.",
+            "Très bien. Et après, on mange.",
+            "Oui, avec plaisir.",
+            "Là, je suis d'accord."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Qu'est-ce qu'on regarde ?",
+            "Pas le film de trois heures.",
+            "Le polar français, bonne idée."
+          ],
+          "scenario": "Вы с другом выбираете фильм в кино."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 17,
+      "level": "A1",
+      "lesson_number": 17,
+      "title_fr": "À la banque",
+      "title_ru": "В банке — открыть счёт",
+      "content": {
+        "step1": {
+          "phrase_fr": "Je voudrais ouvrir un compte",
+          "phrase_ru": "Я хотел(а) бы открыть счёт",
+          "example_fr": "Bonjour, je voudrais ouvrir un compte.",
+          "explanation_fr": "On utilise cette phrase à la banque pour demander un nouveau compte bancaire."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Mathieu: Bonjour madame.",
+            "Awa: Bonjour monsieur.",
+            "Mathieu: Je voudrais ouvrir un compte.",
+            "Awa: D'accord. C'est votre premier compte ?",
+            "Mathieu: Oui, en France.",
+            "Awa: Vous avez une pièce d'identité ?",
+            "Mathieu: Oui, la voilà.",
+            "Awa: Merci. Et un justificatif de domicile ?",
+            "Mathieu: Oui, je l'ai aussi.",
+            "Awa: Parfait. Installez-vous, s'il vous plaît.",
+            "Mathieu: Merci beaucoup.",
+            "Awa: Avec plaisir."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "ouvrir un compte",
+              "explanation_fr": "créer un compte bancaire",
+              "translation_ru": "открыть счёт"
+            },
+            {
+              "word": "une pièce d'identité",
+              "explanation_fr": "document officiel avec photo",
+              "translation_ru": "удостоверение личности"
+            },
+            {
+              "word": "la voilà",
+              "explanation_fr": "tenez, la voici",
+              "translation_ru": "вот она"
+            },
+            {
+              "word": "un justificatif de domicile",
+              "explanation_fr": "document avec l'adresse",
+              "translation_ru": "подтверждение адреса"
+            },
+            {
+              "word": "installez-vous",
+              "explanation_fr": "asseyez-vous, mettez-vous à l'aise",
+              "translation_ru": "присаживайтесь"
+            },
+            {
+              "word": "avec plaisir",
+              "explanation_fr": "formule polie",
+              "translation_ru": "с удовольствием / пожалуйста"
+            }
+          ],
+          "culture_note": "En France, pour ouvrir un compte bancaire, on demande presque toujours une pièce d'identité et un justificatif de domicile.",
+          "comprehension": [
+            {
+              "answer": "Он приходит, чтобы открыть счёт.",
+              "question": "Pourquoi Mathieu vient-il à la banque ?"
+            },
+            {
+              "answer": "Сначала он показывает удостоверение личности.",
+              "question": "Quel document montre-t-il d'abord ?"
+            },
+            {
+              "answer": "Она просит подтверждение адреса.",
+              "question": "Que demande aussi Awa ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour madame.",
+            "Bonjour monsieur.",
+            "Je voudrais ouvrir un compte.",
+            "D'accord. C'est votre premier compte ?",
+            "Oui, en France.",
+            "Vous avez une pièce d'identité ?",
+            "Oui, la voilà.",
+            "Merci. Et un justificatif de domicile ?",
+            "Oui, je l'ai aussi.",
+            "Parfait. Installez-vous, s'il vous plaît.",
+            "Merci beaucoup.",
+            "Avec plaisir."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, je voudrais ouvrir un compte.",
+            "Oui, c'est mon premier compte.",
+            "Voilà ma pièce d'identité."
+          ],
+          "scenario": "Вы пришли в банк, чтобы открыть счёт."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 18,
+      "level": "A1",
+      "lesson_number": 18,
+      "title_fr": "Dans l'avion",
+      "title_ru": "В самолёте — первый полёт",
+      "content": {
+        "step1": {
+          "phrase_fr": "C'est mon premier vol",
+          "phrase_ru": "Это мой первый полёт",
+          "example_fr": "Excusez-moi, c'est mon premier vol.",
+          "explanation_fr": "On utilise cette phrase pour dire qu'on prend l'avion pour la première fois."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Camille: Excusez-moi monsieur.",
+            "Romain: Oui ?",
+            "Camille: C'est mon premier vol.",
+            "Romain: Ah, d'accord.",
+            "Camille: J'ai un peu peur.",
+            "Romain: Oui, je comprends.",
+            "Camille: Surtout au décollage.",
+            "Romain: Regardez devant vous. Respirez calmement.",
+            "Camille: D'accord, merci.",
+            "Romain: Tout va bien se passer.",
+            "Camille: Merci, c'est gentil.",
+            "Romain: De rien."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "un vol",
+              "explanation_fr": "voyage en avion",
+              "translation_ru": "полёт"
+            },
+            {
+              "word": "avoir peur",
+              "explanation_fr": "être inquiète",
+              "translation_ru": "бояться"
+            },
+            {
+              "word": "le décollage",
+              "explanation_fr": "moment où l'avion part du sol",
+              "translation_ru": "взлёт"
+            },
+            {
+              "word": "respirer",
+              "explanation_fr": "prendre de l'air",
+              "translation_ru": "дышать"
+            },
+            {
+              "word": "calmement",
+              "explanation_fr": "d'une manière calme",
+              "translation_ru": "спокойно"
+            },
+            {
+              "word": "de rien",
+              "explanation_fr": "formule polie",
+              "translation_ru": "не за что"
+            }
+          ],
+          "culture_note": "Dans l'avion, parler avec son voisin peut aider à se calmer. Dire simplement “C'est mon premier vol” explique tout de suite la situation.",
+          "comprehension": [
+            {
+              "answer": "Потому что это её первый полёт, и она боится.",
+              "question": "Pourquoi Camille parle-t-elle à Romain ?"
+            },
+            {
+              "answer": "Больше всего она боится взлёта.",
+              "question": "À quel moment a-t-elle surtout peur ?"
+            },
+            {
+              "answer": "Он советует смотреть вперёд и спокойно дышать.",
+              "question": "Quel conseil donne Romain ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Excusez-moi monsieur.",
+            "Oui ?",
+            "C'est mon premier vol.",
+            "Ah, d'accord.",
+            "J'ai un peu peur.",
+            "Oui, je comprends.",
+            "Surtout au décollage.",
+            "Regardez devant vous. Respirez calmement.",
+            "D'accord, merci.",
+            "Tout va bien se passer.",
+            "Merci, c'est gentil.",
+            "De rien."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Excusez-moi, c'est mon premier vol.",
+            "J'ai un peu peur.",
+            "Merci, ça va mieux."
+          ],
+          "scenario": "Вы в самолёте и говорите соседу, что летите впервые."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 19,
+      "level": "A1",
+      "lesson_number": 19,
+      "title_fr": "À la bibliothèque",
+      "title_ru": "В библиотеке — записаться",
+      "content": {
+        "step1": {
+          "phrase_fr": "Je voudrais m'inscrire",
+          "phrase_ru": "Я хотел(а) бы записаться / оформить читательский билет",
+          "example_fr": "Bonjour, je voudrais m'inscrire à la bibliothèque.",
+          "explanation_fr": "On utilise cette phrase pour devenir membre d'une bibliothèque."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Julien: Bonjour madame.",
+            "Chloé: Bonjour monsieur.",
+            "Julien: Je voudrais m'inscrire.",
+            "Chloé: D'accord. Vous habitez ici ?",
+            "Julien: Oui, juste à côté.",
+            "Chloé: Très bien. Il me faut une pièce d'identité.",
+            "Julien: Voilà.",
+            "Chloé: Merci. C'est gratuit.",
+            "Julien: Ah, très bien.",
+            "Chloé: Bienvenue.",
+            "Julien: Merci beaucoup.",
+            "Chloé: Avec plaisir."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "s'inscrire",
+              "explanation_fr": "devenir membre",
+              "translation_ru": "записаться"
+            },
+            {
+              "word": "juste à côté",
+              "explanation_fr": "très près",
+              "translation_ru": "совсем рядом"
+            },
+            {
+              "word": "il me faut",
+              "explanation_fr": "j'ai besoin de",
+              "translation_ru": "мне нужно"
+            },
+            {
+              "word": "une pièce d'identité",
+              "explanation_fr": "document officiel",
+              "translation_ru": "удостоверение личности"
+            },
+            {
+              "word": "gratuit",
+              "explanation_fr": "sans payer",
+              "translation_ru": "бесплатно"
+            },
+            {
+              "word": "bienvenue",
+              "explanation_fr": "mot gentil pour accueillir",
+              "translation_ru": "добро пожаловать"
+            }
+          ],
+          "culture_note": "Beaucoup de bibliothèques municipales en France sont gratuites ou peu chères. “Je voudrais m'inscrire” est la phrase de base la plus utile.",
+          "comprehension": [
+            {
+              "answer": "Он хочет записаться в библиотеку.",
+              "question": "Pourquoi Julien vient-il à la bibliothèque ?"
+            },
+            {
+              "answer": "Он живёт рядом.",
+              "question": "Où habite-t-il ?"
+            },
+            {
+              "answer": "Нет, запись бесплатная.",
+              "question": "L'inscription est-elle payante ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour madame.",
+            "Bonjour monsieur.",
+            "Je voudrais m'inscrire.",
+            "D'accord. Vous habitez ici ?",
+            "Oui, juste à côté.",
+            "Très bien. Il me faut une pièce d'identité.",
+            "Voilà.",
+            "Merci. C'est gratuit.",
+            "Ah, très bien.",
+            "Bienvenue.",
+            "Merci beaucoup.",
+            "Avec plaisir."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, je voudrais m'inscrire.",
+            "Oui, j'habite juste à côté.",
+            "Voilà ma pièce d'identité."
+          ],
+          "scenario": "Вы хотите записаться в библиотеку."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 20,
+      "level": "A1",
+      "lesson_number": 20,
+      "title_fr": "Au travail",
+      "title_ru": "На работе — первый день",
+      "content": {
+        "step1": {
+          "phrase_fr": "C'est mon premier jour",
+          "phrase_ru": "Это мой первый день",
+          "example_fr": "Bonjour, c'est mon premier jour ici.",
+          "explanation_fr": "On utilise cette phrase pour dire qu'on commence dans un nouvel endroit."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Émilie: Bonjour.",
+            "Hugo: Bonjour.",
+            "Émilie: C'est mon premier jour.",
+            "Hugo: Bienvenue.",
+            "Émilie: Merci. Je dois aller où ?",
+            "Hugo: Au deuxième étage, bureau 12.",
+            "Émilie: D'accord. Et le café ?",
+            "Hugo: Au fond, à gauche.",
+            "Émilie: Parfait, merci.",
+            "Hugo: De rien.",
+            "Émilie: Je suis un peu stressée.",
+            "Hugo: C'est normal."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "le premier jour",
+              "explanation_fr": "le début dans un lieu",
+              "translation_ru": "первый день"
+            },
+            {
+              "word": "le deuxième étage",
+              "explanation_fr": "niveau 2 du bâtiment",
+              "translation_ru": "второй этаж"
+            },
+            {
+              "word": "le bureau",
+              "explanation_fr": "pièce ou numéro de travail",
+              "translation_ru": "кабинет / офис"
+            },
+            {
+              "word": "au fond",
+              "explanation_fr": "tout au bout",
+              "translation_ru": "в глубине / в конце"
+            },
+            {
+              "word": "stressée",
+              "explanation_fr": "un peu inquiète",
+              "translation_ru": "взволнованная / нервничающая"
+            },
+            {
+              "word": "c'est normal",
+              "explanation_fr": "c'est habituel",
+              "translation_ru": "это нормально"
+            }
+          ],
+          "culture_note": "Au travail en France, demander où est la machine à café dès le premier jour n'a rien de bizarre. C'est même assez réaliste.",
+          "comprehension": [
+            {
+              "answer": "Потому что это её первый день, и она спрашивает, куда идти.",
+              "question": "Pourquoi Émilie parle-t-elle à Hugo ?"
+            },
+            {
+              "answer": "Она должна идти на второй этаж, в кабинет 12.",
+              "question": "Où doit-elle aller ?"
+            },
+            {
+              "answer": "Кофе находится в глубине, слева.",
+              "question": "Où est le café ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour.",
+            "Bonjour.",
+            "C'est mon premier jour.",
+            "Bienvenue.",
+            "Merci. Je dois aller où ?",
+            "Au deuxième étage, bureau 12.",
+            "D'accord. Et le café ?",
+            "Au fond, à gauche.",
+            "Parfait, merci.",
+            "De rien.",
+            "Je suis un peu stressée.",
+            "C'est normal."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, c'est mon premier jour.",
+            "Je dois aller où ?",
+            "Et le café, c'est où ?"
+          ],
+          "scenario": "У вас первый день на работе, и вы задаёте простые вопросы."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 21,
+      "level": "A1",
+      "lesson_number": 21,
+      "title_fr": "En famille",
+      "title_ru": "В семье — ужин дома",
+      "content": {
+        "step1": {
+          "phrase_fr": "Tu veux encore un peu ?",
+          "phrase_ru": "Хочешь ещё немного?",
+          "example_fr": "Tu veux encore un peu de gratin ?",
+          "explanation_fr": "On utilise cette phrase à table pour proposer encore de la nourriture à quelqu'un."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Antoine: Alors, tu veux encore un peu ?",
+            "Camille: Un tout petit peu, oui.",
+            "Antoine: Voilà. Mange bien.",
+            "Camille: Merci, c'est très bon.",
+            "Antoine: Ah, enfin une parole sérieuse.",
+            "Camille: C'est quoi, déjà ?",
+            "Antoine: Des pommes de terre, du fromage, et beaucoup d'amour.",
+            "Camille: Ah oui, je sens bien le fromage.",
+            "Antoine: Normal, j'ai eu la main généreuse.",
+            "Camille: Et du pain, avec ça ?",
+            "Antoine: Bien sûr. Ici, on ne plaisante pas avec ça.",
+            "Camille: Non merci, sinon je ne bouge plus.",
+            "Antoine: Ça, c'est un vrai repas réussi."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "encore un peu",
+              "explanation_fr": "une petite quantité en plus",
+              "translation_ru": "ещё немного"
+            },
+            {
+              "word": "un tout petit peu",
+              "explanation_fr": "très peu",
+              "translation_ru": "совсем чуть-чуть"
+            },
+            {
+              "word": "manger bien",
+              "explanation_fr": "bien manger",
+              "translation_ru": "хорошо поесть"
+            },
+            {
+              "word": "généreux",
+              "explanation_fr": "qui met beaucoup",
+              "translation_ru": "щедрый"
+            },
+            {
+              "word": "ne pas plaisanter avec ça",
+              "explanation_fr": "prendre ça au sérieux",
+              "translation_ru": "с этим не шутят"
+            },
+            {
+              "word": "réussi",
+              "explanation_fr": "bien fait, très bien",
+              "translation_ru": "удавшийся"
+            }
+          ],
+          "culture_note": "À table, dans une famille française, proposer encore un peu à manger est très courant. Refuser poliment une deuxième ou troisième portion fait aussi partie du jeu.",
+          "comprehension": [
+            {
+              "answer": "Он предлагает ей ещё немного еды.",
+              "question": "Que propose Antoine à Camille ?"
+            },
+            {
+              "answer": "Она говорит, что это очень вкусно.",
+              "question": "Qu'est-ce que pense Camille du plat ?"
+            },
+            {
+              "answer": "Потому что тогда она уже совсем не сможет двигаться.",
+              "question": "Pourquoi refuse-t-elle le pain à la fin ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Alors, tu veux encore un peu ?",
+            "Un tout petit peu, oui.",
+            "Voilà. Mange bien.",
+            "Merci, c'est très bon.",
+            "Ah, enfin une parole sérieuse.",
+            "C'est quoi, déjà ?",
+            "Des pommes de terre, du fromage, et beaucoup d'amour.",
+            "Ah oui, je sens bien le fromage.",
+            "Normal, j'ai eu la main généreuse.",
+            "Et du pain, avec ça ?",
+            "Bien sûr. Ici, on ne plaisante pas avec ça.",
+            "Non merci, sinon je ne bouge plus.",
+            "Ça, c'est un vrai repas réussi."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Oui, je veux encore un peu.",
+            "Merci, c'est très bon.",
+            "Non merci, sinon je ne bouge plus."
+          ],
+          "scenario": "Вы ужинаете дома с семьёй, и вам предлагают добавку."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 22,
+      "level": "A1",
+      "lesson_number": 22,
+      "title_fr": "Au magasin de vêtements",
+      "title_ru": "В магазине одежды — купить подарок",
+      "content": {
+        "step1": {
+          "phrase_fr": "Je cherche un cadeau",
+          "phrase_ru": "Я ищу подарок",
+          "example_fr": "Bonjour, je cherche un cadeau pour ma sœur.",
+          "explanation_fr": "On utilise cette phrase dans un magasin pour demander de l'aide."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Nadia: Bonjour madame, je cherche un cadeau.",
+            "Inès: D'accord. C'est pour qui ?",
+            "Nadia: Pour ma sœur.",
+            "Inès: Elle a quel âge ?",
+            "Nadia: Vingt-cinq ans.",
+            "Inès: Et elle aime quoi ?",
+            "Nadia: Les choses simples.",
+            "Inès: Très bien. Regardez cette écharpe.",
+            "Nadia: Ah oui, elle est jolie.",
+            "Inès: Et la couleur va avec tout.",
+            "Nadia: Parfait, je vais prendre ça.",
+            "Inès: Très bon choix.",
+            "Nadia: Merci beaucoup.",
+            "Inès: Avec plaisir."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "chercher",
+              "explanation_fr": "vouloir trouver",
+              "translation_ru": "искать"
+            },
+            {
+              "word": "un cadeau",
+              "explanation_fr": "chose qu'on offre",
+              "translation_ru": "подарок"
+            },
+            {
+              "word": "une sœur",
+              "explanation_fr": "sister",
+              "translation_ru": "сестра"
+            },
+            {
+              "word": "une écharpe",
+              "explanation_fr": "vêtement pour le cou",
+              "translation_ru": "шарф"
+            },
+            {
+              "word": "joli(e)",
+              "explanation_fr": "beau / belle",
+              "translation_ru": "красивый"
+            },
+            {
+              "word": "aller avec tout",
+              "explanation_fr": "être facile à porter",
+              "translation_ru": "подходить ко всему"
+            }
+          ],
+          "culture_note": "En France, dans un magasin, on demande souvent: “C'est pour qui ?” et “Elle aime quoi ?” pour aider à choisir un cadeau simple et utile.",
+          "comprehension": [
+            {
+              "answer": "Она ищет подарок для своей сестры.",
+              "question": "Pour qui Nadia cherche-t-elle un cadeau ?"
+            },
+            {
+              "answer": "Она смотрит на шарф.",
+              "question": "Quel objet regarde-t-elle ?"
+            },
+            {
+              "answer": "Потому что шарф красивый и цвет подходит ко всему.",
+              "question": "Pourquoi aime-t-elle ce choix ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour madame, je cherche un cadeau.",
+            "D'accord. C'est pour qui ?",
+            "Pour ma sœur.",
+            "Elle a quel âge ?",
+            "Vingt-cinq ans.",
+            "Et elle aime quoi ?",
+            "Les choses simples.",
+            "Très bien. Regardez cette écharpe.",
+            "Ah oui, elle est jolie.",
+            "Et la couleur va avec tout.",
+            "Parfait, je vais prendre ça.",
+            "Très bon choix.",
+            "Merci beaucoup.",
+            "Avec plaisir."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, je cherche un cadeau.",
+            "C'est pour ma sœur.",
+            "Cette écharpe est jolie, je vais prendre ça."
+          ],
+          "scenario": "Вы в магазине и ищете подарок."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 23,
+      "level": "A1",
+      "lesson_number": 23,
+      "title_fr": "Au musée",
+      "title_ru": "В музее — купить билет",
+      "content": {
+        "step1": {
+          "phrase_fr": "Je voudrais un billet",
+          "phrase_ru": "Я хотел(а) бы билет",
+          "example_fr": "Bonjour, je voudrais un billet pour le musée.",
+          "explanation_fr": "On utilise cette phrase pour acheter une entrée au musée."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Awa: Bonjour monsieur, je voudrais un billet.",
+            "Léo: Un billet simple ?",
+            "Awa: Oui, s'il vous plaît.",
+            "Léo: Pour l'exposition aussi ?",
+            "Awa: Ah, il y a une exposition ?",
+            "Léo: Oui, au deuxième étage.",
+            "Awa: Alors oui, je veux bien.",
+            "Léo: Très bien. Ça fait quinze euros.",
+            "Awa: Le musée ferme à quelle heure ?",
+            "Léo: À dix-huit heures.",
+            "Awa: Parfait, merci.",
+            "Léo: Avec plaisir."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "un billet simple",
+              "explanation_fr": "billet normal",
+              "translation_ru": "обычный билет"
+            },
+            {
+              "word": "une exposition",
+              "explanation_fr": "présentation d'œuvres ou d'objets",
+              "translation_ru": "выставка"
+            },
+            {
+              "word": "le deuxième étage",
+              "explanation_fr": "niveau 2 du bâtiment",
+              "translation_ru": "второй этаж"
+            },
+            {
+              "word": "ça fait...",
+              "explanation_fr": "le prix est...",
+              "translation_ru": "с вас будет..."
+            },
+            {
+              "word": "fermer",
+              "explanation_fr": "ne plus être ouvert",
+              "translation_ru": "закрываться"
+            },
+            {
+              "word": "je veux bien",
+              "explanation_fr": "d'accord, oui",
+              "translation_ru": "да, хорошо"
+            }
+          ],
+          "culture_note": "Dans beaucoup de musées en France, on peut acheter un billet simple ou ajouter une exposition temporaire.",
+          "comprehension": [
+            {
+              "answer": "Она хочет купить билет в музей.",
+              "question": "Que veut acheter Awa ?"
+            },
+            {
+              "answer": "Выставка находится на втором этаже.",
+              "question": "Où est l'exposition ?"
+            },
+            {
+              "answer": "Музей закрывается в 18:00.",
+              "question": "À quelle heure ferme le musée ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour monsieur, je voudrais un billet.",
+            "Un billet simple ?",
+            "Oui, s'il vous plaît.",
+            "Pour l'exposition aussi ?",
+            "Ah, il y a une exposition ?",
+            "Oui, au deuxième étage.",
+            "Alors oui, je veux bien.",
+            "Très bien. Ça fait quinze euros.",
+            "Le musée ferme à quelle heure ?",
+            "À dix-huit heures.",
+            "Parfait, merci.",
+            "Avec plaisir."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, je voudrais un billet.",
+            "Oui, pour l'exposition aussi.",
+            "Le musée ferme à quelle heure ?"
+          ],
+          "scenario": "Вы в музее и хотите купить билет."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 24,
+      "level": "A1",
+      "lesson_number": 24,
+      "title_fr": "À la plage",
+      "title_ru": "На пляже — каникулы",
+      "content": {
+        "step1": {
+          "phrase_fr": "L'eau est bonne ?",
+          "phrase_ru": "Вода хорошая? / Вода тёплая?",
+          "example_fr": "Alors, l'eau est bonne ?",
+          "explanation_fr": "On utilise cette question à la plage pour parler de la température de l'eau."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Théo: Alors, l'eau est bonne ?",
+            "Lucie: Non, pas du tout.",
+            "Théo: Ah bon ? Elle est froide ?",
+            "Lucie: Très froide, même.",
+            "Théo: Pourtant, tu es déjà dedans.",
+            "Lucie: Oui, mais je regrette un peu.",
+            "Théo: Allez, encore deux pas.",
+            "Lucie: C'est facile à dire.",
+            "Théo: Après, ça va mieux.",
+            "Lucie: Tu dis toujours ça.",
+            "Théo: Oui, mais j'ai raison.",
+            "Lucie: Bon... j'avance un peu."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "pas du tout",
+              "explanation_fr": "vraiment non",
+              "translation_ru": "совсем нет"
+            },
+            {
+              "word": "froide",
+              "explanation_fr": "pas chaude",
+              "translation_ru": "холодная"
+            },
+            {
+              "word": "pourtant",
+              "explanation_fr": "malgré ça",
+              "translation_ru": "однако / несмотря на это"
+            },
+            {
+              "word": "regretter",
+              "explanation_fr": "penser que ce n'est pas une bonne idée",
+              "translation_ru": "жалеть"
+            },
+            {
+              "word": "un pas",
+              "explanation_fr": "mouvement pour avancer",
+              "translation_ru": "шаг"
+            },
+            {
+              "word": "avancer",
+              "explanation_fr": "aller plus loin",
+              "translation_ru": "продвигаться вперёд"
+            }
+          ],
+          "culture_note": "À la plage en France, demander “L'eau est bonne ?” est presque automatique. Et la réponse “elle est froide !” l'est aussi.",
+          "comprehension": [
+            {
+              "answer": "Вода очень холодная.",
+              "question": "Comment est l'eau ?"
+            },
+            {
+              "answer": "Она уже стоит в воде.",
+              "question": "Où est déjà Lucie ?"
+            },
+            {
+              "answer": "Он просит её зайти ещё чуть дальше.",
+              "question": "Que demande Théo ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Alors, l'eau est bonne ?",
+            "Non, pas du tout.",
+            "Ah bon ? Elle est froide ?",
+            "Très froide, même.",
+            "Pourtant, tu es déjà dedans.",
+            "Oui, mais je regrette un peu.",
+            "Allez, encore deux pas.",
+            "C'est facile à dire.",
+            "Après, ça va mieux.",
+            "Tu dis toujours ça.",
+            "Oui, mais j'ai raison.",
+            "Bon... j'avance un peu."
+          ]
+        },
+        "step5": {
+          "models": [
+            "L'eau est bonne ?",
+            "Non, elle est très froide.",
+            "Bon, j'avance un peu."
+          ],
+          "scenario": "Вы на пляже и говорите с другом о воде."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 25,
+      "level": "A1",
+      "lesson_number": 25,
+      "title_fr": "Au sport",
+      "title_ru": "На спорте — записаться в зал",
+      "content": {
+        "step1": {
+          "phrase_fr": "Je peux essayer un cours ?",
+          "phrase_ru": "Можно мне попробовать одно занятие?",
+          "example_fr": "Bonjour, je peux essayer un cours ?",
+          "explanation_fr": "On utilise cette phrase pour demander un cours d'essai dans une salle de sport."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Hugo: Bonjour.",
+            "Youssef: Bonjour. Je peux vous aider ?",
+            "Hugo: Oui. Je peux essayer un cours ?",
+            "Youssef: Bien sûr. Vous voulez quel cours ?",
+            "Hugo: Un cours du soir, si possible.",
+            "Youssef: D'accord. On a dix-huit heures ou dix-neuf heures trente.",
+            "Hugo: Dix-huit heures, c'est bien.",
+            "Youssef: Très bien. Il faut une pièce d'identité.",
+            "Hugo: D'accord, pas de problème.",
+            "Youssef: Et une tenue de sport.",
+            "Hugo: Oui, bien sûr.",
+            "Youssef: Parfait, à ce soir."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "essayer un cours",
+              "explanation_fr": "tester un cours une première fois",
+              "translation_ru": "попробовать занятие"
+            },
+            {
+              "word": "un cours du soir",
+              "explanation_fr": "cours dans la soirée",
+              "translation_ru": "вечернее занятие"
+            },
+            {
+              "word": "une pièce d'identité",
+              "explanation_fr": "document officiel",
+              "translation_ru": "удостоверение личности"
+            },
+            {
+              "word": "une tenue de sport",
+              "explanation_fr": "vêtements pour faire du sport",
+              "translation_ru": "спортивная форма"
+            },
+            {
+              "word": "pas de problème",
+              "explanation_fr": "d'accord, c'est possible",
+              "translation_ru": "без проблем"
+            },
+            {
+              "word": "à ce soir",
+              "explanation_fr": "à plus tard aujourd'hui",
+              "translation_ru": "до вечера"
+            }
+          ],
+          "culture_note": "Dans beaucoup de salles de sport en France, on peut demander un cours d'essai avant de s'inscrire pour de bon.",
+          "comprehension": [
+            {
+              "answer": "Он хочет попробовать одно занятие в спортзале.",
+              "question": "Que veut faire Hugo ?"
+            },
+            {
+              "answer": "В 18:00 и в 19:30.",
+              "question": "À quelles heures sont les cours du soir ?"
+            },
+            {
+              "answer": "Нужно принести удостоверение личности и спортивную одежду.",
+              "question": "Que faut-il apporter ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour docteur.",
+            "Bonjour. Je peux vous aider ?",
+            "Oui. Je peux essayer un cours ?",
+            "Bien sûr. Vous voulez quel cours ?",
+            "Un cours du soir, si possible.",
+            "D'accord. On a dix-huit heures ou dix-neuf heures trente.",
+            "Dix-huit heures, c'est bien.",
+            "Très bien. Il faut une pièce d'identité.",
+            "D'accord, pas de problème.",
+            "Et une tenue de sport.",
+            "Oui, bien sûr.",
+            "Parfait, à ce soir."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, je peux essayer un cours ?",
+            "Je préfère un cours du soir.",
+            "D'accord, à ce soir."
+          ],
+          "scenario": "Вы хотите попробовать одно занятие в спортзале."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 26,
+      "level": "A1",
+      "lesson_number": 26,
+      "title_fr": "À la fête",
+      "title_ru": "На празднике — день рождения",
+      "content": {
+        "step1": {
+          "phrase_fr": "Joyeux anniversaire !",
+          "phrase_ru": "С днём рождения!",
+          "example_fr": "Joyeux anniversaire, Camille !",
+          "explanation_fr": "On utilise cette expression pour souhaiter un bon anniversaire à quelqu'un."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Camille: Vous êtes très calmes, ce soir.",
+            "Léo: Nous ? Pas du tout.",
+            "Chloé: On parle juste doucement.",
+            "Camille: Ah bon ? C'est bizarre.",
+            "Léo: Bon... trois, deux, un...",
+            "Chloé: Joyeux anniversaire !",
+            "Camille: Ah ! Je comprends mieux.",
+            "Léo: On a presque réussi.",
+            "Chloé: Deux minutes, c'était déjà bien.",
+            "Camille: Merci, c'est adorable.",
+            "Léo: Et le gâteau arrive.",
+            "Chloé: Enfin, si personne ne le mange avant.",
+            "Camille: Là, ça devient sérieux.",
+            "Léo: Oui, très sérieux."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "joyeux anniversaire",
+              "explanation_fr": "formule pour l'anniversaire",
+              "translation_ru": "с днём рождения"
+            },
+            {
+              "word": "bizarre",
+              "explanation_fr": "étrange, pas normal",
+              "translation_ru": "странно"
+            },
+            {
+              "word": "comprendre mieux",
+              "explanation_fr": "voir la situation plus clairement",
+              "translation_ru": "лучше понять"
+            },
+            {
+              "word": "adorable",
+              "explanation_fr": "très gentil",
+              "translation_ru": "очень мило"
+            },
+            {
+              "word": "le gâteau",
+              "explanation_fr": "dessert d'anniversaire",
+              "translation_ru": "торт"
+            },
+            {
+              "word": "sérieux",
+              "explanation_fr": "important",
+              "translation_ru": "серьёзный"
+            }
+          ],
+          "culture_note": "En France, pour un anniversaire entre amis, on chante souvent “Joyeux anniversaire”, puis le gâteau arrive très vite. La surprise tient rarement très longtemps.",
+          "comprehension": [
+            {
+              "answer": "Они празднуют день рождения Камий.",
+              "question": "Quel événement fêtent-ils ?"
+            },
+            {
+              "answer": "Нет, сюрприз держится совсем недолго.",
+              "question": "Est-ce que la surprise dure longtemps ?"
+            },
+            {
+              "answer": "Потом приносят торт.",
+              "question": "Qu'est-ce qui arrive après ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Vous êtes très calmes, ce soir.",
+            "Nous ? Pas du tout.",
+            "On parle juste doucement.",
+            "Ah bon ? C'est bizarre.",
+            "Bon... trois, deux, un...",
+            "Joyeux anniversaire !",
+            "Ah ! Je comprends mieux.",
+            "On a presque réussi.",
+            "Deux minutes, c'était déjà bien.",
+            "Merci, c'est adorable.",
+            "Et le gâteau arrive.",
+            "Enfin, si personne ne le mange avant.",
+            "Là, ça devient sérieux.",
+            "Oui, très sérieux."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Joyeux anniversaire !",
+            "Merci, c'est adorable.",
+            "Le gâteau arrive ?"
+          ],
+          "scenario": "Вы пришли на день рождения друга."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 27,
+      "level": "A1",
+      "lesson_number": 27,
+      "title_fr": "Au garage",
+      "title_ru": "В гараже — проблема с машиной",
+      "content": {
+        "step1": {
+          "phrase_fr": "Ma voiture ne démarre pas",
+          "phrase_ru": "Моя машина не заводится",
+          "example_fr": "Bonjour, ma voiture ne démarre pas ce matin.",
+          "explanation_fr": "On utilise cette phrase quand la voiture ne fonctionne pas."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Romain: Bonjour.",
+            "Hugo: Bonjour monsieur.",
+            "Romain: Ma voiture ne démarre pas.",
+            "Hugo: D'accord. Depuis quand ?",
+            "Romain: Depuis ce matin.",
+            "Hugo: Elle fait du bruit ?",
+            "Romain: Oui, un peu.",
+            "Hugo: Vous avez encore de l'essence ?",
+            "Romain: Oui, bien sûr.",
+            "Hugo: Très bien. Je peux regarder.",
+            "Romain: Merci beaucoup.",
+            "Hugo: Laissez-la ici pour la journée.",
+            "Romain: D'accord.",
+            "Hugo: On vous appelle plus tard."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "démarrer",
+              "explanation_fr": "commencer à fonctionner",
+              "translation_ru": "заводиться"
+            },
+            {
+              "word": "depuis ce matin",
+              "explanation_fr": "à partir de ce matin",
+              "translation_ru": "с сегодняшнего утра"
+            },
+            {
+              "word": "du bruit",
+              "explanation_fr": "un son",
+              "translation_ru": "шум / звук"
+            },
+            {
+              "word": "de l'essence",
+              "explanation_fr": "carburant pour la voiture",
+              "translation_ru": "бензин"
+            },
+            {
+              "word": "laisser",
+              "explanation_fr": "ne pas reprendre tout de suite",
+              "translation_ru": "оставить"
+            },
+            {
+              "word": "plus tard",
+              "explanation_fr": "après",
+              "translation_ru": "позже"
+            }
+          ],
+          "culture_note": "Au garage en France, on explique souvent le problème avec des mots très simples: “ça ne démarre pas”, “ça fait du bruit”, “ça ne roule pas bien”.",
+          "comprehension": [
+            {
+              "answer": "Машина не заводится.",
+              "question": "Quel est le problème ?"
+            },
+            {
+              "answer": "С сегодняшнего утра.",
+              "question": "Depuis quand ?"
+            },
+            {
+              "answer": "Он просит оставить машину на весь день.",
+              "question": "Que demande Hugo ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour.",
+            "Bonjour monsieur.",
+            "Ma voiture ne démarre pas.",
+            "D'accord. Depuis quand ?",
+            "Depuis ce matin.",
+            "Elle fait du bruit ?",
+            "Oui, un peu.",
+            "Vous avez encore de l'essence ?",
+            "Oui, bien sûr.",
+            "Très bien. Je peux regarder.",
+            "Merci beaucoup.",
+            "Laissez-la ici pour la journée.",
+            "D'accord.",
+            "On vous appelle plus tard."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, ma voiture ne démarre pas.",
+            "Depuis ce matin.",
+            "Oui, elle fait un peu de bruit."
+          ],
+          "scenario": "Вы приехали в гараж и хотите объяснить, что машина не заводится."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 28,
+      "level": "A1",
+      "lesson_number": 28,
+      "title_fr": "Au commissariat",
+      "title_ru": "В полиции — я потерял кошелёк",
+      "content": {
+        "step1": {
+          "phrase_fr": "J'ai perdu mon portefeuille",
+          "phrase_ru": "Я потерял(а) свой кошелёк",
+          "example_fr": "Bonjour, j'ai perdu mon portefeuille dans le métro.",
+          "explanation_fr": "On utilise cette phrase quand on ne retrouve plus son portefeuille."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Margot: Bonjour monsieur.",
+            "Mathieu: Bonjour madame.",
+            "Margot: J'ai perdu mon portefeuille.",
+            "Mathieu: D'accord. Vous l'avez perdu où ?",
+            "Margot: Je crois dans le métro.",
+            "Mathieu: Aujourd'hui ?",
+            "Margot: Oui, ce matin.",
+            "Mathieu: Vous avez vos papiers dedans ?",
+            "Margot: Oui, malheureusement.",
+            "Mathieu: Il faut faire une déclaration.",
+            "Margot: D'accord.",
+            "Mathieu: Vous vous souvenez de la ligne ?",
+            "Margot: Oui, la ligne 4.",
+            "Mathieu: Très bien, on va noter ça."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "perdre",
+              "explanation_fr": "ne plus retrouver",
+              "translation_ru": "потерять"
+            },
+            {
+              "word": "le portefeuille",
+              "explanation_fr": "objet avec argent et cartes",
+              "translation_ru": "кошелёк"
+            },
+            {
+              "word": "malheureusement",
+              "explanation_fr": "hélas",
+              "translation_ru": "к сожалению"
+            },
+            {
+              "word": "une déclaration",
+              "explanation_fr": "document officiel pour signaler un problème",
+              "translation_ru": "заявление"
+            },
+            {
+              "word": "se souvenir",
+              "explanation_fr": "se rappeler",
+              "translation_ru": "помнить"
+            },
+            {
+              "word": "noter",
+              "explanation_fr": "écrire une information",
+              "translation_ru": "записывать"
+            }
+          ],
+          "culture_note": "En France, au commissariat, on fait souvent une déclaration pour un portefeuille perdu ou volé. La phrase de base est simple et directe.",
+          "comprehension": [
+            {
+              "answer": "Она потеряла кошелёк.",
+              "question": "Qu'est-ce que Margot a perdu ?"
+            },
+            {
+              "answer": "Она думает, что потеряла его в метро.",
+              "question": "Où pense-t-elle l'avoir perdu ?"
+            },
+            {
+              "answer": "Нужно сделать заявление.",
+              "question": "Que faut-il faire ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Bonjour monsieur.",
+            "Bonjour madame.",
+            "J'ai perdu mon portefeuille.",
+            "D'accord. Vous l'avez perdu où ?",
+            "Je crois dans le métro.",
+            "Aujourd'hui ?",
+            "Oui, ce matin.",
+            "Vous avez vos papiers dedans ?",
+            "Oui, malheureusement.",
+            "Il faut faire une déclaration.",
+            "D'accord.",
+            "Vous vous souvenez de la ligne ?",
+            "Oui, la ligne 4.",
+            "Très bien, on va noter ça."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Bonjour, j'ai perdu mon portefeuille.",
+            "Je crois dans le métro.",
+            "Oui, j'avais mes papiers dedans."
+          ],
+          "scenario": "Вы в полиции и хотите сказать, что потеряли кошелёк."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 29,
+      "level": "A1",
+      "lesson_number": 29,
+      "title_fr": "À l'aéroport",
+      "title_ru": "В аэропорту — проводить друга",
+      "content": {
+        "step1": {
+          "phrase_fr": "Tu pars à quelle heure ?",
+          "phrase_ru": "Во сколько ты улетаешь?",
+          "example_fr": "Tu pars à quelle heure, finalement ?",
+          "explanation_fr": "On utilise cette question à l'aéroport pour parler de l'heure du départ."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Camille: Tu pars à quelle heure ?",
+            "Nadia: À dix-sept heures dix.",
+            "Camille: D'accord, on a encore un peu de temps.",
+            "Nadia: Oui, mais pas trop.",
+            "Camille: Tu as ton passeport ?",
+            "Nadia: Oui.",
+            "Camille: Et ton billet ?",
+            "Nadia: Oui, aussi.",
+            "Camille: Très bien. On prend un café ?",
+            "Nadia: Oui, bonne idée.",
+            "Camille: Parfait.",
+            "Nadia: Comme ça, tu stresses moins.",
+            "Camille: Oui, un peu moins.",
+            "Nadia: Alors, allons-y."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "partir",
+              "explanation_fr": "quitter un lieu",
+              "translation_ru": "уезжать / улетать"
+            },
+            {
+              "word": "encore un peu de temps",
+              "explanation_fr": "un peu de temps restant",
+              "translation_ru": "ещё есть немного времени"
+            },
+            {
+              "word": "le passeport",
+              "explanation_fr": "document pour voyager",
+              "translation_ru": "паспорт"
+            },
+            {
+              "word": "le billet",
+              "explanation_fr": "document de voyage",
+              "translation_ru": "билет"
+            },
+            {
+              "word": "bonne idée",
+              "explanation_fr": "idée agréable ou utile",
+              "translation_ru": "хорошая идея"
+            },
+            {
+              "word": "allons-y",
+              "explanation_fr": "partons maintenant",
+              "translation_ru": "идём / пошли"
+            }
+          ],
+          "culture_note": "À l'aéroport, les petites vérifications de dernière minute sont très normales: passeport, billet, téléphone, heure du départ.",
+          "comprehension": [
+            {
+              "answer": "Она улетает в 17:10.",
+              "question": "À quelle heure part Nadia ?"
+            },
+            {
+              "answer": "Она проверяет, есть ли у Нади паспорт и билет.",
+              "question": "Que vérifie Camille ?"
+            },
+            {
+              "answer": "Они решают выпить кофе перед вылетом.",
+              "question": "Que décident-elles de faire ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Tu pars à quelle heure ?",
+            "À dix-sept heures dix.",
+            "D'accord, on a encore un peu de temps.",
+            "Oui, mais pas trop.",
+            "Tu as ton passeport ?",
+            "Oui.",
+            "Et ton billet ?",
+            "Oui, aussi.",
+            "Très bien. On prend un café ?",
+            "Oui, bonne idée.",
+            "Parfait.",
+            "Comme ça, tu stresses moins.",
+            "Oui, un peu moins.",
+            "Alors, allons-y."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Tu pars à quelle heure ?",
+            "Tu as ton passeport ?",
+            "On prend un café ?"
+          ],
+          "scenario": "Вы провожаете друга в аэропорту."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    },
+    {
+      "id": 30,
+      "level": "A1",
+      "lesson_number": 30,
+      "title_fr": "Sur le Pont des Arts",
+      "title_ru": "На мосту Пон-дез-Ар — итоги и встреча",
+      "content": {
+        "step1": {
+          "phrase_fr": "Ça fait plaisir de vous voir",
+          "phrase_ru": "Очень приятно вас видеть",
+          "example_fr": "Ça fait plaisir de vous voir tous ici.",
+          "explanation_fr": "On utilise cette phrase quand on est content de retrouver des gens."
+        },
+        "step2": {
+          "dialogue_with_names": [
+            "Camille: Ah, ça fait plaisir de vous voir.",
+            "Léo: Oui, tout le monde est là.",
+            "Chloé: Et il fait beau.",
+            "Antoine: Oui, c'est rare.",
+            "Nadia: Pour une fois, on ne court pas.",
+            "Hugo: Oui, ça change.",
+            "Margot: Il manque juste un café.",
+            "Lucie: Et un banc aussi.",
+            "Mathieu: Oui, avec moins de vent.",
+            "Camille: Vous voyez ? On parle déjà beaucoup.",
+            "Antoine: Oui, comme toujours.",
+            "Chloé: Mais c'est bien comme ça.",
+            "Camille: Oui. Et on continue."
+          ]
+        },
+        "step3": {
+          "vocab": [
+            {
+              "word": "ça fait plaisir",
+              "explanation_fr": "c'est agréable",
+              "translation_ru": "приятно"
+            },
+            {
+              "word": "tout le monde",
+              "explanation_fr": "toutes les personnes du groupe",
+              "translation_ru": "все"
+            },
+            {
+              "word": "pour une fois",
+              "explanation_fr": "cette fois, ce n'est pas comme d'habitude",
+              "translation_ru": "на этот раз"
+            },
+            {
+              "word": "ça change",
+              "explanation_fr": "c'est différent et agréable",
+              "translation_ru": "это меняет дело"
+            },
+            {
+              "word": "il manque",
+              "explanation_fr": "ce n'est pas là",
+              "translation_ru": "не хватает"
+            },
+            {
+              "word": "comme toujours",
+              "explanation_fr": "comme d'habitude",
+              "translation_ru": "как всегда"
+            },
+            {
+              "word": "continuer",
+              "explanation_fr": "aller plus loin, continuer ensemble",
+              "translation_ru": "продолжать"
+            }
+          ],
+          "culture_note": "Le Pont des Arts à Paris est un lieu de promenade et de rencontre. Pour finir un niveau ensemble, c'est un endroit simple et symbolique.",
+          "comprehension": [
+            {
+              "answer": "Они находятся на мосту Пон-дез-Ар в Париже.",
+              "question": "Où sont-ils ?"
+            },
+            {
+              "answer": "Погода хорошая.",
+              "question": "Quel temps fait-il ?"
+            },
+            {
+              "answer": "Она говорит, что они продолжают дальше.",
+              "question": "Que dit Camille à la fin ?"
+            }
+          ],
+          "grammar_micro": ""
+        },
+        "step4": {
+          "dialogue_no_names": [
+            "Ah, ça fait plaisir de vous voir.",
+            "Oui, tout le monde est là.",
+            "Et il fait beau.",
+            "Oui, c'est rare.",
+            "Pour une fois, on ne court pas.",
+            "Oui, ça change.",
+            "Il manque juste un café.",
+            "Et un banc aussi.",
+            "Oui, avec moins de vent.",
+            "Vous voyez ? On parle déjà beaucoup.",
+            "Oui, comme toujours.",
+            "Mais c'est bien comme ça.",
+            "Oui. Et on continue."
+          ]
+        },
+        "step5": {
+          "models": [
+            "Ça fait plaisir de vous voir.",
+            "Il fait beau aujourd'hui.",
+            "Oui, on continue."
+          ],
+          "scenario": "Вы встречаетесь с друзьями после долгого времени."
+        }
+      },
+      "created_at": "2026-04-17T02:04:26.756972+00:00",
+      "updated_at": "2026-04-17T02:04:26.756972+00:00"
+    }
+  ]
+}
