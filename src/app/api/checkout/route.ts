@@ -3,15 +3,16 @@ import { createClient } from '@supabase/supabase-js'
 
 export const dynamic = 'force-dynamic'
 
-type Plan = 'monthly' | 'yearly' | 'yearly_launch'
+type Plan = 'monthly' | 'annual' | 'launch_annual'
 
 const PRICES: Record<Plan, { amount: number; description: string; durationDays: number }> = {
-  monthly: { amount: 1500, description: 'Подписка на курс «Français au Quotidien», месяц', durationDays: 30 },
-  yearly: { amount: 7990, description: 'Подписка на курс «Français au Quotidien», год', durationDays: 365 },
-  yearly_launch: { amount: 4990, description: 'Подписка на курс «Français au Quotidien», год (старт-оффер)', durationDays: 365 },
+  monthly: { amount: 990, description: 'Подписка на курс «Français au Quotidien», месяц', durationDays: 30 },
+  annual: { amount: 7990, description: 'Подписка на курс «Français au Quotidien», год', durationDays: 365 },
+  launch_annual: { amount: 4990, description: 'Подписка на курс «Français au Quotidien», год (стартовое предложение)', durationDays: 365 },
 }
 
 const LAUNCH_LIMIT = 50
+const LAUNCH_OFFER_UNTIL = new Date('2026-09-01T00:00:00+03:00')
 
 export async function POST(req: NextRequest) {
   try {
@@ -46,11 +47,14 @@ export async function POST(req: NextRequest) {
     )
 
     // Если выбран старт-оффер — проверяем что лимит не исчерпан
-    if (plan === 'yearly_launch') {
+    if (plan === 'launch_annual') {
+      if (new Date() >= LAUNCH_OFFER_UNTIL) {
+        return NextResponse.json({ error: 'launch_offer_ended' }, { status: 410 })
+      }
       const { count } = await supabaseAdmin
         .from('user_subscriptions')
         .select('id', { count: 'exact', head: true })
-        .eq('plan', 'yearly_launch')
+        .eq('plan', 'launch_annual')
         .eq('status', 'active')
 
       if (typeof count === 'number' && count >= LAUNCH_LIMIT) {
@@ -84,7 +88,7 @@ export async function POST(req: NextRequest) {
     // Создаём платёж в ЮKassa
     const shopId = process.env.YOOKASSA_SHOP_ID
     const secretKey = process.env.YOOKASSA_SECRET_KEY
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://francais-au-quotidien.ru'
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://francais-au-quotidien.vercel.app'
 
     if (!shopId || !secretKey) {
       console.error('[checkout] YOOKASSA_SHOP_ID or YOOKASSA_SECRET_KEY missing')
