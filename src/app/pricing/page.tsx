@@ -234,8 +234,8 @@ export default function PricingPage() {
                 )}
 
                 <ul style={{ listStyle: 'none', padding: 0, margin: '20px 0', fontSize: '14px', color: '#5a4a35' }}>
-                  <li style={{ marginBottom: '8px' }}>✓ Все уровни A2–C2</li>
-                  <li style={{ marginBottom: '8px' }}>✓ 150 уроков с Camille</li>
+                  <li style={{ marginBottom: '8px' }}>✓ Все уровни A1–C2</li>
+                  <li style={{ marginBottom: '8px' }}>✓ 180 уроков с Camille</li>
                   <li style={{ marginBottom: '8px' }}>✓ Аудио + распознавание речи</li>
                   <li>✓ Доступ с любого устройства</li>
                 </ul>

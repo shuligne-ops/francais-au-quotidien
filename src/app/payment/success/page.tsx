@@ -111,7 +111,7 @@ function SuccessContent() {
                </p>
              )}
              <p style={{ color: '#7a6549', marginBottom: '24px' }}>
-              Все уровни A2–C2 теперь доступны. Bonne chance !
+              Весь курс — 180 уроков, все уровни A1–C2. Bonne chance !
             </p>
             <button
               onClick={() => router.push('/')}
