@@ -78,7 +78,7 @@ function StartContent() {
           maxWidth: '560px',
           margin: '0 auto 32px',
         }}>
-          Курс французского, где Camille говорит в естественном темпе — со связной речью, ритмом и парижским акцентом. 180 уроков от A1 до C2.
+          Курс французского: связная речь, ритм и реальная скорость. 180 уроков от A1 до C2.
         </p>
 
         <button
@@ -137,36 +137,11 @@ function StartContent() {
           но не понимаешь ни одного на улице Парижа?
         </h2>
 
-        <GapRow
-          school='"Qu&apos;est-ce que c&apos;est ?"'
-          schoolPhonetic="— кэ-эс-кё-сэ — четыре слова —"
-          real='"Kèskësè ?"'
-          realPhonetic="кескёсэ — один звук, 0.6 секунды"
-        />
-        <GapRow
-          school='"Je ne sais pas."'
-          schoolPhonetic="— жё нё сэ па —"
-          real='"Chépas."'
-          realPhonetic="шепа — один слог"
-        />
-        <GapRow
-          school='"Tu as vu ?"'
-          schoolPhonetic="— тю а вю —"
-          real='"T&apos;as vu ?"'
-          realPhonetic="та вю — два слога"
-        />
-
-        <p style={{
-          textAlign: 'center',
-          fontSize: '15px',
-          color: '#5C4033',
-          marginTop: '24px',
-          fontStyle: 'italic',
-          lineHeight: 1.6,
-        }}>
-          Так звучит связная французская речь: <strong style={{ color: '#A87729', fontStyle: 'normal' }}>liaison</strong> и <strong style={{ color: '#A87729', fontStyle: 'normal' }}>enchaînement</strong> слышны прямо в диалогах.<br/>
-          Мы показываем речь такой, какой она звучит в жизни.
-        </p>
+        <div style={{ background: 'rgba(255, 255, 255, 0.5)', borderRadius: '16px', padding: '24px', border: '1px solid rgba(200, 150, 74, 0.2)' }}>
+          <p style={{ fontSize: '19px', color: '#2A1810', fontStyle: 'italic', margin: '0 0 16px' }}>«Les deux peuvent être vrais. D&apos;accord. Les partenaires ont eu leur réunion lundi. Ton nom est ressorti.»</p>
+          <p style={{ fontSize: '15px', color: '#5C4033', lineHeight: 1.6, margin: 0 }}>Здесь нет ни одного слова, которого ты не знаешь. Но главное — в последних фразах: «твоё имя упоминали». Они проходят на том же ровном тоне, что и остальное, без выделения. Именно их чаще всего и не слышат.</p>
+        </div>
+        <p style={{ textAlign: 'center', fontSize: '15px', color: '#5C4033', marginTop: '24px', fontStyle: 'italic', lineHeight: 1.6 }}>Дело не в словарном запасе. Разрыв — между <strong style={{ color: '#A87729', fontStyle: 'normal' }}>«знаю глазами»</strong> и <strong style={{ color: '#A87729', fontStyle: 'normal' }}>«узнаю на слух в темпе»</strong>.</p>
       </section>
 
       {/* DIALOGUE PREVIEW */}
@@ -193,9 +168,9 @@ function StartContent() {
           boxShadow: '0 2px 12px rgba(61, 40, 23, 0.06)',
         }}>
           <DialogueLine speaker="Camille" text="Bah, t&apos;as vu Léo ce matin ?" />
-          <DialogueLine speaker="Inès" text="Non, pourquoi ?" />
+          <DialogueLine speaker="Marie" text="Non, pourquoi ?" />
           <DialogueLine speaker="Camille" text="Il avait l&apos;air... bizarre. Du coup je m&apos;inquiète." />
-          <DialogueLine speaker="Inès" text="Bizarre comment ?" />
+          <DialogueLine speaker="Marie" text="Bizarre comment ?" />
           <DialogueLine speaker="Camille" text="Enfin, tu sais, comme quand il a un truc à dire mais il dit rien." />
         </div>
 
@@ -206,7 +181,7 @@ function StartContent() {
           marginTop: '16px',
           fontStyle: 'italic',
         }}>
-          Реальные диалоги, живой парижский акцент, настоящая скорость. Никаких «Bonjour, je m&apos;appelle Marie».
+          Реальные диалоги, французская речь, настоящая скорость. Никаких «Bonjour, je m&apos;appelle Marie».
         </p>
       </section>
 
@@ -232,10 +207,10 @@ function StartContent() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
           gap: '20px',
         }}>
-          <Feature icon="🎙" title="Голос, а не текст" text="Естественный парижский акцент со связками, ритмом и реальной скоростью" />
+          <Feature icon="🎙" title="Голос, а не текст" text="Французская речь с ритмом, связками и реальной скоростью" />
           <Feature icon="🎭" title="Liaison et enchaînement" text="Chépas, t&apos;as, y a un — примеры того, как французская речь звучит в диалогах" />
-          <Feature icon="🗣" title="Распознавание речи" text="Говоришь — приложение слышит и понимает сказанное" />
-          <Feature icon="📈" title="180 уроков, 6 уровней" text="От первых фраз до уверенного понимания живой речи. Каждый урок — новая ситуация" />
+          <Feature icon="🗣" title="Распознавание речи" text="Говоришь фразу вслух — приложение распознаёт речь и реагирует" />
+          <Feature icon="📈" title="180 уроков, 6 уровней" text="От первых фраз до уверенного понимания французской речи. Каждый урок — новая ситуация" />
         </div>
       </section>
 
@@ -388,63 +363,6 @@ function StartContent() {
         </div>
       </section>
       <SiteFooter />
-    </div>
-  )
-}
-
-function GapRow({ school, schoolPhonetic, real, realPhonetic }: { school: string; schoolPhonetic: string; real: string; realPhonetic: string }) {
-  return (
-    <div style={{
-      background: 'rgba(255, 255, 255, 0.5)',
-      borderRadius: '12px',
-      padding: '16px 20px',
-      marginBottom: '14px',
-      border: '1px solid rgba(200, 150, 74, 0.15)',
-    }}>
-      <div style={{ marginBottom: '10px' }}>
-        <p style={{
-          fontSize: '12px',
-          color: '#8B6F47',
-          letterSpacing: '1px',
-          marginBottom: '4px',
-        }}>
-          ШКОЛА УЧИТ ТАК
-        </p>
-        <p style={{
-          fontSize: '17px',
-          color: '#5C4033',
-          fontStyle: 'italic',
-          marginBottom: '2px',
-        }}>
-          {school}
-        </p>
-        <p style={{ fontSize: '13px', color: '#8B6F47' }}>{schoolPhonetic}</p>
-      </div>
-      <div style={{
-        height: '1px',
-        background: 'rgba(200, 150, 74, 0.2)',
-        margin: '12px 0',
-      }} />
-      <div>
-        <p style={{
-          fontSize: '12px',
-          color: '#A87729',
-          letterSpacing: '1px',
-          marginBottom: '4px',
-        }}>
-          ПАРИЖАНИН ГОВОРИТ ТАК
-        </p>
-        <p style={{
-          fontSize: '20px',
-          color: '#2A1810',
-          fontWeight: 700,
-          fontStyle: 'italic',
-          marginBottom: '2px',
-        }}>
-          {real}
-        </p>
-        <p style={{ fontSize: '13px', color: '#A87729' }}>{realPhonetic}</p>
-      </div>
     </div>
   )
 }
