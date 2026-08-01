@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
       }
 
       // Активируем подписку — триггер trg_grant_level_access автоматически
-      // создаст записи в user_level_access для всех уровней A1-C2.
+      // создаст записи в user_level_access для уровней A2-C2
       const { error: updateErr } = await supabaseAdmin
         .from('user_subscriptions')
         .update({ status: 'active' })
