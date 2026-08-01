@@ -55,6 +55,8 @@ export type Lesson = {
   lesson_number: number
   title_fr: string
   title_ru: string
+  is_free_teaser?: boolean
+  is_published?: boolean
   content: {
     step1: { phrase_fr: string; phrase_ru: string; explanation_fr: string; example_fr: string }
     step2: { dialogue_with_names: string[] }
@@ -69,14 +71,16 @@ export type Lesson = {
   }
 }
 
-export async function getLessons(level: string): Promise<Lesson[]> {
+export type LessonSummary = Pick<Lesson, 'id' | 'level' | 'lesson_number' | 'title_fr' | 'title_ru' | 'is_free_teaser' | 'is_published'>
+
+export async function getLessons(level: string): Promise<LessonSummary[]> {
   const { data, error } = await supabase
-    .from('lessons')
-    .select('*')
+    .from('lessons_catalog')
+    .select('id, level, lesson_number, title_fr, title_ru, is_free_teaser, is_published')
     .eq('level', level)
     .order('lesson_number')
   if (error) throw error
-  return data as Lesson[]
+  return data as LessonSummary[]
 }
 
 export async function getLesson(level: string, lessonNumber: number): Promise<Lesson | null> {
