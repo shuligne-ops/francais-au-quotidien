@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
+import YandexMetrika from './components/YandexMetrika';
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -28,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${inter.variable} ${playfair.variable}`}>
       <body className="min-h-screen bg-[#FFF8F0]" style={{ fontFamily: 'var(--font-sans)' }}>
+        <YandexMetrika />
         {children}
       </body>
     </html>

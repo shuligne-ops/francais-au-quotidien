@@ -5,32 +5,51 @@ import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
 const LAUNCH_LIMIT = 50
+const LAUNCH_OFFER_UNTIL = new Date('2026-09-01T00:00:00+03:00')
 
-type Plan = 'monthly' | 'yearly' | 'yearly_launch'
+type Plan = 'monthly' | 'annual' | 'launch_annual'
+
+const PLAN_LABELS: Record<Plan, string> = {
+  monthly: 'Месяц',
+  annual: 'Год',
+  launch_annual: 'Стартовый годовой',
+}
 
 const PLANS: { id: Plan; title: string; price: number; period: string; note?: string; highlight?: boolean }[] = [
-  { id: 'monthly', title: 'Месяц', price: 1500, period: 'в месяц' },
-  { id: 'yearly_launch', title: 'Год · Старт-оффер', price: 4990, period: 'в год', note: 'Только для первых 50 подписчиков', highlight: true },
-  { id: 'yearly', title: 'Год', price: 7990, period: 'в год', note: 'Экономия 25%' },
+  { id: 'monthly', title: 'Месяц', price: 990, period: 'в месяц' },
+  { id: 'launch_annual', title: 'Год · Стартовое предложение', price: 4990, period: 'в год', note: 'До 31 августа 2026', highlight: true },
+  { id: 'annual', title: 'Год', price: 7990, period: 'в год', note: 'Экономия 33%' },
 ]
 
 export default function PricingPage() {
   const router = useRouter()
   const [user, setUser] = useState<{ email: string | null } | null>(null)
+  const [currentPlan, setCurrentPlan] = useState<Plan | null>(null)
   const [launchTaken, setLaunchTaken] = useState<number>(0)
   const [loading, setLoading] = useState<Plan | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user) setUser({ email: user.email ?? null })
+    supabase.auth.getUser().then(async ({ data: { user } }) => {
+      if (!user) return
+      setUser({ email: user.email ?? null })
+      const { data: subscription } = await supabase
+        .from('user_subscriptions')
+        .select('plan')
+        .eq('user_id', user.id)
+        .eq('status', 'active')
+        .order('starts_at', { ascending: false })
+        .limit(1)
+        .maybeSingle()
+      const plan = subscription?.plan as Plan | undefined
+      if (plan && PLAN_LABELS[plan]) setCurrentPlan(plan)
     })
 
-    // Считаем сколько уже куплено старт-офферов (status='active' и plan='yearly_launch')
+    // Считаем активные стартовые подписки для проверки лимита. Число на странице не показываем.
     supabase
       .from('user_subscriptions')
       .select('id', { count: 'exact', head: true })
-      .eq('plan', 'yearly_launch')
+      .eq('plan', 'launch_annual')
       .eq('status', 'active')
       .then(({ count }) => {
         if (typeof count === 'number') setLaunchTaken(count)
@@ -38,13 +57,13 @@ export default function PricingPage() {
   }, [])
 
   const launchLeft = Math.max(0, LAUNCH_LIMIT - launchTaken)
-  const launchAvailable = launchLeft > 0
+  const launchAvailable = new Date() < LAUNCH_OFFER_UNTIL && launchLeft > 0
 
   async function handleChoose(plan: Plan) {
     setError(null)
 
     // Старт-оффер закончился — отключаем кнопку (на бэке тоже проверим)
-    if (plan === 'yearly_launch' && !launchAvailable) {
+    if (plan === 'launch_annual' && !launchAvailable) {
       setError('Стартовое предложение закончилось')
       return
     }
@@ -88,7 +107,7 @@ export default function PricingPage() {
     if (!user) return
     const url = new URL(window.location.href)
     const plan = url.searchParams.get('plan') as Plan | null
-    if (plan && ['monthly', 'yearly', 'yearly_launch'].includes(plan)) {
+    if (plan && ['monthly', 'annual', 'launch_annual'].includes(plan)) {
       url.searchParams.delete('plan')
       window.history.replaceState({}, '', url.toString())
       handleChoose(plan)
@@ -114,8 +133,21 @@ export default function PricingPage() {
             Подписка на курс
           </h1>
           <p style={{ color: '#7a6549', fontSize: '17px' }}>
-            3 урока A1 — бесплатно. Остальные уроки A1 и уровни A2–C2 по подписке.
+            Первый урок каждого уровня A1–C1 бесплатен. Остальные уроки A1–C2 по подписке.
           </p>
+          {currentPlan && (
+            <div style={{
+              display: 'inline-block',
+              marginTop: '16px',
+              padding: '10px 16px',
+              borderRadius: '10px',
+              background: '#e8f4ea',
+              color: '#35613b',
+              fontSize: '14px',
+            }}>
+              У вас активная подписка · тариф: <strong>{PLAN_LABELS[currentPlan]}</strong>
+            </div>
+          )}
         </header>
 
         {launchAvailable && (
@@ -129,7 +161,7 @@ export default function PricingPage() {
             fontSize: '15px',
             fontWeight: 500,
           }}>
-            🎉 Стартовое предложение: годовая подписка <strong>4 990 ₽</strong> для первых 50 подписчиков. Осталось мест: <strong>{launchLeft}</strong>.
+             🎉 Стартовое предложение до 31 августа: годовая подписка <strong>4 990 ₽</strong> вместо 7 990 ₽.
           </div>
         )}
 
@@ -139,7 +171,7 @@ export default function PricingPage() {
           gap: '16px',
         }}>
           {PLANS.map(p => {
-            const isLaunch = p.id === 'yearly_launch'
+             const isLaunch = p.id === 'launch_annual'
             const disabled = isLaunch && !launchAvailable
             const isLoading = loading === p.id
 

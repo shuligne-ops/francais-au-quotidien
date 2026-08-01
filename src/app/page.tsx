@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import ReactMarkdown from 'react-markdown'
+import SiteFooter from './components/SiteFooter'
+import { track, trackOnce } from '@/lib/analytics'
 
 type LessonSummary = {
   id: number
@@ -11,6 +13,8 @@ type LessonSummary = {
   lesson_number: number
   title_fr: string
   title_ru: string
+  is_free_teaser: boolean
+  is_published: boolean
 }
 
 type Lesson = {
@@ -20,6 +24,8 @@ type Lesson = {
   title_fr: string
   title_ru: string
   content: any
+  is_free_teaser: boolean
+  is_published: boolean
 }
 
 type Message = {
@@ -28,7 +34,7 @@ type Message = {
 }
 
 const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
-const FREE_A1_LESSONS = 3
+const LESSON_ENGAGED_TURNS = 4
 
 function normalizeMd(t: string) {
   return t.replace(/\*\*\s+/g, '**').replace(/\s+\*\*/g, '**')
@@ -92,17 +98,16 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    if (!accessibleLevels.has(level)) {
+    if (level === 'C2' && !accessibleLevels.has(level)) {
       setLessons([])
       return
     }
 
-    let query = supabase.from('lessons').select('id,level,lesson_number,title_fr,title_ru')
-      .eq('level', level).order('lesson_number')
-
-    if (level === 'A1' && !hasPaidAccess) {
-      query = query.lte('lesson_number', FREE_A1_LESSONS)
-    }
+    const query = supabase.from('lessons')
+      .select('id,level,lesson_number,title_fr,title_ru,is_free_teaser,is_published')
+      .eq('level', level)
+      .eq('is_published', true)
+      .order('lesson_number')
 
     query
       .then(({ data }) => { if (data) setLessons(data as LessonSummary[]) })
@@ -128,6 +133,14 @@ export default function Home() {
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [msgs])
 
   useEffect(() => {
+    if (!lesson) return
+    const userTurns = msgs.filter(message => message.role === 'user').length
+    if (userTurns >= LESSON_ENGAGED_TURNS) {
+      trackOnce('lesson_50', `lesson50_${lesson.id}`, { level: lesson.level, lesson_id: lesson.id })
+    }
+  }, [msgs, lesson])
+
+  useEffect(() => {
     if (taRef.current) {
       taRef.current.style.height = '48px'
       taRef.current.style.height = Math.min(taRef.current.scrollHeight, 160) + 'px'
@@ -142,7 +155,7 @@ export default function Home() {
   }
 
   function handleLevelClick(l: string) {
-    if (accessibleLevels.has(l)) {
+    if (accessibleLevels.has(l) || hasPaidAccess || l !== 'C2') {
       setLevel(l)
       return
     }
@@ -158,11 +171,12 @@ export default function Home() {
     const { data } = await supabase.from('lessons').select('*').eq('id', id).single()
     if (!data) return
     const lessonData = data as Lesson
-    const canOpen = hasPaidAccess || (lessonData.level === 'A1' && lessonData.lesson_number <= FREE_A1_LESSONS)
+    const canOpen = hasPaidAccess || lessonData.is_free_teaser === true
     if (!canOpen) {
       router.push(userEmail ? '/pricing' : '/auth?redirect_to=' + encodeURIComponent('/pricing'))
       return
     }
+    track('lesson_start', { level: lessonData.level, lesson_id: lessonData.id })
     setLesson(lessonData)
     setMsgs([])
     kill()
@@ -399,7 +413,7 @@ export default function Home() {
 
       <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '32px', flexWrap: 'wrap' }}>
         {LEVELS.map(l => {
-          const isAccessible = accessibleLevels.has(l)
+          const isAccessible = accessibleLevels.has(l) || hasPaidAccess || l !== 'C2'
           const isSelected = level === l
           return (
             <button
@@ -431,19 +445,28 @@ export default function Home() {
 
       <div>
         {lessons.map(ls => (
-          <button key={ls.id} onClick={() => open(ls.id)} style={{
-            display: 'block', width: '100%', textAlign: 'left', padding: '16px 20px', background: 'white', borderRadius: '12px', border: 'none', cursor: 'pointer', marginBottom: '8px', fontFamily: 'inherit'
+            <button key={ls.id} onClick={() => open(ls.id)} style={{
+            display: 'block', width: '100%', textAlign: 'left', padding: '16px 20px', background: 'white', borderRadius: '12px', border: 'none', cursor: 'pointer', marginBottom: '8px', fontFamily: 'inherit', opacity: hasPaidAccess || ls.is_free_teaser ? 1 : 0.78
           }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
               <span style={{ fontSize: '12px', fontFamily: 'monospace', color: '#999' }}>{String(ls.lesson_number).padStart(2, '0')}</span>
               <div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: '#1a1a2e' }}>{ls.title_fr}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: '#1a1a2e', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  {ls.title_fr}
+                  {ls.is_free_teaser && !hasPaidAccess && (
+                    <span style={{ fontSize: '10px', fontWeight: 700, color: '#92400e', background: '#fef3c7', padding: '3px 8px', borderRadius: '8px', letterSpacing: '0.3px' }}>
+                      Бесплатный урок
+                    </span>
+                  )}
+                  {!hasPaidAccess && !ls.is_free_teaser && <span style={{ fontSize: '12px', color: '#999' }}>🔒</span>}
+                </div>
                 <div style={{ fontSize: '13px', color: '#999', marginTop: '2px' }}>{ls.title_ru}</div>
               </div>
             </div>
           </button>
         ))}
       </div>
+      <SiteFooter />
     </div>
   )
 }

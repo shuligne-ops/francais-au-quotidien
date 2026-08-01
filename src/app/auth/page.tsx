@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { trackOnce } from '@/lib/analytics'
 
 const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'] as const
 
@@ -27,6 +28,15 @@ function AuthForm() {
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        trackOnce('registration', 'registration')
+        router.push(redirectTo)
+      }
+    })
+  }, [router, redirectTo])
 
   // Если в URL есть UTM-параметры — сохраняем их в localStorage.
   // Так атрибуция работает даже если реклама ведёт прямо на /auth.

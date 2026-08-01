@@ -2,6 +2,7 @@
 
 import { useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
+import SiteFooter from '../components/SiteFooter'
 
 // Этот лендинг — точка приземления для рекламного трафика FAQ.
 // Главный аргумент: ЗВУЧАНИЕ. Школа учит читать — мы учим звучать.
@@ -77,7 +78,7 @@ function StartContent() {
           maxWidth: '560px',
           margin: '0 auto 32px',
         }}>
-          Курс французского, где Camille из Парижа говорит живым голосом носителя — со связками, ритмом и реальным акцентом. Не как Google Translate. 180 уроков, 30 минут в день.
+          Курс французского, где Camille говорит в естественном темпе — со связной речью, ритмом и парижским акцентом. 180 уроков от A1 до C2.
         </p>
 
         <button
@@ -163,8 +164,8 @@ function StartContent() {
           fontStyle: 'italic',
           lineHeight: 1.6,
         }}>
-          Это называется <strong style={{ color: '#A87729', fontStyle: 'normal' }}>liaison</strong> и <strong style={{ color: '#A87729', fontStyle: 'normal' }}>enchaînement</strong> — реальная фонетика французского.<br/>
-          В школе её нет. У нас — на каждом уроке.
+          Так звучит связная французская речь: <strong style={{ color: '#A87729', fontStyle: 'normal' }}>liaison</strong> и <strong style={{ color: '#A87729', fontStyle: 'normal' }}>enchaînement</strong> слышны прямо в диалогах.<br/>
+          Мы показываем речь такой, какой она звучит в жизни.
         </p>
       </section>
 
@@ -231,55 +232,10 @@ function StartContent() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
           gap: '20px',
         }}>
-          <Feature icon="🎙" title="Живой голос Camille" text="Не синтезатор. Живой парижский акцент со связками, ритмом и реальной скоростью" />
-          <Feature icon="🎭" title="Liaison et enchaînement" text="Chépas, t&apos;as, y a un — реальная фонетика, которой не учат в школе" />
-          <Feature icon="🗣" title="Распознавание речи" text="Говоришь — приложение слышит и понимает. Тренировка произношения в одиночку" />
-          <Feature icon="📈" title="180 уроков, 6 уровней" text="От первых фраз до свободной речи. Каждый урок — новая ситуация" />
-        </div>
-      </section>
-
-      {/* FOUNDER STORY */}
-      <section style={{
-        maxWidth: '600px',
-        margin: '0 auto',
-        padding: '40px 20px',
-      }}>
-        <div style={{
-          background: 'rgba(255, 255, 255, 0.6)',
-          borderRadius: '16px',
-          padding: '28px 24px',
-          border: '1px solid rgba(200, 150, 74, 0.2)',
-          boxShadow: '0 2px 12px rgba(61, 40, 23, 0.06)',
-        }}>
-          <p style={{
-            color: '#8B6F47',
-            fontSize: '13px',
-            letterSpacing: '1.5px',
-            marginBottom: '16px',
-          }}>
-            ПОЧЕМУ Я СДЕЛАЛ ЭТОТ КУРС
-          </p>
-          <p style={{
-            fontSize: '16px',
-            lineHeight: 1.7,
-            color: '#3D2817',
-            margin: 0,
-          }}>
-            Я три года учился в Горьковском инязе на французском отделении. Грамматика, фонетика на бумаге, тексты про Жанну д&apos;Арк — всё было.
-            <br/><br/>
-            А в первой беседе с живой француженкой — я не понял ни одной фразы. Звуки шли — слов не было. Будто язык, которому меня учили, и язык, на котором говорят, — это два разных языка.
-            <br/><br/>
-            Через несколько месяцев я понял: они и правда разные. Школа учит, <strong>как слова пишутся</strong>. А парижане говорят, <strong>как они звучат вместе</strong>. И этой второй системе у нас не учат — ни в школе, ни в большинстве курсов.
-            <br/><br/>
-            Français au Quotidien — это то, чего мне самому не хватало. Курс, где ты слышишь язык таким, какой он есть. И постепенно начинаешь сам звучать так же.
-          </p>
-          <p style={{
-            marginTop: '16px',
-            fontSize: '14px',
-            color: '#8B6F47',
-          }}>
-            — Александр, автор курса
-          </p>
+          <Feature icon="🎙" title="Голос, а не текст" text="Естественный парижский акцент со связками, ритмом и реальной скоростью" />
+          <Feature icon="🎭" title="Liaison et enchaînement" text="Chépas, t&apos;as, y a un — примеры того, как французская речь звучит в диалогах" />
+          <Feature icon="🗣" title="Распознавание речи" text="Говоришь — приложение слышит и понимает сказанное" />
+          <Feature icon="📈" title="180 уроков, 6 уровней" text="От первых фраз до уверенного понимания живой речи. Каждый урок — новая ситуация" />
         </div>
       </section>
 
@@ -304,7 +260,7 @@ function StartContent() {
           color: '#8B6F47',
           marginBottom: '24px',
         }}>
-          3 урока A1 — бесплатно. Дальше один тариф открывает все уровни A1–C2.
+          Первый урок каждого уровня A1–C1 бесплатен. C2 открывается по подписке.
         </p>
 
         <div style={{
@@ -317,7 +273,7 @@ function StartContent() {
           fontSize: '14px',
           color: '#3D2817',
         }}>
-          🎁 <strong style={{ color: '#A87729' }}>Старт-оффер для первых 50:</strong> год за 4 990 ₽ вместо 7 990 ₽
+          🎁 <strong style={{ color: '#A87729' }}>Стартовое предложение до 31 августа:</strong> год за 4 990 ₽ вместо 7 990 ₽
         </div>
 
         <div style={{
@@ -325,8 +281,8 @@ function StartContent() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
           gap: '12px',
         }}>
-          <Price label="Месяц" value="1 500 ₽" period="в мес" />
-          <Price label="Год" value="7 990 ₽" period="экономия 25%" highlight />
+          <Price label="Месяц" value="990 ₽" period="в мес" />
+          <Price label="Год" value="7 990 ₽" period="экономия 33%" highlight />
         </div>
 
         <p style={{
@@ -387,7 +343,7 @@ function StartContent() {
           fontSize: '13px',
           color: '#8B6F47',
         }}>
-          3 урока A1 — бесплатно, без регистрации.
+          Первый урок уровней A1–C1 бесплатен, без регистрации.
         </p>
       </section>
 
@@ -431,6 +387,7 @@ function StartContent() {
           </a>
         </div>
       </section>
+      <SiteFooter />
     </div>
   )
 }

@@ -1,12 +1,27 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useState, Suspense } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { trackOnce } from '@/lib/analytics'
 
 export default function SuccessPage() {
+  return (
+    <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5ebd6' }} />}>
+      <SuccessContent />
+    </Suspense>
+  )
+}
+
+function SuccessContent() {
   const router = useRouter()
+  const search = useSearchParams()
   const [status, setStatus] = useState<'checking' | 'active' | 'pending'>('checking')
+  const planFromUrl = search.get('plan')
+  const planLabel =
+    planFromUrl === 'monthly' ? 'Месяц' :
+    planFromUrl === 'annual' ? 'Год' :
+    planFromUrl === 'launch_annual' ? 'Стартовый годовой' : null
 
   useEffect(() => {
     let stop = false
@@ -41,6 +56,12 @@ export default function SuccessPage() {
     return () => { stop = true }
   }, [router])
 
+  useEffect(() => {
+    if (status === 'active') {
+      trackOnce('paid', `paid_${planFromUrl ?? 'unknown'}`, { plan: planFromUrl })
+    }
+  }, [status, planFromUrl])
+
   return (
     <div style={{
       minHeight: '100vh',
@@ -61,7 +82,7 @@ export default function SuccessPage() {
         {status === 'checking' && (
           <>
             <div style={{ fontSize: '48px', marginBottom: '12px' }}>⏳</div>
-            <h1 style={{
+             <h1 style={{
               fontFamily: 'var(--font-display)',
               fontSize: '24px',
               color: '#2a1f0f',
@@ -82,9 +103,14 @@ export default function SuccessPage() {
               color: '#2a1f0f',
               marginBottom: '8px',
             }}>
-              Доступ открыт!
-            </h1>
-            <p style={{ color: '#7a6549', marginBottom: '24px' }}>
+               Доступ открыт!
+             </h1>
+             {planLabel && (
+               <p style={{ color: '#7a6549', marginBottom: '12px' }}>
+                 Тариф: <strong>{planLabel}</strong>
+               </p>
+             )}
+             <p style={{ color: '#7a6549', marginBottom: '24px' }}>
               Все уровни A2–C2 теперь доступны. Bonne chance !
             </p>
             <button
@@ -109,15 +135,20 @@ export default function SuccessPage() {
         {status === 'pending' && (
           <>
             <div style={{ fontSize: '48px', marginBottom: '12px' }}>📨</div>
-            <h1 style={{
+             <h1 style={{
               fontFamily: 'var(--font-display)',
               fontSize: '24px',
               color: '#2a1f0f',
               marginBottom: '8px',
             }}>
-              Оплата получена
-            </h1>
-            <p style={{ color: '#7a6549', marginBottom: '8px' }}>
+               Оплата получена
+             </h1>
+             {planLabel && (
+               <p style={{ color: '#7a6549', marginBottom: '8px' }}>
+                 Тариф: <strong>{planLabel}</strong>
+               </p>
+             )}
+             <p style={{ color: '#7a6549', marginBottom: '8px' }}>
               Доступ активируется в течение 1-2 минут.
             </p>
             <p style={{ color: '#9a8770', fontSize: '13px', marginBottom: '24px' }}>
