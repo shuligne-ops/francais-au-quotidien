@@ -1,4 +1,21 @@
-import { NextRequest } from 'next/server'
+import { NextRequest, after } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
+import { createHash } from 'crypto'
+
+const MODEL = 'eleven_flash_v2_5'
+
+// Кэш готового аудио в Supabase Storage. Имя файла — отпечаток модели, голоса
+// и текста: сменишь модель или голос — старое просто перестанет находиться.
+// Без ключей Supabase cache === null, и роут работает ровно как до правки.
+const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
+const SUPA_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
+const cache = SERVICE_KEY && SUPA_URL
+  ? createClient(SUPA_URL, SERVICE_KEY).storage.from('tts-cache')
+  : null
+
+function cacheKey(voiceId: string, cleaned: string): string {
+  return createHash('sha256').update(`${MODEL}|${voiceId}|${cleaned}`).digest('hex') + '.mp3'
+}
 
 function cleanForTTS(text: string): string {
   let t = text
@@ -54,7 +71,7 @@ async function genChunk(text: string, voiceId: string, apiKey: string): Promise<
       headers: { 'Content-Type': 'application/json', 'xi-api-key': apiKey },
       body: JSON.stringify({
         text,
-        model_id: 'eleven_multilingual_v2',
+        model_id: MODEL,
         voice_settings: { stability: 0.5, similarity_boost: 0.75 },
       }),
     }
@@ -75,6 +92,17 @@ export async function POST(req: NextRequest) {
   if (cleaned.length < 5) return new Response('Too short', { status: 400 })
 
   const voiceId = sanitizeEnv(process.env.ELEVENLABS_VOICE_ID) || 'Da9VfudgKUvFOKayCiue'
+
+  const key = cacheKey(voiceId, cleaned)
+  if (cache) {
+    const cached = await cache.download(key)
+    if (cached.data) {
+      return new Response(await cached.data.arrayBuffer(), {
+        headers: { 'Content-Type': 'audio/mpeg', 'X-TTS-Cache': 'hit' },
+      })
+    }
+  }
+
   const KEY = sanitizeEnv(process.env.ELEVENLABS_API_KEY)
   if (!KEY) {
     console.error('TTS: ELEVENLABS_API_KEY не задан (или содержит только невалидные символы)')
@@ -88,7 +116,28 @@ export async function POST(req: NextRequest) {
     const combined = new Uint8Array(total)
     let off = 0
     for (const b of buffers) { combined.set(new Uint8Array(b), off); off += b.byteLength }
-    return new Response(combined.buffer, { headers: { 'Content-Type': 'audio/mpeg' } })
+
+    // Заливка идёт после того, как ответ ушёл: студент не ждёт Storage, а
+    // упавшая заливка (нет бакета, кончилась квота) не роняет запрос.
+    if (cache) {
+      const audio = combined
+      after(async () => {
+        try {
+          const { error } = await cache.upload(
+            key,
+            new Blob([audio], { type: 'audio/mpeg' }),
+            { contentType: 'audio/mpeg', upsert: true }
+          )
+          if (error) console.warn('TTS cache upload failed:', error.message)
+        } catch (e) {
+          console.warn('TTS cache upload failed:', e)
+        }
+      })
+    }
+
+    return new Response(combined.buffer, {
+      headers: { 'Content-Type': 'audio/mpeg', 'X-TTS-Cache': 'miss' },
+    })
   } catch (err) {
     console.error('TTS error:', err)
     return new Response('TTS Error', { status: 500 })
