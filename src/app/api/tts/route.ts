@@ -40,6 +40,12 @@ function splitText(text: string, maxLen: number): string[] {
   return chunks.filter(c => c.length > 0)
 }
 
+// Значение из env может прийти с BOM (U+FEFF) или невидимыми пробелами —
+// такой заголовок роняет fetch с "Cannot convert argument to a ByteString".
+function sanitizeEnv(value: string | undefined): string {
+  return (value || '').replace(/[^\x21-\x7E]/g, '')
+}
+
 async function genChunk(text: string, voiceId: string, apiKey: string): Promise<ArrayBuffer> {
   const r = await fetch(
     `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_22050_32`,
@@ -53,7 +59,11 @@ async function genChunk(text: string, voiceId: string, apiKey: string): Promise<
       }),
     }
   )
-  if (!r.ok) throw new Error('TTS chunk failed')
+  if (!r.ok) {
+    const body = await r.text().catch(() => '<no body>')
+    console.error(`TTS: ElevenLabs ${r.status} ${r.statusText}: ${body.slice(0, 500)}`)
+    throw new Error(`TTS chunk failed: ${r.status}`)
+  }
   return r.arrayBuffer()
 }
 
@@ -64,12 +74,16 @@ export async function POST(req: NextRequest) {
   const cleaned = cleanForTTS(text)
   if (cleaned.length < 5) return new Response('Too short', { status: 400 })
 
-  const voiceId = process.env.ELEVENLABS_VOICE_ID || 'Da9VfudgKUvFOKayCiue'
-  const apiKey = process.env.ELEVENLABS_API_KEY!
+  const voiceId = sanitizeEnv(process.env.ELEVENLABS_VOICE_ID) || 'Da9VfudgKUvFOKayCiue'
+  const KEY = sanitizeEnv(process.env.ELEVENLABS_API_KEY)
+  if (!KEY) {
+    console.error('TTS: ELEVENLABS_API_KEY не задан (или содержит только невалидные символы)')
+    return Response.json({ error: 'ELEVENLABS_API_KEY не задан' }, { status: 500 })
+  }
   const chunks = splitText(cleaned, 700)
 
   try {
-    const buffers = await Promise.all(chunks.map(c => genChunk(c, voiceId, apiKey)))
+    const buffers = await Promise.all(chunks.map(c => genChunk(c, voiceId, KEY)))
     const total = buffers.reduce((s, b) => s + b.byteLength, 0)
     const combined = new Uint8Array(total)
     let off = 0
