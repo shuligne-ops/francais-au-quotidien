@@ -36,6 +36,8 @@ type ProviderConfig = {
 
 const TIMEOUT_MS = 15_000 // если основной провайдер молчит дольше — уходим в резерв
 
+const STREAM_INTERRUPTED_MSG = '\n\n⚠️ Связь прервалась. Напишите «продолжи».'
+
 // ── ОСНОВНОЙ: Anthropic ──────────────────────────────────────────────────────
 const anthropic: ProviderConfig = {
   name: 'anthropic',
@@ -50,7 +52,7 @@ const anthropic: ProviderConfig = {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
-        max_tokens: 2048,
+        max_tokens: 4096,
         stream: true,
         system,
         messages,
@@ -63,28 +65,44 @@ const anthropic: ProviderConfig = {
         const reader = response.body?.getReader()
         const decoder = new TextDecoder()
         let buffer = ''
-        while (reader) {
-          const { done, value } = await reader.read()
-          if (done) break
-          buffer += decoder.decode(value, { stream: true })
-          const lines = buffer.split('\n')
-          buffer = lines.pop() ?? '' // последний кусок может быть неполным — копим до след. чанка
-          for (const line of lines) {
-            if (!line.startsWith('data: ')) continue
-            const data = line.slice(6)
-            if (data === '[DONE]') continue
-            try {
-              const parsed = JSON.parse(data)
-              // Anthropic-формат: текст лежит в content_block_delta.delta.text
-              if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
-                controller.enqueue(encoder.encode(parsed.delta.text))
+        const notifyInterrupted = () => controller.enqueue(encoder.encode(STREAM_INTERRUPTED_MSG))
+        try {
+          while (reader) {
+            const { done, value } = await reader.read()
+            if (done) break
+            buffer += decoder.decode(value, { stream: true })
+            const lines = buffer.split('\n')
+            buffer = lines.pop() ?? '' // последний кусок может быть неполным — копим до след. чанка
+            for (const line of lines) {
+              if (!line.startsWith('data: ')) continue
+              const data = line.slice(6)
+              if (data === '[DONE]') continue
+              try {
+                const parsed = JSON.parse(data)
+                if (parsed.type === 'error') {
+                  console.error('[llm] anthropic stream error', parsed)
+                  notifyInterrupted()
+                } else if (
+                  parsed.type === 'message_delta' &&
+                  parsed.delta?.stop_reason === 'max_tokens'
+                ) {
+                  console.warn('[llm] anthropic stream stopped: max_tokens', parsed)
+                  notifyInterrupted()
+                } else if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
+                  // Anthropic-формат: текст лежит в content_block_delta.delta.text
+                  controller.enqueue(encoder.encode(parsed.delta.text))
+                }
+              } catch {
+                /* неполный JSON — пропускаем, дособерётся следующим чанком */
               }
-            } catch {
-              /* неполный JSON — пропускаем, дособерётся следующим чанком */
             }
           }
+          controller.close()
+        } catch (err) {
+          console.error('[llm] anthropic stream read failed', err)
+          notifyInterrupted()
+          controller.close()
         }
-        controller.close()
       },
     })
   },

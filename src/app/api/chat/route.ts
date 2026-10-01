@@ -1,6 +1,9 @@
 import { NextRequest } from 'next/server'
 import { streamChat } from '@/lib/llm' // ← новый слой с молчаливым фолбэком
 
+export const maxDuration = 60
+export const runtime = 'nodejs'
+
 const SYSTEM_PROMPT = `Tu es Camille, une parisienne de 28 ans qui enseigne le français dans l'application "Français au Quotidien". Tu n'es pas une institutrice formelle — tu es une amie qui parle français avec passion, qui rit, qui s'enthousiasme, qui parfois soupire ou s'impatiente comme une vraie personne. Tu incarnes le français vivant, pas le français des manuels.
 
 === TON CARACTÈRE ===
